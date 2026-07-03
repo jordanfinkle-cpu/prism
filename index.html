@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prism — your meetings, written up</title>
+<meta name="description" content="Prism records when you ask, follows along while you jot, and writes the clean version beneath your notes — without ever touching a word you wrote. Free during beta, on-device, for Mac.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231A1A19'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2.5' fill='%23fff' transform='rotate(45 16 16)'/%3E%3C/svg%3E">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;background:#FFFFFF}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+  a{transition:background .15s ease,color .15s ease}
+  .lnk:hover{color:#1A1A19 !important}
+  .btn-dark:hover{background:#333330 !important}
+  .btn-ghost:hover{background:rgba(0,0,0,.03) !important}
+  .btn-light:hover{background:#e9e9e7 !important}
+  .foot-lnk:hover{color:#1A1A19 !important}
+  .dlrow{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+  @media (max-width:900px){
+    .grid3,.grid2{grid-template-columns:1fr !important}
+    .hero-h1{font-size:40px !important}
+    .heroapp{height:auto !important;flex-direction:column !important}
+    .heroapp aside{width:100% !important;flex-direction:row !important;overflow-x:auto;border-right:none !important;border-bottom:1px solid rgba(0,0,0,.05)}
+    .heroapp aside .foldercol{display:none !important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== BANNER ===================== -->
+<div style="display:flex;align-items:center;justify-content:center;gap:9px;padding:10px 20px;background:#F8F7FD;border-bottom:1px solid #ECE9F7;font-size:13px;color:#6b63b5">
+  <span>✦</span><span style="color:#55508f">Prism is now in public beta — free while it lasts.</span><a href="#download" class="lnk" style="color:#6b63b5;font-weight:600;text-decoration:none">Download ›</a>
+</div>
+
+<!-- ===================== NAV ===================== -->
+<div style="border-bottom:1px solid rgba(0,0,0,.05)">
+  <div style="max-width:1100px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;gap:28px">
+    <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#1A1A19">
+      <span style="display:inline-flex;width:28px;height:28px;border-radius:8px;background:#1A1A19;align-items:center;justify-content:center"><span style="width:10px;height:10px;border-radius:2.5px;background:#fff;transform:rotate(45deg)"></span></span>
+      <span style="font-size:15.5px;font-weight:600;letter-spacing:-.01em">Prism</span>
+    </a>
+    <div style="flex:1"></div>
+    <nav style="display:flex;align-items:center;gap:26px">
+      <a href="#how" class="lnk" style="font-size:14px;color:#737373;text-decoration:none">How it works</a>
+      <a href="#features" class="lnk" style="font-size:14px;color:#737373;text-decoration:none">Features</a>
+      <a href="#download" class="btn-dark" style="font-size:13.5px;font-weight:600;color:#fff;background:#1A1A19;padding:9px 16px;border-radius:10px;text-decoration:none">Download</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<div id="top" style="padding:96px 32px 0;text-align:center">
+  <h1 class="hero-h1" style="font-size:58px;font-weight:600;letter-spacing:-.028em;line-height:1.06;color:#1A1A19;max-width:760px;margin:0 auto;text-wrap:balance">Your meetings, written&nbsp;up.</h1>
+  <p style="font-size:19px;line-height:1.55;color:#737373;max-width:600px;margin:22px auto 0;text-wrap:pretty">Prism records when you ask, follows along while you jot, and writes the clean version beneath your notes — without ever touching a word you wrote.</p>
+  <div class="dlrow" style="margin-top:34px">
+    <a href="#download" class="btn-dark" style="font-size:15px;font-weight:600;color:#fff;background:#1A1A19;padding:14px 24px;border-radius:12px;text-decoration:none">Download for Mac</a>
+    <a href="#how" class="btn-ghost" style="font-size:15px;font-weight:500;color:#1A1A19;padding:14px 22px;border-radius:12px;border:1px solid rgba(0,0,0,.14);text-decoration:none">See how it works</a>
+  </div>
+  <div style="font-size:12.5px;color:#a8a8a8;margin-top:16px">Free during beta · macOS 13 or later · Apple silicon</div>
+
+  <!-- ====== hero app window ====== -->
+  <div class="heroapp" style="max-width:980px;margin:64px auto 0;background:#FFFFFF;border:1px solid rgba(0,0,0,.07);border-radius:14px;box-shadow:0 30px 90px rgba(40,35,25,.16);overflow:hidden;display:flex;text-align:left;color:#1A1A19;height:640px">
+    <aside style="width:200px;flex-shrink:0;background:#FBFBFA;display:flex;flex-direction:column;border-right:1px solid rgba(0,0,0,.05)">
+      <div style="display:flex;gap:7px;padding:15px 15px 12px"><span style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></span><span style="width:10px;height:10px;border-radius:50%;background:#FEBC2E"></span><span style="width:10px;height:10px;border-radius:50%;background:#28C840"></span></div>
+      <div style="display:flex;align-items:center;gap:7px;padding:2px 15px 13px">
+        <span style="display:inline-flex;width:17px;height:17px;border-radius:5px;background:#1A1A19;align-items:center;justify-content:center"><span style="width:6px;height:6px;border-radius:1.5px;background:#fff;transform:rotate(45deg)"></span></span>
+        <span style="font-size:12px;font-weight:600;letter-spacing:-.01em">Prism</span>
+      </div>
+      <div style="margin:0 11px 12px;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:9px;background:rgba(0,0,0,.035);font-size:11.5px;color:#9b9b9b"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="5.75"></circle><path d="M15.3 15.3 19.5 19.5"></path></svg><span style="flex:1">Search</span><span style="font-size:9.5px;opacity:.8">⌘K</span></div>
+      <nav style="display:flex;flex-direction:column;gap:1px;padding:0 10px">
+        <a style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:12px;color:#737373"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="6.2" height="6.2" rx="2"></rect><rect x="13.3" y="4.5" width="6.2" height="6.2" rx="2"></rect><rect x="4.5" y="13.3" width="6.2" height="6.2" rx="2"></rect><rect x="13.3" y="13.3" width="6.2" height="6.2" rx="2"></rect></svg>Home</a>
+        <a style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:12px;color:#737373"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.75" width="14" height="16.5" rx="3"></rect><path d="M9 9.5h6M9 13h6M9 16.5h3"></path></svg>All notes</a>
+      </nav>
+      <div class="foldercol" style="padding:18px 20px 6px;font-size:9.5px;letter-spacing:.05em;color:#b0b0b0;text-transform:uppercase">Folders</div>
+      <div class="foldercol" style="display:block;padding:0 10px">
+        <a style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:500;color:#1A1A19"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#9b9b9b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5.75 9.25 12 15.5l6.25-6.25"></path></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 7.75C4 6.5 5 5.5 6.25 5.5h3.4l2.1 2.4h6C19 7.9 20 8.9 20 10.15v6.1c0 1.25-1 2.25-2.25 2.25H6.25C5 18.5 4 17.5 4 16.25z"></path></svg><span style="flex:1">2026 Draft</span></a>
+        <a style="display:block;padding:5px 10px 5px 33px;border-radius:7px;font-size:11px;color:#1A1A19;background:rgba(0,0,0,.045);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">NBA draft strategy and trade analysis</a>
+        <a style="display:block;padding:5px 10px 5px 33px;border-radius:7px;font-size:11px;color:#737373;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pre-draft workout debrief</a>
+        <a style="display:flex;align-items:center;gap:6px;padding:5px 10px 5px 21px;border-radius:8px;font-size:11.5px;font-weight:500;color:#3a3a3a"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#9b9b9b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5.75 9.25 12 15.5l6.25-6.25"></path></svg><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 7.75C4 6.5 5 5.5 6.25 5.5h3.4l2.1 2.4h6C19 7.9 20 8.9 20 10.15v6.1c0 1.25-1 2.25-2.25 2.25H6.25C5 18.5 4 17.5 4 16.25z"></path></svg><span style="flex:1">Mock drafts</span></a>
+        <a style="display:block;padding:5px 10px 5px 43px;border-radius:7px;font-size:11px;color:#737373;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Mock draft v3</a>
+        <a style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;font-size:12px;color:#3a3a3a"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#9b9b9b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-90deg);flex-shrink:0"><path d="M5.75 9.25 12 15.5l6.25-6.25"></path></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 7.75C4 6.5 5 5.5 6.25 5.5h3.4l2.1 2.4h6C19 7.9 20 8.9 20 10.15v6.1c0 1.25-1 2.25-2.25 2.25H6.25C5 18.5 4 17.5 4 16.25z"></path></svg><span style="flex:1">Free Agency</span></a>
+        <a style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;font-size:12px;color:#3a3a3a"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#9b9b9b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-90deg);flex-shrink:0"><path d="M5.75 9.25 12 15.5l6.25-6.25"></path></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 7.75C4 6.5 5 5.5 6.25 5.5h3.4l2.1 2.4h6C19 7.9 20 8.9 20 10.15v6.1c0 1.25-1 2.25-2.25 2.25H6.25C5 18.5 4 17.5 4 16.25z"></path></svg><span style="flex:1">Trades &amp; Cap</span></a>
+        <a style="display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;font-size:12px;color:#3a3a3a"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#9b9b9b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-90deg);flex-shrink:0"><path d="M5.75 9.25 12 15.5l6.25-6.25"></path></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 7.75C4 6.5 5 5.5 6.25 5.5h3.4l2.1 2.4h6C19 7.9 20 8.9 20 10.15v6.1c0 1.25-1 2.25-2.25 2.25H6.25C5 18.5 4 17.5 4 16.25z"></path></svg><span style="flex:1">Scouting</span></a>
+      </div>
+      <div style="flex:1"></div>
+      <div style="margin:0 11px 12px;display:flex;align-items:center;gap:8px;padding:6px 4px"><span style="width:20px;height:20px;border-radius:5px;background:#1A1A19;color:#fff;display:flex;align-items:center;justify-content:center;font-size:7.5px;font-weight:600">JF</span><span style="flex:1;font-size:11.5px;font-weight:500">Jordan Finkle</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a8a8a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h2.5M12.1 7.5H20"></path><circle cx="9.3" cy="7.5" r="2.4"></circle><path d="M4 16.5h7.9M17.5 16.5H20"></path><circle cx="14.7" cy="16.5" r="2.4"></circle></svg></div>
+    </aside>
+    <main style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 26px;font-size:11.5px;color:#737373"><span>‹ 2026 Draft</span><span style="display:flex;gap:15px"><span>Share</span><span>···</span></span></div>
+      <div style="flex:1;overflow:hidden;display:flex;justify-content:center;padding:4px 34px 0">
+        <div style="width:560px;max-width:100%">
+          <div style="font-size:10.5px;color:#a8a8a8;margin-bottom:10px">2026 Draft · June 23, 2026</div>
+          <div style="font-size:24px;font-weight:600;letter-spacing:-.015em;line-height:1.2;margin-bottom:12px">NBA draft strategy and trade analysis</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:11px;color:#a8a8a8">
+            <div style="display:flex"><span style="width:21px;height:21px;border-radius:50%;background:#ededeb;color:#737373;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;border:2px solid #fff">T</span><span style="width:21px;height:21px;border-radius:50%;background:#1A1A19;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-left:-8px">J</span><span style="width:21px;height:21px;border-radius:50%;background:#d8d8d6;color:#737373;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-left:-8px">S</span></div>
+            <span>4 attendees</span><span>·</span><span>48 min</span><span>·</span><span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#E0533D"></span>Recorded</span>
+          </div>
+          <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:11px;padding:16px 18px;margin-bottom:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px"><span style="font-size:10px;font-weight:600;letter-spacing:.04em;color:#1A1A19">MY NOTES</span><span style="font-size:10px;color:#a8a8a8">✎ Editable</span></div>
+            <div style="display:flex;gap:10px;margin-bottom:8px"><span style="color:#cfcfcf">•</span><span style="font-size:12.5px;line-height:1.5;color:#3a3a3a">Tony open to trading back from 14 — wants a future second</span></div>
+            <div style="display:flex;gap:10px;margin-bottom:8px"><span style="color:#cfcfcf">•</span><span style="font-size:12.5px;line-height:1.5;color:#3a3a3a">OK taking the expiring to balance salary</span></div>
+            <div style="display:flex;gap:10px"><span style="color:#cfcfcf">•</span><span style="font-size:12.5px;line-height:1.5;color:#3a3a3a">check two-way timeline before deadline</span></div>
+          </div>
+          <div style="background:#F8F7FD;border:1px solid #ECE9F7;border-radius:11px;padding:16px 18px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><span style="display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.04em;color:#6b63b5"><span>✦</span>PRISM NOTES</span><span style="font-size:10px;color:#9a93c4">↻ Regenerate</span></div>
+            <div style="font-size:10px;color:#a39cc9;margin-bottom:13px">Synthesized from your notes, the transcript &amp; audio</div>
+            <div style="font-size:11px;font-weight:600;color:#3a3a3a;margin-bottom:8px">Summary</div>
+            <div style="display:flex;gap:10px;margin-bottom:7px"><span style="color:#c4bce6">•</span><span style="font-size:12.5px;line-height:1.5;color:#3a3a3a">Divaris is open to trading back from pick 14 in exchange for a future second-round pick.</span></div>
+            <div style="display:flex;gap:10px;margin-bottom:7px"><span style="color:#c4bce6">•</span><span style="font-size:12.5px;line-height:1.5;color:#3a3a3a">He'll absorb an expiring contract to make the salary math work, with a floor around picks 19–22.</span></div>
+            <div style="font-size:11px;font-weight:600;color:#3a3a3a;margin:14px 0 8px">Action items</div>
+            <div style="display:flex;gap:10px;margin-bottom:7px;align-items:flex-start"><span style="width:13px;height:13px;border-radius:3.5px;border:1.5px solid #c4bce6;margin-top:2px;flex-shrink:0"></span><span style="font-size:12.5px;line-height:1.5;color:#3a3a3a">Confirm two-way contract timeline before the deadline.</span></div>
+            <div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start"><span style="width:13px;height:13px;border-radius:3.5px;border:1.5px solid #c4bce6;margin-top:2px;flex-shrink:0"></span><span style="font-size:12.5px;line-height:1.5;color:#3a3a3a">Send Divaris the trade-back framework by Friday.</span></div>
+            <div style="border-top:1px solid #ECE9F7;padding-top:12px;display:flex;align-items:center;gap:9px">
+              <span style="width:20px;height:20px;border-radius:50%;background:#6b63b5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0">▶</span>
+              <span style="display:flex;align-items:center;gap:2px;height:13px;flex:1"><span style="width:2px;height:5px;background:#8b82c9;border-radius:1px"></span><span style="width:2px;height:9px;background:#8b82c9;border-radius:1px"></span><span style="width:2px;height:6px;background:#8b82c9;border-radius:1px"></span><span style="width:2px;height:11px;background:#8b82c9;border-radius:1px"></span><span style="width:2px;height:7px;background:#8b82c9;border-radius:1px"></span><span style="width:2px;height:5px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:8px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:10px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:6px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:9px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:7px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:10px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:5px;background:#d6d1ee;border-radius:1px"></span><span style="width:2px;height:8px;background:#d6d1ee;border-radius:1px"></span></span>
+              <span style="font-size:9.5px;color:#a39cc9;white-space:nowrap">12:34 / 48:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===================== PRINCIPLES ===================== -->
+<div style="max-width:1100px;margin:0 auto;padding:104px 32px 0">
+  <div class="grid3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:56px">
+    <div>
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.06em;color:#1A1A19;margin-bottom:12px">RECORDS ON DEMAND</div>
+      <p style="font-size:15px;line-height:1.6;color:#737373;text-wrap:pretty">Prism only listens when you press record. No bots joining calls, no surprise transcripts.</p>
+    </div>
+    <div>
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.06em;color:#1A1A19;margin-bottom:12px">NEVER REWRITES YOU</div>
+      <p style="font-size:15px;line-height:1.6;color:#737373;text-wrap:pretty">Every note has two parts: <b style="color:#3a3a3a;font-weight:600">My notes</b>, which only you edit, and <b style="color:#6b63b5;font-weight:600">✦ Prism notes</b>, generated when you ask.</p>
+    </div>
+    <div>
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.06em;color:#1A1A19;margin-bottom:12px">RUNS ON YOUR MAC</div>
+      <p style="font-size:15px;line-height:1.6;color:#737373;text-wrap:pretty">Transcription and the AI run entirely on your device. Your audio never leaves your Mac.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<div id="how" style="max-width:1100px;margin:0 auto;padding:130px 32px 0">
+  <h2 style="font-size:34px;font-weight:600;letter-spacing:-.02em;color:#1A1A19;text-align:center">How it works</h2>
+  <p style="font-size:16.5px;color:#737373;text-align:center;margin:14px auto 0;max-width:480px;line-height:1.55">You keep taking notes the way you always have. Prism does the busywork.</p>
+  <div class="grid3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:52px">
+
+    <!-- step 1 -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:230px;overflow:hidden;position:relative">
+        <div style="position:absolute;left:22px;right:-40px;top:24px;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;box-shadow:0 10px 30px rgba(40,35,25,.08);padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="display:flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:.04em;color:#E0533D"><span style="width:6px;height:6px;border-radius:50%;background:#E0533D;animation:pulse 1.4s ease-in-out infinite"></span>RECORDING</span><span style="font-size:10.5px;color:#a8a8a8">12:34</span></div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:.04em;color:#1A1A19;margin-bottom:8px">MY NOTES</div>
+          <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:#cfcfcf">•</span><span style="font-size:11.5px;line-height:1.5;color:#3a3a3a">Tony open to trading back from 14</span></div>
+          <div style="display:flex;gap:8px;margin-bottom:12px"><span style="color:#cfcfcf">•</span><span style="font-size:11.5px;line-height:1.5;color:#3a3a3a">check two-way timeline<span style="display:inline-block;width:2px;height:12px;background:#1A1A19;margin-left:2px;vertical-align:-2px;animation:blink 1.1s steps(1) infinite"></span></span></div>
+          <div style="border-top:1px solid rgba(0,0,0,.06);padding-top:10px">
+            <div style="font-size:9px;font-weight:600;letter-spacing:.04em;color:#737373;margin-bottom:6px">LIVE TRANSCRIPT</div>
+            <div style="font-size:10px;line-height:1.5;color:#9a9a9a"><b style="color:#7a7a7a;font-weight:600">Tony:</b> …I'd rather move back and grab the extra pick.</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:22px 24px 26px">
+        <div style="font-size:12px;color:#a8a8a8;margin-bottom:6px">Step 1</div>
+        <div style="font-size:17px;font-weight:600;color:#1A1A19;margin-bottom:8px">Jot while you talk</div>
+        <p style="font-size:14px;line-height:1.6;color:#737373;text-wrap:pretty">Type quick, messy bullets during the call. Prism captures the transcript and audio alongside.</p>
+      </div>
+    </div>
+
+    <!-- step 2 -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:230px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center">
+        <div style="text-align:center">
+          <span style="display:inline-block;font-size:13px;font-weight:600;color:#fff;background:#1A1A19;padding:12px 20px;border-radius:11px;box-shadow:0 12px 32px rgba(26,26,25,.28)">Stop &amp; generate</span>
+          <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;font-size:11px;color:#9a93c4"><span style="color:#6b63b5;animation:pulse 1.4s ease-in-out infinite">✦</span>Combining your notes, transcript &amp; audio…</div>
+        </div>
+      </div>
+      <div style="padding:22px 24px 26px">
+        <div style="font-size:12px;color:#a8a8a8;margin-bottom:6px">Step 2</div>
+        <div style="font-size:17px;font-weight:600;color:#1A1A19;margin-bottom:8px">Stop &amp; generate</div>
+        <p style="font-size:14px;line-height:1.6;color:#737373;text-wrap:pretty">One press when the call ends. Nothing is written until you ask for it.</p>
+      </div>
+    </div>
+
+    <!-- step 3 -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:230px;overflow:hidden;position:relative">
+        <div style="position:absolute;left:22px;right:-40px;top:24px">
+          <div style="background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;box-shadow:0 10px 30px rgba(40,35,25,.08);padding:12px 16px;margin-bottom:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:9px;font-weight:600;letter-spacing:.04em;color:#1A1A19">MY NOTES</span><span style="font-size:9px;color:#a8a8a8">✎ Editable</span></div>
+            <div style="display:flex;gap:8px"><span style="color:#cfcfcf">•</span><span style="font-size:11.5px;line-height:1.5;color:#3a3a3a">Tony open to trading back from 14 — wants a future second</span></div>
+          </div>
+          <div style="background:#F8F7FD;border:1px solid #ECE9F7;border-radius:10px;box-shadow:0 10px 30px rgba(107,99,181,.10);padding:12px 16px">
+            <div style="display:flex;align-items:center;gap:5px;font-size:9px;font-weight:600;letter-spacing:.04em;color:#6b63b5;margin-bottom:8px"><span>✦</span>PRISM NOTES</div>
+            <div style="font-size:10px;font-weight:600;color:#3a3a3a;margin-bottom:6px">Summary</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:#c4bce6">•</span><span style="font-size:11.5px;line-height:1.5;color:#3a3a3a">Divaris open to trading back from 14 for a future second.</span></div>
+            <div style="display:flex;gap:8px;align-items:flex-start"><span style="width:11px;height:11px;border-radius:3px;border:1.5px solid #c4bce6;margin-top:2px;flex-shrink:0"></span><span style="font-size:11.5px;line-height:1.5;color:#3a3a3a">Send the trade-back framework by Friday.</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:22px 24px 26px">
+        <div style="font-size:12px;color:#a8a8a8;margin-bottom:6px">Step 3</div>
+        <div style="font-size:17px;font-weight:600;color:#1A1A19;margin-bottom:8px">Two sections, one note</div>
+        <p style="font-size:14px;line-height:1.6;color:#737373;text-wrap:pretty">Your bullets stay on top, untouched. The synthesis lands below — sources attached.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FEATURES ===================== -->
+<div id="features" style="max-width:1100px;margin:0 auto;padding:120px 32px 0">
+  <div class="grid2" style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+    <!-- all notes -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:250px;overflow:hidden;position:relative">
+        <div style="position:absolute;left:26px;right:26px;top:26px;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;box-shadow:0 10px 30px rgba(40,35,25,.08);padding:16px 20px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px"><div style="font-size:14px;font-weight:600;color:#1A1A19">All notes</div><span style="font-size:10px;color:#a8a8a8">Sort: Recent ▾</span></div>
+          <div style="font-size:10px;color:#a8a8a8;margin-bottom:2px">Today</div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.05)">
+            <span style="width:22px;height:22px;border-radius:6px;background:#f0f0ee;display:flex;align-items:center;justify-content:center;color:#9b9b9b;flex-shrink:0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.75" width="14" height="16.5" rx="3"></rect><path d="M9 9.5h6M9 13h6M9 16.5h3"></path></svg></span>
+            <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;color:#1A1A19;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pre-draft workout debrief</div></div>
+            <span style="font-size:9px;color:#737373;background:#f0f0ee;padding:2px 6px;border-radius:5px;white-space:nowrap">2026 Draft</span><span style="font-size:10px;color:#a8a8a8;white-space:nowrap">9:20 AM</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.05)">
+            <span style="width:22px;height:22px;border-radius:6px;background:#E6E3F4;color:#6b63b5;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">T</span>
+            <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;color:#1A1A19;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Agent call — Bitting</div></div>
+            <span style="font-size:9px;color:#737373;background:#f0f0ee;padding:2px 6px;border-radius:5px;white-space:nowrap">Free Agency</span><span style="font-size:10px;color:#a8a8a8;white-space:nowrap">8:05 AM</span>
+          </div>
+          <div style="font-size:10px;color:#a8a8a8;margin:8px 0 2px">Tue, Jun 23</div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+            <span style="width:22px;height:22px;border-radius:6px;background:#f0f0ee;display:flex;align-items:center;justify-content:center;color:#9b9b9b;flex-shrink:0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.75" width="14" height="16.5" rx="3"></rect><path d="M9 9.5h6M9 13h6M9 16.5h3"></path></svg></span>
+            <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;color:#1A1A19;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">NBA draft strategy and trade analysis</div></div>
+            <span style="font-size:9px;color:#737373;background:#f0f0ee;padding:2px 6px;border-radius:5px;white-space:nowrap">2026 Draft</span><span style="font-size:10px;color:#a8a8a8;white-space:nowrap">4:16 PM</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding:24px 28px 30px">
+        <div style="font-size:18px;font-weight:600;color:#1A1A19;margin-bottom:8px">Every meeting in one place</div>
+        <p style="font-size:14.5px;line-height:1.6;color:#737373;text-wrap:pretty;max-width:400px">All notes gathers your whole workspace into one list — organized by day, with folders and sub-folders to keep it tidy.</p>
+      </div>
+    </div>
+
+    <!-- calendar home -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:250px;overflow:hidden;position:relative">
+        <div style="position:absolute;left:26px;right:26px;top:26px;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;box-shadow:0 10px 30px rgba(40,35,25,.08);padding:18px 20px">
+          <div style="font-size:14px;font-weight:600;color:#1A1A19;margin-bottom:16px">Coming up</div>
+          <div style="display:flex;gap:18px">
+            <div style="width:44px;flex-shrink:0"><div style="font-size:20px;font-weight:500;line-height:1;color:#1A1A19">26</div><div style="margin-top:4px;font-size:10px;font-weight:500;color:#1A1A19">June</div><div style="font-size:10px;color:#a8a8a8">Fri</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:13px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px"><div><div style="font-size:12.5px;font-weight:500;color:#1A1A19">Call with Tony Divaris</div><div style="font-size:10.5px;color:#a8a8a8;margin-top:2px">10:30 AM – 12:00 PM</div></div><span style="display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#fff;background:#1A1A19;padding:6px 10px;border-radius:7px;white-space:nowrap"><span style="width:5px;height:5px;border-radius:50%;background:#E0533D"></span>Record</span></div>
+              <div><div style="font-size:12.5px;font-weight:500;color:#1A1A19">Pre-draft workout debrief</div><div style="font-size:10.5px;color:#a8a8a8;margin-top:2px">1:00 – 2:45 PM</div></div>
+              <div><div style="font-size:12.5px;font-weight:500;color:#1A1A19">Flight from Norfolk to Miami</div><div style="font-size:10.5px;color:#a8a8a8;margin-top:2px">7:00 – 9:00 PM</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:24px 28px 30px">
+        <div style="font-size:18px;font-weight:600;color:#1A1A19;margin-bottom:8px">Your day, ready to record</div>
+        <p style="font-size:14.5px;line-height:1.6;color:#737373;text-wrap:pretty;max-width:400px">Connect your calendar and Home shows just what's next — every meeting one press from a note.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- quiet trust row -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:64px;text-align:center">
+    <p style="font-size:14.5px;line-height:1.6;color:#a8a8a8;max-width:560px;text-wrap:pretty">Recording is always visible while it's happening. Audio stays in your workspace, deletable any time, and is never used to train anything.</p>
+  </div>
+</div>
+
+<!-- ===================== DOWNLOAD BAND ===================== -->
+<div id="download" style="margin-top:130px;background:#1A1A19;padding:96px 32px;text-align:center">
+  <span style="display:inline-flex;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.08);align-items:center;justify-content:center;margin-bottom:26px"><span style="width:14px;height:14px;border-radius:4px;background:#fff;transform:rotate(45deg)"></span></span>
+  <h2 style="font-size:38px;font-weight:600;letter-spacing:-.022em;color:#fff;text-wrap:balance">Bring Prism to your next call.</h2>
+  <div class="dlrow" style="margin-top:30px">
+    <a href="https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism.dmg" class="btn-light" style="font-size:15px;font-weight:600;color:#1A1A19;background:#fff;padding:14px 26px;border-radius:12px;text-decoration:none">Download for Mac</a>
+  </div>
+  <div style="font-size:12.5px;color:#8a8a8a;margin-top:18px">Free during beta · macOS 13 or later · Also lives in your menu bar</div>
+  <a href="#install" class="foot-lnk" style="display:inline-block;font-size:12.5px;color:#8a8a8a;margin-top:12px;text-decoration:underline">First time opening it? Read this →</a>
+</div>
+
+<!-- ===================== INSTALL / OPEN ANYWAY ===================== -->
+<div id="install" style="max-width:1100px;margin:0 auto;padding:104px 32px 0">
+  <h2 style="font-size:30px;font-weight:600;letter-spacing:-.02em;color:#1A1A19;text-align:center">Opening Prism the first time</h2>
+  <p style="font-size:15.5px;color:#737373;text-align:center;margin:14px auto 0;max-width:520px;line-height:1.55">Prism is a free app from outside the App Store, so macOS asks you to approve it once. It takes about ten seconds.</p>
+  <div class="grid3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:48px">
+
+    <!-- install step 1 -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:180px;display:flex;align-items:center;justify-content:center;padding:24px">
+        <div style="display:flex;align-items:center;gap:20px">
+          <span style="display:inline-flex;width:52px;height:52px;border-radius:14px;background:#1A1A19;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(26,26,25,.2)"><span style="width:18px;height:18px;border-radius:5px;background:#fff;transform:rotate(45deg)"></span></span>
+          <svg width="34" height="20" viewBox="0 0 34 20" fill="none" stroke="#c4bce6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h27M22 3l8 7-8 7"></path></svg>
+          <span style="display:inline-flex;width:52px;height:52px;border-radius:13px;background:#eceaf6;color:#8b82c9;align-items:center;justify-content:center;font-size:22px">📁</span>
+        </div>
+      </div>
+      <div style="padding:22px 24px 26px">
+        <div style="font-size:12px;color:#a8a8a8;margin-bottom:6px">Step 1</div>
+        <div style="font-size:17px;font-weight:600;color:#1A1A19;margin-bottom:8px">Drag Prism to Applications</div>
+        <p style="font-size:14px;line-height:1.6;color:#737373;text-wrap:pretty">Open the downloaded <b style="color:#3a3a3a;font-weight:600">Prism.dmg</b> and drag the Prism icon into your Applications folder.</p>
+      </div>
+    </div>
+
+    <!-- install step 2 -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:180px;display:flex;align-items:center;justify-content:center;padding:24px">
+        <div style="width:230px;background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:12px;box-shadow:0 12px 30px rgba(40,35,25,.14);padding:16px;text-align:center">
+          <div style="width:34px;height:34px;border-radius:9px;background:#1A1A19;margin:0 auto 10px;display:flex;align-items:center;justify-content:center"><span style="width:12px;height:12px;border-radius:3px;background:#fff;transform:rotate(45deg)"></span></div>
+          <div style="font-size:11px;font-weight:600;color:#1A1A19;margin-bottom:4px">"Prism" can't be opened</div>
+          <div style="font-size:9.5px;line-height:1.5;color:#9a9a9a;margin-bottom:12px">Apple could not verify it is free of malware.</div>
+          <div style="font-size:10.5px;font-weight:600;color:#fff;background:#0a7cff;padding:6px 0;border-radius:7px">Done</div>
+        </div>
+      </div>
+      <div style="padding:22px 24px 26px">
+        <div style="font-size:12px;color:#a8a8a8;margin-bottom:6px">Step 2</div>
+        <div style="font-size:17px;font-weight:600;color:#1A1A19;margin-bottom:8px">Click Done — don't trash it</div>
+        <p style="font-size:14px;line-height:1.6;color:#737373;text-wrap:pretty">The first open shows a warning. Just click <b style="color:#3a3a3a;font-weight:600">Done</b>. This is expected for free apps outside the App Store.</p>
+      </div>
+    </div>
+
+    <!-- install step 3 -->
+    <div style="background:#FAFAF9;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden">
+      <div style="height:180px;display:flex;align-items:center;justify-content:center;padding:24px">
+        <div style="width:250px;background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:12px;box-shadow:0 12px 30px rgba(40,35,25,.14);padding:14px 16px">
+          <div style="font-size:10px;font-weight:600;color:#1A1A19;margin-bottom:10px">Privacy &amp; Security</div>
+          <div style="display:flex;align-items:center;gap:9px;font-size:10px;color:#737373">
+            <span style="flex:1;line-height:1.4">"Prism" was blocked to protect your Mac.</span>
+            <span style="font-size:9.5px;font-weight:600;color:#1A1A19;background:#ececec;padding:5px 9px;border-radius:6px;white-space:nowrap">Open Anyway</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding:22px 24px 26px">
+        <div style="font-size:12px;color:#a8a8a8;margin-bottom:6px">Step 3</div>
+        <div style="font-size:17px;font-weight:600;color:#1A1A19;margin-bottom:8px">Open Anyway, once</div>
+        <p style="font-size:14px;line-height:1.6;color:#737373;text-wrap:pretty">Go to <b style="color:#3a3a3a;font-weight:600">System Settings → Privacy &amp; Security</b>, scroll down, and click <b style="color:#3a3a3a;font-weight:600">Open Anyway</b>. Prism opens normally from then on.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<div style="border-top:1px solid rgba(0,0,0,.05);margin-top:110px">
+  <div style="max-width:1100px;margin:0 auto;padding:30px 32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:9px">
+      <span style="display:inline-flex;width:20px;height:20px;border-radius:6px;background:#1A1A19;align-items:center;justify-content:center"><span style="width:7px;height:7px;border-radius:2px;background:#fff;transform:rotate(45deg)"></span></span>
+      <span style="font-size:13px;font-weight:600;color:#1A1A19">Prism</span>
+    </div>
+    <div style="flex:1"></div>
+    <span style="font-size:12.5px;color:#a8a8a8">Runs on your Mac · Notes sync when you sign in</span>
+    <span style="font-size:12.5px;color:#c4c4c4">© 2026 Prism</span>
+  </div>
+</div>
+
+</body>
+</html>
