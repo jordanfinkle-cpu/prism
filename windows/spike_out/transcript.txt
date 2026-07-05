@@ -1,0 +1,8 @@
+﻿[00:00] Caller: Hi Jordan, this is the caller on the other end of the line.
+[00:03] Me: This is the me-side of the test.
+[00:04] Caller: I am coming through the system audio.
+[00:05] Me: I am pretending to be Jordan speaking into a microphone.
+[00:06] Caller: 77 Benevolent Elephants.
+[00:09] Me: One, two, three, four, five.
+[00:09] Caller: She sells seashells by the seashore.
+[00:11] Me: The rain in Spain stays mainly in the plane.

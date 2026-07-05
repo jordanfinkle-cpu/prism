@@ -1,0 +1,7 @@
+# Prism for Windows — spike dependencies (install on the Windows PC)
+#   py -m pip install -r requirements-win.txt
+#
+# pyaudiowpatch : PyAudio fork with WASAPI loopback (capture "what you hear")
+# faster-whisper: on-device Whisper via CTranslate2 (CPU or NVIDIA GPU), zero-token
+pyaudiowpatch>=0.2.12
+faster-whisper>=1.0.0
