@@ -117,6 +117,10 @@ for a short call) is fine for post-call notes generation.
 
 - **Ollama 0.31.1** — user-level install via winget (`%LOCALAPPDATA%\Programs\Ollama`)
 - **qwen2.5:3b** model (~2 GB) via `ollama pull`
+- **GitHub CLI** — install attempted via winget for the push fallback, but the
+  download stalled on this connection; it may or may not complete. Not needed:
+  this PC had no stored GitHub credentials, so Jordan authorizes the push once
+  via Git Credential Manager's browser prompt on a plain `git push`.
 - No other system-wide changes. pip deps were already present from Step 1.
 
 ## Ready for Step 3
