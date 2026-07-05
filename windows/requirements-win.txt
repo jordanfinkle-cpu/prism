@@ -3,5 +3,7 @@
 #
 # pyaudiowpatch : PyAudio fork with WASAPI loopback (capture "what you hear")
 # faster-whisper: on-device Whisper via CTranslate2 (CPU or NVIDIA GPU), zero-token
+# pywebview     : the app window (EdgeWebView2) — needed for app/, not the spikes
 pyaudiowpatch>=0.2.12
 faster-whisper>=1.0.0
+pywebview>=5.0

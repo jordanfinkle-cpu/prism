@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prism</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:"Segoe UI Variable Text","Segoe UI",system-ui,Arial,sans-serif;background:#fff;color:#1A1A19;display:flex;overflow:hidden}
+  button{font:inherit;cursor:pointer;border:none;background:none}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+  /* ---- sidebar ---- */
+  aside{width:230px;flex-shrink:0;background:#FBFBFA;border-right:1px solid rgba(0,0,0,.05);display:flex;flex-direction:column}
+  .brand{display:flex;align-items:center;gap:9px;padding:16px 16px 12px;font-size:14px;font-weight:600}
+  .newcall{margin:4px 12px 10px;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9px;background:#1A1A19;color:#fff;font-size:12.5px;font-weight:600}
+  .newcall:hover{background:#333330}
+  .newcall:disabled{opacity:.45;cursor:default}
+  .listhead{padding:10px 18px 4px;font-size:9.5px;letter-spacing:.05em;color:#b0b0b0;text-transform:uppercase}
+  #sessions{flex:1;overflow-y:auto;padding:0 8px 8px}
+  .sess{display:block;width:100%;text-align:left;padding:7px 10px;border-radius:8px;font-size:12.5px;color:#3a3a3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sess:hover{background:rgba(0,0,0,.035)}
+  .sess.active{background:rgba(0,0,0,.055);font-weight:600;color:#1A1A19}
+  .sess .when{display:block;font-size:10.5px;color:#a8a8a8;font-weight:400}
+  .sidefoot{padding:12px 16px;font-size:10.5px;color:#a8a8a8;border-top:1px solid rgba(0,0,0,.05)}
+
+  /* ---- main ---- */
+  main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  #banner{display:none;align-items:center;gap:9px;padding:10px 20px;background:#FDF6F0;border-bottom:1px solid #F5E4D3;font-size:12.5px;color:#a06b2f}
+  #banner code{background:rgba(0,0,0,.05);padding:1px 6px;border-radius:5px;font-size:11.5px}
+  #banner a{color:#a06b2f;font-weight:600;cursor:pointer;text-decoration:underline}
+  #content{flex:1;overflow-y:auto;padding:34px 44px 60px}
+  .inner{max-width:640px;margin:0 auto}
+
+  /* empty state */
+  #empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
+  #empty h1{font-size:26px;font-weight:600;letter-spacing:-.02em}
+  #empty p{font-size:14px;color:#737373;max-width:380px;line-height:1.55}
+
+  /* note view */
+  #titlebox{width:100%;font:inherit;font-size:24px;font-weight:600;letter-spacing:-.015em;border:none;outline:none;color:#1A1A19;background:transparent;margin-bottom:8px}
+  .metaline{display:flex;align-items:center;gap:9px;font-size:11.5px;color:#a8a8a8;margin-bottom:22px;flex-wrap:wrap}
+  .recdot{width:5px;height:5px;border-radius:50%;background:#E0533D;display:inline-block}
+
+  .card{border:1px solid rgba(0,0,0,.06);border-radius:11px;padding:16px 18px;margin-bottom:14px;background:#FAFAF9}
+  .cardhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .cardhead .lab{font-size:10px;font-weight:600;letter-spacing:.04em;color:#1A1A19}
+  .cardhead .hint{font-size:10px;color:#a8a8a8}
+  #mynotes{width:100%;min-height:110px;border:none;outline:none;background:transparent;font:inherit;font-size:13px;line-height:1.6;color:#3a3a3a;resize:vertical}
+
+  .prismcard{background:#F8F7FD;border-color:#ECE9F7}
+  .prismcard .lab{color:#6b63b5}
+  .prismcard .sub{font-size:10px;color:#a39cc9;margin-bottom:12px}
+  #prismbody{font-size:13px;line-height:1.6;color:#3a3a3a}
+  #prismbody h3{font-size:11.5px;font-weight:600;color:#3a3a3a;margin:13px 0 7px}
+  #prismbody h3:first-child{margin-top:0}
+  #prismbody ul{list-style:none}
+  #prismbody li{display:flex;gap:10px;margin-bottom:6px}
+  #prismbody li::before{content:"•";color:#c4bce6}
+  .genbtn{font-size:11px;font-weight:600;color:#6b63b5;cursor:pointer}
+  .genbtn:hover{text-decoration:underline}
+
+  details{margin-top:6px}
+  summary{font-size:11px;color:#a8a8a8;cursor:pointer;user-select:none}
+  #transcript{font-size:11.5px;line-height:1.7;color:#737373;white-space:pre-wrap;margin-top:10px;font-variant-numeric:tabular-nums}
+
+  /* record controls */
+  .recbar{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+  .recbtn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:11px;background:#1A1A19;color:#fff;font-size:13.5px;font-weight:600}
+  .recbtn:hover{background:#333330}
+  .recbtn .dot{width:7px;height:7px;border-radius:50%;background:#E0533D}
+  .recbtn.stop .dot{animation:pulse 1.4s ease-in-out infinite}
+  #rectimer{font-size:13px;color:#737373;font-variant-numeric:tabular-nums}
+  #status{display:flex;align-items:center;gap:7px;font-size:12px;color:#9a93c4}
+  #status .spark{color:#6b63b5;animation:pulse 1.4s ease-in-out infinite}
+  .err{font-size:12px;color:#c0392b;margin-bottom:14px;white-space:pre-wrap}
+  .danger{font-size:10.5px;color:#c9c9c9;cursor:pointer;margin-top:26px}
+  .danger:hover{color:#c0392b}
+</style>
+</head>
+<body>
+
+<aside>
+  <div class="brand">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4.4 20.4 18.9H3.6z" fill="#1A1A19" stroke="#1A1A19" stroke-width="3.2" stroke-linejoin="round"/></svg>
+    Prism
+  </div>
+  <button class="newcall" id="newcall" onclick="newCall()">
+    <span style="width:6px;height:6px;border-radius:50%;background:#E0533D"></span>New call
+  </button>
+  <div class="listhead">All notes</div>
+  <div id="sessions"></div>
+  <div class="sidefoot">Runs on your PC · zero-token</div>
+</aside>
+
+<main>
+  <div id="banner"></div>
+  <div id="content"></div>
+</main>
+
+<script>
+let API = null, current = null, recTick = null, saveTick = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function md(src){                      // tiny renderer for the notes format
+  const out = [];
+  let ul = false;
+  for (const raw of src.split(/\r?\n/)){
+    const line = raw.trim();
+    const flush = () => { if (ul){ out.push("</ul>"); ul = false; } };
+    if (!line){ flush(); continue; }
+    if (line.startsWith("## ")){ flush(); out.push("<h3>"+inline(line.slice(3))+"</h3>"); }
+    else if (/^[-*•] /.test(line)){ if(!ul){ out.push("<ul>"); ul = true; } out.push("<li><span>"+inline(line.slice(2))+"</span></li>"); }
+    else { flush(); out.push("<p style='margin-bottom:6px'>"+inline(line)+"</p>"); }
+  }
+  if (ul) out.push("</ul>");
+  return out.join("");
+}
+const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+
+const fmtWhen = ts => new Date(ts*1000).toLocaleString([], {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"});
+const fmtDur = s => s >= 60 ? Math.round(s/60) + " min" : s + " sec";
+const fmtClock = s => String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0");
+
+async function refreshSidebar(){
+  const list = await API.list_sessions();
+  $("sessions").innerHTML = list.map(m =>
+    `<button class="sess${current && current.id === m.id ? " active" : ""}" onclick="openSession('${m.id}')">${esc(m.title)}<span class="when">${fmtWhen(m.created)}</span></button>`
+  ).join("");
+  return list;
+}
+
+async function checkOllama(){
+  const st = await API.ollama_status();
+  const b = $("banner");
+  if (st.running && st.model_present){ b.style.display = "none"; return; }
+  b.style.display = "flex";
+  b.innerHTML = !st.running
+    ? `<span>✦</span><span>Prism notes need Ollama running. <a onclick="API.open_url('https://ollama.com/download')">Install Ollama</a>, then pull the model: <code>ollama pull ${st.model}</code></span>`
+    : `<span>✦</span><span>One step left — open a terminal and run <code>ollama pull ${st.model}</code></span>`;
+}
+
+/* ---------- views ---------- */
+function showEmpty(){
+  current = null;
+  $("content").innerHTML = `
+    <div id="empty">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 4.4 20.4 18.9H3.6z" fill="#1A1A19" stroke="#1A1A19" stroke-width="3.2" stroke-linejoin="round"/></svg>
+      <h1>Bring Prism to your next call.</h1>
+      <p>Prism records when you ask, transcribes on your PC, and writes the clean version beneath your notes — nothing leaves this machine.</p>
+      <button class="recbtn" onclick="newCall()"><span class="dot"></span>Start recording</button>
+    </div>`;
+  refreshSidebar();
+}
+
+function noteView(s, opts){
+  const o = opts || {};
+  current = s;
+  const recorded = s.duration_s > 0;
+  $("content").innerHTML = `
+  <div class="inner">
+    <input id="titlebox" value="${esc(s.title)}" spellcheck="false" onchange="API.rename_session(current.id, this.value).then(refreshSidebar)">
+    <div class="metaline">
+      <span>${fmtWhen(s.created)}</span>
+      ${recorded ? `<span>·</span><span>${fmtDur(s.duration_s)}</span><span>·</span><span style="display:flex;align-items:center;gap:4px"><span class="recdot"></span>Recorded</span>` : ""}
+    </div>
+    <div id="errbox"></div>
+    <div class="recbar" id="recbar"></div>
+    <div class="card">
+      <div class="cardhead"><span class="lab">MY NOTES</span><span class="hint">✎ Editable — Prism never touches these</span></div>
+      <textarea id="mynotes" placeholder="Jot quick, messy bullets while you talk…" oninput="queueSave()">${esc(s.my_notes || "")}</textarea>
+    </div>
+    <div class="card prismcard" id="prismcard" style="display:${s.prism_notes || o.busy ? "block" : "none"}">
+      <div class="cardhead">
+        <span class="lab">✦ PRISM NOTES</span>
+        <button class="genbtn" onclick="generate()">↻ Regenerate</button>
+      </div>
+      <div class="sub">Synthesized from your notes &amp; the transcript</div>
+      <div id="prismbody">${s.prism_notes ? md(s.prism_notes) : ""}</div>
+    </div>
+    <details ${s.transcript ? "" : "style='display:none'"}>
+      <summary>Transcript</summary>
+      <div id="transcript">${esc(s.transcript || "")}</div>
+    </details>
+    <div class="danger" onclick="removeSession()">Delete this note and its audio</div>
+  </div>`;
+  renderRecbar(o);
+  refreshSidebar();
+}
+
+function renderRecbar(o){
+  const bar = $("recbar");
+  if (!bar) return;
+  if (o.recording){
+    bar.innerHTML = `<button class="recbtn stop" onclick="stopAndGenerate()"><span class="dot"></span>Stop &amp; generate</button><span id="rectimer">00:00</span>`;
+    const t0 = Date.now();
+    recTick = setInterval(() => { const el = $("rectimer"); if (el) el.textContent = fmtClock(Math.floor((Date.now()-t0)/1000)); }, 500);
+  } else if (o.busy){
+    bar.innerHTML = `<span id="status"><span class="spark">✦</span>${o.busy}</span>`;
+  } else if (!current.transcript){
+    bar.innerHTML = `<button class="recbtn" onclick="recordInto()"><span class="dot"></span>Record</button>`;
+  } else {
+    bar.innerHTML = "";
+  }
+}
+
+function setBusy(text){ renderRecbar({busy:text}); }
+function showErr(e){ const b = $("errbox"); if (b) b.innerHTML = `<div class="err">${esc(e)}</div>`; }
+
+/* ---------- actions ---------- */
+async function newCall(){
+  const r = await API.start_recording();
+  if (r.error) { if (current) showErr(r.error); else { showEmpty(); alert(r.error); } return; }
+  noteView(await API.get_session(r.session.id), {recording:true});
+}
+
+async function recordInto(){        // re-record an empty note: just start fresh
+  newCall();
+}
+
+async function stopAndGenerate(){
+  clearInterval(recTick);
+  const r = await API.stop_recording();
+  if (r.error){ showErr(r.error); return; }
+  const sid = r.session_id;
+  current = await API.get_session(sid);
+  noteView(current, {busy:"Transcribing on your PC… (first run downloads the model)"});
+  const tr = await API.transcribe(sid);
+  if (tr.error){ noteView(await API.get_session(sid), {}); showErr(tr.error); return; }
+  current = await API.get_session(sid);
+  noteView(current, {busy:"Writing Prism notes…"});
+  const g = await API.generate(sid);
+  noteView(await API.get_session(sid), {});
+  if (g.error) showErr(g.error);
+}
+
+async function generate(){
+  const sid = current.id;
+  setBusy("Writing Prism notes…");
+  const g = await API.generate(sid);
+  noteView(await API.get_session(sid), {});
+  if (g.error) showErr(g.error);
+}
+
+function queueSave(){
+  clearTimeout(saveTick);
+  saveTick = setTimeout(() => API.save_my_notes(current.id, $("mynotes").value), 500);
+}
+
+async function openSession(sid){
+  noteView(await API.get_session(sid), {});
+}
+
+async function removeSession(){
+  if (!confirm("Delete this note and its audio? This can't be undone.")) return;
+  await API.delete_session(current.id);
+  showEmpty();
+}
+
+/* ---------- boot ---------- */
+async function boot(api){
+  API = api;
+  const list = await refreshSidebar();
+  if (list.length) openSession(list[0].id); else showEmpty();
+  checkOllama();
+  setInterval(checkOllama, 15000);
+}
+window.addEventListener("pywebviewready", () => boot(window.pywebview.api));
+
+// Opened in a plain browser (UI development): boot with canned data instead.
+setTimeout(() => {
+  if (API) return;
+  const demo = {id:"demo", title:"Q3 billing rollout — Dana", created: Date.now()/1000 - 3600,
+    duration_s: 95, my_notes: "- budget approved at 80k (10 under)\n- phased cutover, mirror from Jul 21\n- Priya owns reconciliation",
+    prism_notes: "## Summary\nCall covered the Q3 rollout plan for the new billing system and concluded with a phased cutover schedule.\n\n## Key points\n- Finance approved an $80k migration budget.\n- Two-week write mirror starts July 21st; reads flip the weekend of August 2nd.\n\n## Action items\n- **Me** — mirroring code in staging by July 14th\n- **Caller** — assign Priya to the reconciliation report",
+    transcript: "[00:02] Me: Hey Dana, thanks for making time.\n[00:09] Caller: Of course. Did finance sign off?"};
+  boot({
+    list_sessions: async () => [ {id:"demo", title:demo.title, created:demo.created},
+                                 {id:"demo2", title:"New call", created:demo.created - 90000} ],
+    get_session: async sid => sid === "demo" ? demo : {id:"demo2", title:"New call", created:demo.created - 90000, duration_s:0, my_notes:"", prism_notes:"", transcript:""},
+    ollama_status: async () => ({running:true, model:"qwen2.5:3b", model_present:false}),
+    save_my_notes: async () => ({ok:true}), rename_session: async () => ({ok:true}),
+    delete_session: async () => ({ok:true}), start_recording: async () => ({error:"Preview mode — no recording."}),
+    stop_recording: async () => ({error:"Preview mode."}), transcribe: async () => ({error:"Preview mode."}),
+    generate: async () => ({error:"Preview mode."}), open_url: async () => ({ok:true}),
+  });
+}, 300);
+</script>
+</body>
+</html>
