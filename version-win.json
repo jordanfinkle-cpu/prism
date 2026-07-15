@@ -1,1 +1,1 @@
-{"version": "1.2.10", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Fresh installs always open to sign-in; handwriting reading", "min_windows": "10.0"}
+{"version": "1.2.11", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Smoother updates: installing over a running Prism now closes and relaunches it automatically", "min_windows": "10.0"}
