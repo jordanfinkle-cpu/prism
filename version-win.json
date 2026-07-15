@@ -1,1 +1,1 @@
-{"version": "1.2.7", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Scans now read their text automatically on-device", "min_windows": "10.0"}
+{"version": "1.2.8", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Reads handwriting with the same on-device AI model as the Mac", "min_windows": "10.0"}
