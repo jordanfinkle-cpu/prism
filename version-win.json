@@ -1,1 +1,1 @@
-{"version": "1.2.15", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Smoother sign-in: no login-screen flash when you're already signed in; a fresh download asks you to sign in once", "min_windows": "10.0"}
+{"version": "1.2.16", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Big reliability release: works on fresh PCs (auto-installs its runtimes), records on any audio hardware, reads PDFs and iPhone photos, clearer setup errors", "min_windows": "10.0"}
