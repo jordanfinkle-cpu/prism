@@ -1,1 +1,1 @@
-{"version": "1.2.12", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Cleaner installs: the setup deletes itself when done, and Prism is one-click to uninstall", "min_windows": "10.0"}
+{"version": "1.2.13", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Fixes a startup freeze when a meeting app (Zoom/Teams) is already open", "min_windows": "10.0"}
