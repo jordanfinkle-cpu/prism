@@ -1,1 +1,1 @@
-{"version": "1.2.14", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Fresh installs now set up the AI models up front with a progress bar, and render correctly on scaled displays", "min_windows": "10.0"}
+{"version": "1.2.15", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Smoother sign-in: no login-screen flash when you're already signed in; a fresh download asks you to sign in once", "min_windows": "10.0"}
