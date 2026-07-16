@@ -1,1 +1,1 @@
-{"version": "1.2.16", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Big reliability release: works on fresh PCs (auto-installs its runtimes), records on any audio hardware, reads PDFs and iPhone photos, clearer setup errors", "min_windows": "10.0"}
+{"version": "1.2.17", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Works offline on first run, sync is safe on wrong-clock PCs, and a stack of small reliability fixes", "min_windows": "10.0"}
