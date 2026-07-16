@@ -1,1 +1,1 @@
-{"version": "1.2.13", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Fixes a startup freeze when a meeting app (Zoom/Teams) is already open", "min_windows": "10.0"}
+{"version": "1.2.14", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Fresh installs now set up the AI models up front with a progress bar, and render correctly on scaled displays", "min_windows": "10.0"}
