@@ -1,1 +1,1 @@
-{"version": "1.2.18", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Runs well on low-end PCs: lighter AI models picked automatically by machine, setup progress that can never freeze, safe recording on small disks", "min_windows": "10.0"}
+{"version": "1.2.19", "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe", "notes": "Setup can no longer get stuck, ever: hung downloads self-heal, stuck states are clickable, and failures say exactly what's wrong", "min_windows": "10.0"}
