@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Works on every PC now: Prism installs everything it needs built in, so voice-to-text and AI notes run the moment you open it — no first-run downloads, and it works fully offline, even on locked-down or corporate machines.",
+  "notes": "Prism 2.0: a tiny 4 MB app with cloud AI - transcription and notes are faster and smarter on every PC, with a live transcript while you record, the meeting-detected popup, and photo/PDF note scanning. Free. Requires internet for transcription and notes; recording still works offline.",
   "min_windows": "10.0"
 }
