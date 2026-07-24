@@ -1,6 +1,6 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.0: a tiny 4 MB app with cloud AI - transcription and notes are faster and smarter on every PC, with a live transcript while you record, the meeting-detected popup, and photo/PDF note scanning. Free. Requires internet for transcription and notes; recording still works offline.",
+  "notes": "Prism 2.1: transcription moves to AssemblyAI - noticeably more accurate, and it no longer invents a line during a quiet stretch and puts it in your mouth. Every action item now has its own Add task button that pushes just that item to Microsoft To Do, due date and all, reusing the Outlook connection you already granted. Action items reliably render as real checkboxes. Notes are written by a newer model, and the note view got a readability pass. Free. Requires internet for transcription and notes; recording still works offline.",
   "min_windows": "10.0"
 }
