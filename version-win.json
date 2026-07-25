@@ -1,6 +1,6 @@
 {
-  "version": "2.2.2",
+  "version": "2.2.3",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.2: your tasks now sync across devices, like your notes and folders already do — sign in anywhere and they follow you, and only you can see them. A note that's still transcribing now shows a single smooth shimmer instead of blinking placeholder bars. Same private transcription: your audio is never stored, and calls up to three hours transcribe in one go. Free. Requires internet for transcription and notes; recording still works offline.",
+  "notes": "Prism 2.2.3: changes now sync instantly across your devices — add a task, create or rename a note, move it to a folder, or finish a recording, and it shows up on your other devices right away instead of waiting. Blank placeholder notes are no longer synced, which fixes empty notes multiplying into duplicates. The app icon is now the plain Prism triangle everywhere. Same private transcription: your audio is never stored, and calls up to three hours transcribe in one go. Free. Requires internet for transcription and notes; recording still works offline.",
   "min_windows": "10.0"
 }
