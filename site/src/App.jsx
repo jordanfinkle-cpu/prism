@@ -21,7 +21,7 @@ function Banner() {
   return (
     <div className="flex items-center justify-center gap-2.5 border-b border-border px-5 py-2.5 text-[13px] text-muted" style={{ background: 'var(--background-secondary)' }}>
       <Tri className="size-3 shrink-0" />
-      <span className="text-foreground/80">Prism 2.0 is here — now a 4&nbsp;MB download. Free during beta.</span>
+      <span className="text-foreground/80">Prism 2.2 is here — sharper transcription, and your notes stay yours per account. Free during beta.</span>
       <a href="#download" className="font-semibold text-foreground no-underline hover:underline">Download ›</a>
     </div>
   )
@@ -330,7 +330,7 @@ function Capabilities() {
 function Privacy() {
   const cols = [
     ['No bots, ever', 'Prism never joins a meeting. It records from your own device, and only while a visible recording indicator is on.'],
-    ['A private account, not a data pool', 'On Windows, transcription and the write-up run through your own signed-in account — audio is processed securely, then discarded, and Prism keeps no copy on its servers. On Mac, everything runs on-device.'],
+    ['A private account, not a data pool', 'On Windows, transcription runs through your own signed-in account — the audio passes straight through and is never stored by Prism, and the transcript is deleted upstream as soon as it reaches you. On Mac, everything runs on-device.'],
     ['Yours to keep or delete', 'Every recording and note lives in your own workspace. Delete anything whenever you like.'],
   ]
   return (
@@ -387,7 +387,7 @@ function Devices() {
           Lives in your menu bar. Records, transcribes, and writes every note entirely on-device.
         </DeviceCard>
         <DeviceCard icon={<WindowsIcon className="size-5" />} name="Windows">
-          Prism 2.0 is a 4&nbsp;MB installer — sign in and go. Notes are written through your
+          Prism 2.2 is a 4&nbsp;MB installer — sign in and go. Notes are written through your
           private account in seconds.
         </DeviceCard>
         <DeviceCard icon={<PhoneIcon className="size-5" />} name="iPhone">
@@ -407,9 +407,11 @@ function Devices() {
 
 const FAQ_ITEMS = [
   ['Is Prism free?',
-    "Yes — free while it's in beta. No card and no subscription. On Windows you sign in with just your email; on Mac you don't even need an account."],
+    "Yes — free while it's in beta. No card and no subscription. On Windows you sign in with an email and password; on Mac you don't even need an account."],
+  ['How long can a recording be?',
+    'On Windows, Prism transcribes calls up to an hour in one piece. That ceiling exists because Prism never stores your audio — the whole recording travels in a single pass to the transcription service and back. Go past it and Prism tells you plainly; your recording and anything you typed are still saved.'],
   ['Does my audio go to the cloud?',
-    'On Mac, no — recording, transcription, and the write-up all happen on-device. On Windows, Prism 2.0 transcribes and writes notes through your private account: audio is processed securely, then discarded. Prism keeps no copy of your audio on any server.'],
+    'On Mac, no — recording, transcription, and the write-up all happen on-device. On Windows, the audio is passed straight through to the transcription service and back as text. Prism never stores your audio: not in a bucket, not in a temp file, nowhere. The transcript is deleted upstream the moment it reaches you, so the only copy that lasts is the one on your own machine.'],
   ['Does it work offline?',
     "Recording and your typed notes always work offline. The Mac app writes the clean notes offline too. On Windows the write-up needs a connection — if you're offline, Prism finishes the note the next time it's online."],
   ['Does it join meetings like a bot?',
