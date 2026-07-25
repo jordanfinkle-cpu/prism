@@ -1,6 +1,6 @@
 {
-  "version": "2.2.0",
+  "version": "2.2.1",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2: your audio is never stored. It passes straight through for transcription and comes back as text, with nothing kept on any server — and the transcript is deleted upstream the moment it reaches you. Calls up to three hours now transcribe in one go. Your notes, folders, and photos stay separate per account on a shared computer, and signing in takes an email and a password. Free. Requires internet for transcription and notes; recording still works offline.",
+  "notes": "Prism 2.2.1: a polish pass on 2.2. The app icon is now Prism's own triangle mark, notes that are still transcribing show a loading skeleton instead of placeholder text, and the layout no longer jumps a few pixels when a scrollbar appears. Same private transcription: your audio is never stored — it passes straight through and comes back as text, and calls up to three hours transcribe in one go. Free. Requires internet for transcription and notes; recording still works offline.",
   "min_windows": "10.0"
 }
