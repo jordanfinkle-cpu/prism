@@ -1,6 +1,6 @@
 {
-  "version": "2.2.7",
+  "version": "2.2.8",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.7: visual polish \u2014 no more white bar at the left edge of Home and Tasks; the scrollbar sits on the same background as the rest of the view. Plus everything from 2.2.6: one-pass sync catch-up and live sync health in Settings. Same private transcription: your audio is never stored. Free.",
+  "notes": "Prism 2.2.8: edit-mode polish \u2014 the selection check no longer covers the note time, and deleting several notes at once is instant. Plus recent fixes: one-pass sync catch-up, live sync health in Settings, no white gutter bars. Same private transcription: your audio is never stored. Free.",
   "min_windows": "10.0"
 }
