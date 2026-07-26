@@ -1,6 +1,6 @@
 {
-  "version": "2.2.3",
+  "version": "2.2.4",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.3: changes now sync instantly across your devices — add a task, create or rename a note, move it to a folder, or finish a recording, and it shows up on your other devices right away instead of waiting. Blank placeholder notes are no longer synced, which fixes empty notes multiplying into duplicates. The app icon is now the plain Prism triangle everywhere. Same private transcription: your audio is never stored, and calls up to three hours transcribe in one go. Free. Requires internet for transcription and notes; recording still works offline.",
+  "notes": "Prism 2.2.4: fixes empty duplicate notes reappearing after deletion. Blank placeholder notes are never uploaded (so they can no longer multiply across devices), and deletions now clean up properly everywhere. Update Prism on every device you use so they all stay in agreement. Same private transcription: your audio is never stored, and calls up to three hours transcribe in one go. Free.",
   "min_windows": "10.0"
 }
