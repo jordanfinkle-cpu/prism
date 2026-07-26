@@ -1,6 +1,6 @@
 {
-  "version": "2.2.6",
+  "version": "2.2.7",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.6: sync catches up in one pass (big backlogs converge in about a minute), and Settings now shows your app version and live sync health so you can always tell syncing is working. Same private transcription: your audio is never stored. Free.",
+  "notes": "Prism 2.2.7: visual polish \u2014 no more white bar at the left edge of Home and Tasks; the scrollbar sits on the same background as the rest of the view. Plus everything from 2.2.6: one-pass sync catch-up and live sync health in Settings. Same private transcription: your audio is never stored. Free.",
   "min_windows": "10.0"
 }
