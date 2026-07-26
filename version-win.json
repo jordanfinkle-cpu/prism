@@ -1,6 +1,6 @@
 {
-  "version": "2.2.5",
+  "version": "2.2.6",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.5: fixes the root cause of duplicate notes, shifted note times, and deletions not reaching your other devices \u2014 a timestamp-handling bug in sync. Update Prism on every device you use; older versions keep mis-syncing until updated. Same private transcription: your audio is never stored, and calls up to three hours transcribe in one go. Free.",
+  "notes": "Prism 2.2.6: sync catches up in one pass (big backlogs converge in about a minute), and Settings now shows your app version and live sync health so you can always tell syncing is working. Same private transcription: your audio is never stored. Free.",
   "min_windows": "10.0"
 }
