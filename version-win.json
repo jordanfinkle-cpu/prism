@@ -1,6 +1,6 @@
 {
-  "version": "2.2.8",
+  "version": "2.2.9",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.8: edit-mode polish \u2014 the selection check no longer covers the note time, and deleting several notes at once is instant. Plus recent fixes: one-pass sync catch-up, live sync health in Settings, no white gutter bars. Same private transcription: your audio is never stored. Free.",
+  "notes": "Prism 2.2.9: visual polish across the app \u2014 softer field focus, instant multi-note delete, no white gutter bars, live sync health in Settings, one-pass sync catch-up, tasks that follow you across devices, and calls up to three hours. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
