@@ -1,6 +1,6 @@
 {
-  "version": "2.2.4",
+  "version": "2.2.5",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.4: fixes empty duplicate notes reappearing after deletion. Blank placeholder notes are never uploaded (so they can no longer multiply across devices), and deletions now clean up properly everywhere. Update Prism on every device you use so they all stay in agreement. Same private transcription: your audio is never stored, and calls up to three hours transcribe in one go. Free.",
+  "notes": "Prism 2.2.5: fixes the root cause of duplicate notes, shifted note times, and deletions not reaching your other devices \u2014 a timestamp-handling bug in sync. Update Prism on every device you use; older versions keep mis-syncing until updated. Same private transcription: your audio is never stored, and calls up to three hours transcribe in one go. Free.",
   "min_windows": "10.0"
 }
