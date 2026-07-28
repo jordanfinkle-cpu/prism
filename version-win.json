@@ -1,6 +1,6 @@
 {
-  "version": "2.2.9",
+  "version": "2.3.0",
   "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.2.9: visual polish across the app \u2014 softer field focus, instant multi-note delete, no white gutter bars, live sync health in Settings, one-pass sync catch-up, tasks that follow you across devices, and calls up to three hours. Your audio is never stored. Free.",
+  "notes": "Prism 2.3.0: speaker labels that survive AirPods and audio-device switches \u2014 Prism follows Windows device changes mid-call, judges each side by its own voice level, catches speaker echo even through room reverb, and says so honestly if a device drops. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
