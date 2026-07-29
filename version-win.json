@@ -1,7 +1,7 @@
 {
-  "version": "2.3.1",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.3.1/Prism-Setup.exe",
-  "sha256": "4c68b9b0d394daa68a5546bae75b8aa8215bb5f236885c8210392ce2ab931e7a",
-  "notes": "Prism 2.3.1: Prism now updates itself \u2014 silently, in the background, never during a call. Plus 2.3.0's fix: speaker labels that survive AirPods and audio-device switches. Your audio is never stored. Free.",
+  "version": "2.3.2",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.3.2/Prism-Setup.exe",
+  "sha256": "83594bb3a957f78714954f2ce2ff7c18f78ec3b2737e3785ca080a9ff13fbe89",
+  "notes": "Prism 2.3.2: speakerphone and out-loud calls labeled right \u2014 verified by physical testing \u2014 plus silent self-updates and speaker labels that survive AirPods and device switches. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
