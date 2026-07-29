@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Prism">
+  <defs>
+    <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7CF7C4" /><stop offset="0.25" stop-color="#4DD6E8" />
+      <stop offset="0.5" stop-color="#6AA0FF" /><stop offset="0.7" stop-color="#9B7CFF" />
+      <stop offset="0.85" stop-color="#E879C6" /><stop offset="1" stop-color="#F5D36B" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="114" fill="#1A1A19" />
+  <path d="M256 148 L374 352 H138 Z" fill="url(#pg)" stroke="url(#pg)"
+        stroke-width="30" stroke-linejoin="round" />
+</svg>

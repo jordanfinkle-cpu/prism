@@ -1,15 +1,971 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prism — your meetings, written up</title>
-<meta name="description" content="Prism records when you ask, follows along while you jot, and writes the clean version beneath your notes — without ever touching a word you wrote. Free during beta, for Windows &amp; Mac, with an iPhone companion.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231A1A19'/%3E%3Cpath d='M16 9.5 24.5 23H7.5z' fill='%23fff' stroke='%23fff' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <script type="module" crossorigin src="./assets/index-llpK86Ca.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-QvaKA61m.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prism — You take the call. Prism takes the notes.</title>
+<meta name="description" content="Prism records from your own device — no bot joins your meeting — and writes the clean version of your notes seconds after you hang up. Free during beta on Windows, Mac, and iPhone." />
+<meta property="og:title" content="Prism — You take the call. Prism takes the notes." />
+<meta property="og:description" content="A free notetaker for Windows, Mac, and iPhone. No bot in your call, no subscription, notes seconds after you hang up." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.downloadprism.com/" />
+<!-- Tab icon: the bare mark — a solid Ink triangle carrying a white stroke, so it
+     still reads against a dark tab bar. No box. Rounded corners come from the
+     stroke-linejoin, the way the brand mark is drawn. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.4 20.4 18.9H3.6z' fill='%23fff' stroke='%23fff' stroke-width='6' stroke-linejoin='round'/%3E%3Cpath d='M12 4.4 20.4 18.9H3.6z' fill='%231A1A19' stroke='%231A1A19' stroke-width='3.2' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<style>
+  /* ============================================================
+     Prism — downloadprism.com
+     Built to the Brand Guidelines deck (project d62c5235):
+       Type   Inter variable, weights 400/500/600 only.
+              Display 600/-.025em · Title 600/-.015em · Body 400
+              · Label 600 CAPS/+.05em · Wordmark 600/-.03em
+       Color  Ink on Paper with a gray ladder. ONE accent —
+              recording red #E0533D, and it only ever appears on
+              something that is recording. No spectrum, no purple.
+       Mark   Solid, upright, never outlined/stretched/gradient-filled.
+              Reverses to white on Ink.
+       Voice  Plain, calm, second person. No exclamation points.
+     ============================================================ */
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/inter-var.woff2') format('woff2');
+    font-weight:100 900;font-style:normal;font-display:swap;
+  }
+  :root{
+    --ink:#1A1A19;          /* text · mark            */
+    --dark:#141413;         /* dark sections          */
+    --paper:#FFFFFF;        /* canvas                 */
+    --fog:#FBFBFA;          /* cards · fields         */
+    --shell:#F4F4F5;        /* the app's own ground   */
+    --body:#3A3A3A;         /* body copy              */
+    --muted:#737373;        /* secondary              */
+    --faint:#A8A8A8;        /* meta                   */
+    --rec:#E0533D;          /* recording red — only while recording */
+    --line:rgba(26,26,25,.10);
+    --line-strong:rgba(26,26,25,.17);
+    --r-sm:8px; --r-md:12px; --r-lg:16px;
+    --shadow-card:0 1px 2px rgba(40,35,25,.04), 0 8px 40px rgba(40,35,25,.07);
+    --shadow-float:0 2px 6px rgba(40,35,25,.05), 0 30px 70px -24px rgba(40,35,25,.22);
+    --ease:cubic-bezier(.22,.61,.24,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  /* When the site is shown inside a device frame (the phone preview), drop the
+     desktop scrollbar — a phone doesn't park one on screen. Scrolling is
+     untouched, and the real site keeps its normal scrollbar. */
+  html.framed{scrollbar-width:none;-ms-overflow-style:none}
+  html.framed::-webkit-scrollbar{width:0;height:0;display:none}
+  body{
+    font-family:'Inter Variable','Inter',-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:400;background:var(--paper);color:var(--ink);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+  }
+  ::selection{background:rgba(26,26,25,.13)}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  .wrap{width:min(1180px,calc(100% - 48px));margin:0 auto}
+  section{scroll-margin-top:80px}
+
+  /* ---------- shared type ---------- */
+  .label{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+  h1,h2,h3{font-weight:600}
+  h2{font-size:clamp(2rem,3.7vw,2.9rem);letter-spacing:-.025em;line-height:1.12;margin-top:16px}
+  .lead{margin-top:16px;font-size:17px;line-height:1.6;color:var(--muted);max-width:620px}
+  .sect{padding:112px 0}
+  .head-c{max-width:660px;margin:0 auto;text-align:center}
+  .head-c .lead{margin-left:auto;margin-right:auto}
+
+  /* ---------- reveal ---------- */
+  [data-r]{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  [data-r].in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    [data-r]{opacity:1;transform:none;transition:none}
+    html{scroll-behavior:auto}
+  }
+
+  /* ---------- nav ---------- */
+  /* solid Paper — content scrolls under it, not through it */
+  nav{position:fixed;inset:0 0 auto 0;z-index:60;background:var(--paper);
+      border-bottom:1px solid transparent;transition:border-color .3s}
+  nav.on{border-bottom-color:var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600;letter-spacing:-.03em}
+  .nav-links{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--muted)}
+  .nav-links a:hover{color:var(--ink)}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:var(--r-sm);
+       font-size:15px;font-weight:500;line-height:1;padding:13px 20px;cursor:pointer;white-space:nowrap;
+       transition:background .16s,border-color .16s,transform .16s var(--ease)}
+  .btn:active{transform:translateY(1px)}
+  .btn-pri{background:var(--ink);color:#fff}
+  .btn-pri:hover{background:#33332f}
+  .btn-sec{background:#F1F1F0;color:var(--ink)}
+  .btn-sec:hover{background:#E8E8E6}
+  .btn-sm{padding:9px 15px;font-size:13.5px}
+  .btn-onink{background:#fff;color:var(--ink)}
+  .btn-onink:hover{background:#EDEDEB}
+  .btn-ghostink{background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.22)}
+  .btn-ghostink:hover{background:rgba(255,255,255,.13)}
+  .fine{font-size:13px;color:var(--faint)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:132px 0 0}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.06fr;gap:52px;align-items:center}
+  .hero h1{font-size:clamp(2.6rem,4.4vw,3.9rem);letter-spacing:-.025em;line-height:1.05;margin-top:22px}
+  .hero h1 span{display:block}
+  .hero .lead{font-size:18.5px;line-height:1.6;max-width:540px;margin-top:22px}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+  .hero .fine{margin-top:16px}
+  /* the clip is square and seamless — show it whole, no crop */
+  .hero-media video{width:100%;aspect-ratio:1/1;max-height:78vh;object-fit:contain}
+
+  /* ---------- pillars ---------- */
+  .pillars{border-top:1px solid var(--line);margin-top:8px}
+  .pillars .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
+  .pillar{padding:44px 34px 46px;position:relative}
+  .pillar + .pillar::before{content:"";position:absolute;left:0;top:44px;bottom:46px;width:1px;background:var(--line)}
+  .pillar:first-child{padding-left:0}
+  .pillar:last-child{padding-right:0}
+  .pillar h3{font-size:17.5px;letter-spacing:-.015em;margin-bottom:9px}
+  .pillar p{font-size:15px;line-height:1.6;color:var(--muted)}
+
+  /* ---------- rotating statement ----------
+     Ported from the framer-motion animated-hero: the words stack in one column,
+     the live one springs to the baseline while the one before it slides up and
+     out. Spring done with an overshooting cubic-bezier so it stays vanilla. */
+  .statement{border-top:1px solid var(--line);background:var(--fog)}
+  .statement .wrap{padding:96px 0;text-align:center}
+  /* top-aligned, not baseline: the clipping box has overflow:hidden, and CSS
+     then takes its BOTTOM edge as the baseline — which drops "Prism" below the
+     phrase. Same font and line-height on both, aligned at the top, puts the
+     two text baselines on the same line. */
+  .rot{display:flex;align-items:flex-start;justify-content:center;gap:.3em;font-weight:600;
+       font-size:clamp(2.1rem,4.6vw,3.5rem);letter-spacing:-.025em;line-height:1.15}
+  .rot > span:first-child{height:1.15em}
+  /* the box holds the phrases; its width follows the live one so the whole
+     line stays centred instead of ragging out to one side */
+  .rot-box{position:relative;height:1.15em;overflow:hidden;flex:none;
+           transition:width .72s cubic-bezier(.22,1.24,.36,1)}
+  /* absolutely-positioned children have no baseline of their own, so give the
+     box one — otherwise the phrases sit off "Prism" */
+  .rot-box::before{content:"\00a0";display:inline-block;width:0;overflow:hidden}
+  .rot-box span{
+    position:absolute;left:0;top:0;white-space:nowrap;color:var(--ink);
+    opacity:0;transform:translateY(115%);
+    transition:transform .72s cubic-bezier(.22,1.24,.36,1), opacity .5s ease;
+  }
+  .rot-box span.on{opacity:1;transform:translateY(0)}
+  .rot-box span.past{opacity:0;transform:translateY(-115%)}
+  .statement p{margin:22px auto 0;font-size:16.5px;line-height:1.6;color:var(--muted);max-width:560px}
+  @media (prefers-reduced-motion:reduce){
+    .rot-box span,.rot-box{transition:none}
+  }
+  @media (max-width:720px){
+    .rot{flex-direction:column;align-items:center;gap:2px}
+    .rot-box{width:100%!important;height:2.4em}
+    .rot-box span{white-space:normal;left:0;right:0;text-align:center}
+  }
+
+  /* ---------- the note (real app, frozen) ---------- */
+  .appframe{position:relative;overflow:hidden;height:640px;margin-top:52px;
+            border:1px solid var(--line);border-radius:var(--r-lg);
+            box-shadow:var(--shadow-float);background:var(--shell)}
+  .appframe iframe{display:block;width:100%;height:640px;border:0;pointer-events:none;transform-origin:top left}
+  .appframe.scaled iframe{position:absolute;top:0;left:0;width:700px;height:660px}
+  .cap{margin-top:20px;text-align:center;font-size:13.5px;color:var(--faint)}
+  .twoup{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:44px}
+  .twoup .b{border-top:2px solid var(--ink);padding-top:16px}
+  .twoup .b.q{border-top-color:var(--line-strong)}
+  .twoup h3{font-size:16px;letter-spacing:-.015em;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .twoup p{font-size:14.5px;line-height:1.6;color:var(--muted)}
+
+  /* ---------- dark section ---------- */
+  .dark{background:var(--dark);color:#fff}
+  .dark .label{color:#8a8a86}
+  .dark .lead{color:#b8b8b4}
+  .priv-rows{margin-top:52px;border-top:1px solid rgba(255,255,255,.13)}
+  .priv{display:grid;grid-template-columns:300px 1fr;gap:32px;padding:30px 0;border-bottom:1px solid rgba(255,255,255,.13)}
+  .priv h3{font-size:17px;letter-spacing:-.015em}
+  .priv p{font-size:15.5px;line-height:1.62;color:#b8b8b4;max-width:620px}
+  .priv-foot{margin-top:34px;font-size:13.5px;color:#8a8a86}
+
+  /* ---------- popup section ---------- */
+  .pop-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  /* no panel behind the card — it floats on the page, the way it floats over
+     your desktop; its own shadow is what separates it */
+  .pop-stage{min-height:340px;display:flex;flex-direction:column;
+             align-items:center;justify-content:center;padding:20px 0}
+  /* The card is the app's own meeting_popup.html, to the pixel — wrapped in the
+     artifact's interaction model: a perspective stage, a card that springs
+     between the three real sizes, and content floating above the surface so
+     the tilt parallaxes. Driven by clicking, not a script. */
+  .pop-persp{perspective:800px}
+  .popcard{
+    position:relative;width:300px;height:152px;color:#202024;
+    transform-style:preserve-3d;
+    transition:width .5s cubic-bezier(.22,1.12,.36,1), height .5s cubic-bezier(.22,1.12,.36,1),
+               transform .28s cubic-bezier(.25,.8,.3,1);
+    will-change:transform;
+  }
+  .popcard[data-s="confirm"]{width:246px;height:58px}
+  .popcard[data-s="rec"]{width:200px;height:48px}
+  .pop-surface{
+    position:absolute;inset:0;background:#FFFFFF;border-radius:14px;
+    box-shadow:rgba(20,22,30,.05) 0 30px 50px 0, rgba(20,22,30,.10) 0 12px 24px -8px,
+               0 0 0 1px rgba(0,0,0,.06);
+  }
+  /* the artifact lifts the content off the card face — that gap is what you
+     see moving when the card tilts */
+  .pop-layer{position:absolute;inset:0;transform:translateZ(26px);transform-style:preserve-3d}
+  .popcard .v{position:absolute;inset:0;opacity:0;pointer-events:none;
+              transition:opacity .2s cubic-bezier(.25,.1,.25,1)}
+  .popcard[data-s="idle"] .v-idle,
+  .popcard[data-s="confirm"] .v-confirm,
+  .popcard[data-s="rec"] .v-rec{opacity:1;pointer-events:auto}
+  .popcard[data-s="rec"] .v-rec{transition-delay:.06s}
+
+  .popcard .full{padding:10px 14px 11px}
+  .popcard .head{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+  .popcard .bnd{font-size:12.5px;font-weight:600;letter-spacing:-.005em}
+  .popcard .x{width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+              border-radius:7px;color:#a1a1aa;border:0;background:none;cursor:pointer;
+              margin-left:auto;transition:background .14s,color .14s}
+  .popcard .x:hover{background:rgba(20,22,30,.07);color:#202024}
+  .popcard .trow{display:flex;align-items:baseline;gap:8px}
+  .popcard .ttl{font-size:15px;font-weight:600;letter-spacing:-.015em}
+  .popcard .when{font-size:11px;color:#a1a1aa}
+  .popcard .sub{font-size:12px;line-height:1.4;color:#71717a;margin-top:3px}
+  .popcard .go{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;margin-top:11px;
+               font:inherit;font-size:12.5px;font-weight:600;color:#fff;background:#202024;
+               padding:8px 14px;border:0;border-radius:11px;cursor:pointer;transition:background .14s}
+  .popcard .go:hover{background:#3a3a40}
+  .popcard .go .rd{width:7px;height:7px;border-radius:50%;background:var(--rec);flex:none}
+  .popcard .life{margin-top:10px;height:3px;border-radius:2px;background:rgba(20,22,30,.10);overflow:hidden}
+  .popcard .life i{display:block;height:100%;border-radius:2px;background:#202024;
+                   transform-origin:left center;transform:scaleX(1)}
+  .popcard.run .life i{animation:life 9s linear forwards}
+  @keyframes life{to{transform:scaleX(0)}}
+  .popcard .confirm{display:flex;align-items:center;gap:11px;padding:13px 14px}
+  .popcard .chk{width:32px;height:32px;border-radius:50%;background:oklch(73.29% .1941 154.15);
+                display:flex;align-items:center;justify-content:center;flex:none}
+  .popcard .c1{font-size:14px;font-weight:600;letter-spacing:-.01em}
+  .popcard .c2{font-size:11.5px;color:#8b8b93;margin-top:1px}
+  .popcard .pill{display:flex;align-items:center;gap:9px;padding:12px 14px}
+  .popcard .bars{display:flex;align-items:center;gap:3px;height:22px}
+  .popcard .bars i{width:3px;border-radius:2px;background:#202024;height:3px;display:block;flex:none}
+  .popcard .tm{font-size:12px;font-variant-numeric:tabular-nums;color:#71717a;white-space:nowrap;
+               letter-spacing:.01em;min-width:30px;text-align:right}
+  .popcard .stop{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(224,83,61,.55);
+                 display:flex;align-items:center;justify-content:center;flex:none;
+                 background:none;padding:0;cursor:pointer;transition:background .14s}
+  .popcard .stop:hover{background:rgba(224,83,61,.10)}
+  .popcard .stop i{width:9px;height:9px;border-radius:2.5px;background:var(--rec);display:block}
+  .pop-hint{margin-top:18px;text-align:center;font-size:12.5px;color:var(--faint)}
+  @media (prefers-reduced-motion:reduce){
+    .popcard{transition:none}
+    .popcard.run .life i{animation:none}
+  }
+
+  /* ---------- devices ---------- */
+  .logos{display:flex;align-items:center;justify-content:center;gap:52px;margin-top:44px;color:var(--muted)}
+
+  /* ---------- faq: HeroUI Accordion ----------
+     Ported from @heroui/styles accordion.css (surface variant) to plain CSS —
+     same BEM structure, separators, indicator rotation and panel height/opacity
+     transition, with HeroUI's tokens mapped onto Prism's. */
+  .faq-sect{background:var(--fog);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .accordion{width:100%;max-width:760px;margin:48px auto 0;contain:layout style}
+  .accordion--surface{background:var(--paper);border-radius:var(--r-lg);
+                      box-shadow:0 1px 2px rgba(40,35,25,.04), 0 0 0 1px rgba(26,26,25,.05)}
+  .accordion__item{position:relative;border:none}
+  .accordion__item::after{content:"";position:absolute;bottom:0;left:3%;width:94%;height:1px;
+                          background:rgba(26,26,25,.06);border-radius:2px}
+  .accordion__item:last-child::after{content:none}
+  .accordion__heading{display:flex;margin:0}
+  .accordion__trigger{
+    display:flex;flex:1;align-items:center;justify-content:space-between;gap:16px;
+    padding:18px 20px;text-align:left;font:inherit;font-size:15px;font-weight:500;
+    letter-spacing:-.01em;color:var(--ink);background:none;border:0;width:100%;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:background 150ms cubic-bezier(0,0,.58,1), box-shadow 150ms cubic-bezier(0,0,.58,1);
+  }
+  @media (hover:hover){
+    .accordion__trigger:hover:not([aria-expanded="true"]){background:rgba(26,26,25,.035)}
+  }
+  .accordion__trigger:focus-visible{outline:2px solid var(--ink);outline-offset:-2px;border-radius:var(--r-lg)}
+  .accordion__item:first-child .accordion__trigger{border-top-left-radius:var(--r-lg);border-top-right-radius:var(--r-lg)}
+  .accordion__item:last-child:not(:has(.accordion__trigger[aria-expanded="true"])) .accordion__trigger{
+    border-bottom-left-radius:var(--r-lg);border-bottom-right-radius:var(--r-lg)}
+  .accordion__indicator{margin-left:auto;width:16px;height:16px;flex:none;color:var(--faint);
+                        transition:transform 250ms cubic-bezier(0,0,.58,1)}
+  .accordion__indicator[data-expanded="true"]{transform:rotate(-180deg)}
+  .accordion__panel{opacity:0;height:0;overflow:clip;
+                    transition:height 200ms cubic-bezier(.5,1,.89,1), opacity 200ms cubic-bezier(0,0,.58,1)}
+  .accordion__panel[data-expanded="true"]{opacity:1;will-change:height,opacity}
+  .accordion__body{font-size:14.5px}
+  .accordion__body-inner{padding:0 20px 18px;line-height:1.62;color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){
+    .accordion__panel,.accordion__indicator,.accordion__trigger{transition:none}
+  }
+
+  /* ---------- download ---------- */
+  .dl{background:var(--dark);color:#fff;padding:112px 0;text-align:center}
+  .dl h2{margin-top:26px}
+  .dl .lead{color:#b8b8b4;margin:16px auto 0;max-width:500px}
+  .dl-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .dl .fine{color:#8a8a86;margin-top:18px;line-height:1.6}
+
+  /* ---------- footer ---------- */
+  footer{padding:40px 0 48px}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .foot-links{display:flex;gap:24px;font-size:14px;color:var(--faint)}
+  .foot-links a:hover{color:var(--ink)}
+  .foot .cop{font-size:13px;color:var(--faint)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .hero-media{max-width:520px;margin:0 auto}
+    .pop-grid{grid-template-columns:1fr;gap:36px}
+    .cards{grid-template-columns:1fr 1fr}
+    .pillars .wrap{grid-template-columns:1fr}
+    .pillar{padding:26px 0}
+    .pillar + .pillar::before{left:0;right:0;top:0;bottom:auto;width:auto;height:1px}
+    .priv{grid-template-columns:1fr;gap:8px}
+    .dev{grid-template-columns:1fr}
+    .twoup{grid-template-columns:1fr;gap:22px}
+  }
+  @media (max-width:640px){
+    .nav-links{display:none}
+    .sect{padding:80px 0}
+    .hero{padding-top:104px}
+    .cards{grid-template-columns:1fr}
+    .pop-stage{padding:8px 0;min-height:0}
+    .appframe{margin-top:36px}
+  }
+</style>
 </head>
 <body>
-<div id="root"></div>
+<script>
+  /* set before first paint so no scrollbar flashes in the device preview */
+  try { if (window.self !== window.top) document.documentElement.classList.add('framed'); }
+  catch (e) { document.documentElement.classList.add('framed'); }
+</script>
+
+<nav id="nav" aria-label="Main">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.4 20.4 18.9H3.6z" fill="#1A1A19" stroke="#1A1A19" stroke-width="3.2" stroke-linejoin="round"/></svg>
+      Prism
+    </a>
+    <div class="nav-links">
+      <a href="#note">The note</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#detect">Call detection</a>
+      <a href="#devices">Devices</a>
+    </div>
+    <a class="btn btn-pri btn-sm" href="#download">Download</a>
+  </div>
+</nav>
+
+<!-- ============ 1 · HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="label" data-r>Free during beta · Windows, Mac &amp; iPhone</p>
+      <h1 data-r style="transition-delay:60ms"><span>You take the call.</span><span>Prism takes the notes.</span></h1>
+      <p class="lead" data-r style="transition-delay:120ms">
+        Prism records from your own device — no bot joins your meeting — and writes the clean
+        version of your notes seconds after you hang up.
+      </p>
+      <div class="hero-cta" data-r style="transition-delay:180ms">
+        <a class="btn btn-pri" href="https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 21h16"/></svg>
+          Download for Windows
+        </a>
+        <a class="btn btn-sec" href="https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism.dmg">Download for Mac</a>
+      </div>
+      <p class="fine" data-r style="transition-delay:240ms">No card, no subscription. Sign in with your email.</p>
+    </div>
+    <div class="hero-media" data-r style="transition-delay:140ms">
+      <video src="hero.mp4?v=2" poster="hero-poster.jpg?v=2" autoplay muted loop playsinline preload="auto" aria-hidden="true" id="heroVideo"></video>
+    </div>
+  </div>
+</header>
+
+<div class="pillars">
+  <div class="wrap">
+    <div class="pillar" data-r>
+      <h3>No bot in your call</h3>
+      <p>Nothing joins the meeting and nothing is announced to the other side. Prism listens from your machine, the way you would take notes yourself.</p>
+    </div>
+    <div class="pillar" data-r style="transition-delay:80ms">
+      <h3>Your words stay yours</h3>
+      <p>You jot rough notes while you talk. Prism writes its version underneath — it never edits a word you wrote.</p>
+    </div>
+    <div class="pillar" data-r style="transition-delay:160ms">
+      <h3>Done when you hang up</h3>
+      <p>Stop recording and the write-up is there in seconds. No cleaning it up later, no homework at the end of the day.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2 · THE NOTE ============ -->
+<section class="sect" id="note">
+  <div class="wrap">
+    <div class="head-c" data-r>
+      <p class="label">The note</p>
+      <h2>Two parts, one note.</h2>
+      <p class="lead">Everything from a call lands in one place — what you typed, what Prism wrote,
+      and the transcript it worked from.</p>
+    </div>
+
+    <div class="appframe" id="appBox" data-r style="transition-delay:80ms">
+      <iframe src="app/index.html" id="appFrame" tabindex="-1" scrolling="no"
+              title="A note in Prism, showing the summary and action items Prism wrote with the full transcript folded underneath"></iframe>
+    </div>
+    <p class="cap">Prism, with one made-up note. Names and numbers are invented.</p>
+
+    <div class="twoup">
+      <div class="b q" data-r>
+        <h3>My notes</h3>
+        <p>Fragments, shorthand, half-spelled names — whatever you manage while you're talking.
+        This side is yours alone, and nothing rewrites it.</p>
+      </div>
+      <div class="b" data-r style="transition-delay:80ms">
+        <h3>
+          <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.4 20.4 18.9H3.6z" fill="#1A1A19" stroke="#1A1A19" stroke-width="3.2" stroke-linejoin="round"/></svg>
+          Prism notes
+        </h3>
+        <p>A summary, the decisions, and action items as real checkboxes — written from your notes
+        and the transcript together. Rewrite it any time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 · PRIVACY (dark) ============ -->
+<section class="dark sect" id="privacy">
+  <div class="wrap">
+    <div data-r>
+      <p class="label">Privacy</p>
+      <h2>Your meetings are nobody's business.</h2>
+      <p class="lead">Plain answers, because a notetaker that listens to your calls owes you them.</p>
+    </div>
+    <div class="priv-rows">
+      <div class="priv" data-r>
+        <h3>No bots, ever</h3>
+        <p>Prism never joins a meeting. It records from your own device, only while a visible
+        recording indicator is on. Recording laws vary by region, so tell people when you need to.</p>
+      </div>
+      <div class="priv" data-r>
+        <h3>Audio is processed, then discarded</h3>
+        <p>On Windows your recording goes through your own signed-in account to become a transcript
+        and a write-up, and is discarded after. Prism keeps no copy on its servers. On a Mac it
+        never leaves the machine at all.</p>
+      </div>
+      <div class="priv" data-r>
+        <h3>Yours to keep or delete</h3>
+        <p>Your notes live in your own workspace and you can delete any of them whenever you like.
+        The account is optional and exists for one reason — keeping your own devices in step.</p>
+      </div>
+    </div>
+    <p class="priv-foot">Signed out, nothing ever leaves the device it was recorded on.</p>
+  </div>
+</section>
+
+<!-- ============ 4 · CALL DETECTION ============ -->
+<section class="sect" id="detect">
+  <div class="wrap pop-grid">
+    <div>
+      <p class="label" data-r>Call detection</p>
+      <h2 data-r style="transition-delay:60ms">It remembers so you don't.</h2>
+      <p class="lead" data-r style="transition-delay:120ms">
+        The moment a call starts, Prism says so — a small card in the corner of your screen,
+        one click away from recording.
+      </p>
+    </div>
+    <div class="pop-stage" data-r style="transition-delay:100ms">
+      <div class="pop-persp" id="popPersp">
+        <!-- the app's own popup, same markup and measurements as meeting_popup.html -->
+        <div class="popcard" id="pop" data-s="idle">
+          <div class="pop-surface"></div>
+          <div class="pop-layer">
+
+            <div class="v v-idle">
+              <div class="full">
+                <div class="head">
+                  <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.4 20.4 18.9H3.6z" fill="#202024" stroke="#202024" stroke-width="3.2" stroke-linejoin="round"/></svg>
+                  <span class="bnd">Prism</span>
+                  <button class="x" id="popX" type="button" aria-label="Dismiss">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                  </button>
+                </div>
+                <div class="trow"><span class="ttl">Meeting detected</span><span class="when">now</span></div>
+                <div class="sub">Zoom meeting just started.</div>
+                <button class="go" id="popGo" type="button"><span class="rd"></span>Start recording</button>
+                <div class="life"><i></i></div>
+              </div>
+            </div>
+
+            <div class="v v-confirm">
+              <div class="confirm">
+                <span class="chk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06210f" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+                <div><div class="c1">Recording this meeting</div><div class="c2">Got it &mdash; capturing the call.</div></div>
+              </div>
+            </div>
+
+            <div class="v v-rec">
+              <div class="pill">
+                <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.4 20.4 18.9H3.6z" fill="#202024" stroke="#202024" stroke-width="3.2" stroke-linejoin="round"/></svg>
+                <span class="bars" id="bars"></span>
+                <span class="tm" id="tm">0:00</span>
+                <button class="stop" id="popStop" type="button" aria-label="Stop recording"><i></i></button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <p class="pop-hint" id="popHint">Go on — press it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · WHAT IT DOES ============ -->
+<section class="statement">
+  <div class="wrap">
+    <div class="rot" data-r aria-label="Prism writes your notes, gives you your action items, reads your whiteboard photos, knows what is on your calendar, finds any word that was said, keeps every call in one place, and never edits a word you wrote.">
+      <span aria-hidden="true">Prism</span>
+      <span class="rot-box" id="rot" aria-hidden="true">
+        <span class="on">writes your notes</span>
+        <span>gives you your action items</span>
+        <span>reads your whiteboard photos</span>
+        <span>knows what&rsquo;s on your calendar</span>
+        <span>finds any word that was said</span>
+        <span>keeps every call in one place</span>
+        <span>never edits a word you wrote</span>
+      </span>
+    </div>
+    <p data-r style="transition-delay:80ms">One app between the call and the write-up. You talk; it keeps up.</p>
+  </div>
+</section>
+
+<!-- ============ 6 · DEVICES ============ -->
+<section class="sect" id="devices">
+  <div class="wrap">
+    <div class="head-c" data-r>
+      <p class="label">One place</p>
+      <h2>Every call, wherever you took it.</h2>
+      <p class="lead">Notes, folders, and photos stay in step across your machines. Sign in once and
+      they follow you; stay signed out and everything stays put.</p>
+    </div>
+    <div class="logos" data-r style="transition-delay:60ms">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Mac and iPhone">
+        <path d="M16.4 12.6c0-2 1.6-3 1.7-3-.9-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.4.7-3 .7s-1.6-.7-2.6-.7c-1.3 0-2.5.8-3.2 2-1.4 2.3-.4 5.8 1 7.7.7.9 1.5 2 2.5 1.9 1-.04 1.4-.6 2.6-.6s1.5.6 2.6.6 1.7-.9 2.4-1.8c.7-1 1-2 1-2.1 0 0-1.9-.7-2.1-3.1zM14.5 5.9c.5-.7.9-1.6.8-2.6-.8 0-1.8.5-2.4 1.2-.5.6-1 1.6-.8 2.5.9.1 1.8-.4 2.4-1.1z"/>
+      </svg>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Windows">
+        <path d="M3 5.6 10.4 4.6v6.9H3zM11.5 4.4 21 3v8.5h-9.5zM3 12.5h7.4v6.9L3 18.4zM11.5 12.5H21V21l-9.5-1.4z"/>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 7 · FAQ ============ -->
+<section class="sect faq-sect" id="faq">
+  <div class="wrap">
+    <div class="head-c" data-r>
+      <p class="label">FAQ</p>
+      <h2>Questions, answered.</h2>
+    </div>
+    <div class="accordion accordion--surface" id="faq-acc" data-r style="transition-delay:60ms">
+      <div class="accordion__item">
+        <h3 class="accordion__heading">
+          <button class="accordion__trigger" type="button" id="faqT0" aria-controls="faqP0" aria-expanded="true">
+            Does it join my call like a bot?
+            <svg class="accordion__indicator" data-expanded="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="accordion__panel" id="faqP0" role="region" aria-labelledby="faqT0" data-expanded="true">
+          <div class="accordion__body"><div class="accordion__body-inner">Never. Prism notices a call and offers to record from your own device with one click. Nothing joins the meeting and nothing is announced to the other side.</div></div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__heading">
+          <button class="accordion__trigger" type="button" id="faqT1" aria-controls="faqP1" aria-expanded="false">
+            Is Prism really free?
+            <svg class="accordion__indicator" data-expanded="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="accordion__panel" id="faqP1" role="region" aria-labelledby="faqT1" data-expanded="false">
+          <div class="accordion__body"><div class="accordion__body-inner">Yes — free while it is in beta. No card and no subscription. On Windows you sign in with just your email; on a Mac you do not need an account at all.</div></div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__heading">
+          <button class="accordion__trigger" type="button" id="faqT2" aria-controls="faqP2" aria-expanded="false">
+            Does it work offline?
+            <svg class="accordion__indicator" data-expanded="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="accordion__panel" id="faqP2" role="region" aria-labelledby="faqT2" data-expanded="false">
+          <div class="accordion__body"><div class="accordion__body-inner">Recording and your typed notes always work offline. On Windows the write-up needs a connection, so if you are offline Prism finishes the note the next time you are online. The Mac app writes it offline too.</div></div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__heading">
+          <button class="accordion__trigger" type="button" id="faqT3" aria-controls="faqP3" aria-expanded="false">
+            What can it record?
+            <svg class="accordion__indicator" data-expanded="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="accordion__panel" id="faqP3" role="region" aria-labelledby="faqT3" data-expanded="false">
+          <div class="accordion__body"><div class="accordion__body-inner">Anything you can hear on your machine — Zoom, Meet, Teams, a phone call, or a conversation in the room. Only when you press record.</div></div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <h3 class="accordion__heading">
+          <button class="accordion__trigger" type="button" id="faqT4" aria-controls="faqP4" aria-expanded="false">
+            Why does Windows warn me when I install?
+            <svg class="accordion__indicator" data-expanded="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </h3>
+        <div class="accordion__panel" id="faqP4" role="region" aria-labelledby="faqT4" data-expanded="false">
+          <div class="accordion__body"><div class="accordion__body-inner">Prism is a free app distributed outside the Microsoft Store, so SmartScreen shows a one-time warning. Choose <b>More info</b>, then <b>Run anyway</b>, and it installs normally.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8 · DOWNLOAD (dark) ============ -->
+<section class="dl" id="download">
+  <div class="wrap">
+    <svg width="52" height="52" viewBox="0 0 24 24" style="margin:0 auto" aria-hidden="true" data-r><path d="M12 4.4 20.4 18.9H3.6z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/></svg>
+    <h2 data-r style="transition-delay:60ms">Bring Prism to your next call.</h2>
+    <p class="lead" data-r style="transition-delay:100ms">Download it, sign in if you want your devices in step,
+    and the first call writes its own notes.</p>
+    <div class="dl-cta" data-r style="transition-delay:150ms">
+      <a class="btn btn-onink" href="https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 21h16"/></svg>
+        Download for Windows
+      </a>
+      <a class="btn btn-ghostink" href="https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism.dmg">Download for Mac</a>
+      <a class="btn btn-ghostink" href="https://jordanfinkle-cpu.github.io/prism-phone/" rel="noopener">Get for iPhone</a>
+    </div>
+    <p class="fine" data-r style="transition-delay:200ms">Free during beta · Windows 10 &amp; 11 · macOS 13+ · iPhone is a web app you add to your Home Screen</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top" style="font-size:16px">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.4 20.4 18.9H3.6z" fill="#1A1A19" stroke="#1A1A19" stroke-width="3.2" stroke-linejoin="round"/></svg>
+      Prism
+    </a>
+    <div class="foot-links">
+      <a href="#download">Download</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/jordanfinkle-cpu/prism" rel="noopener">GitHub</a>
+    </div>
+    <span class="cop">© 2026 Prism</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- nav hairline ---------- */
+  var nav = document.getElementById("nav");
+  function onScroll(){ nav.classList.toggle("on", window.scrollY > 8); }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  /* ---------- reveal ---------- */
+  var els = [].slice.call(document.querySelectorAll("[data-r]"));
+  if(!reduced && "IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:"0px 0px -6% 0px"});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ---------- hero video ---------- */
+  var v = document.getElementById("heroVideo");
+  if(v){
+    if(reduced){ v.removeAttribute("autoplay"); v.pause(); }
+    else {
+      var kick = function(){ if(v.paused) v.play().catch(function(){}); };
+      if("IntersectionObserver" in window){
+        new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) kick(); }); },
+          {threshold:.2}).observe(v);
+      }
+      document.addEventListener("visibilitychange", function(){ if(!document.hidden) kick(); });
+    }
+  }
+
+  /* ---------- rotating statement ----------
+     Same rule as the framer-motion original: the live line sits at 0, anything
+     already shown is parked above, anything still to come waits below — so it
+     always reads as one column moving upward. Runs only while on screen. */
+  (function(){
+    var box = document.getElementById("rot");
+    if(!box) return;
+    var items = [].slice.call(box.children), i = 0, timer = null;
+    /* Width follows the live phrase, so "Prism · phrase" reads as one centred
+       line at every step. Each phrase is absolutely positioned and nowrap, so
+       its own rect is its natural width no matter how wide the box is. */
+    function sizeTo(n){
+      if(window.innerWidth <= 720){ box.style.width = ""; return; }
+      box.style.width = Math.ceil(items[n].getBoundingClientRect().width) + "px";
+    }
+    function show(n){
+      items.forEach(function(el, k){
+        el.classList.toggle("on", k === n);
+        el.classList.toggle("past", k < n);
+      });
+      sizeTo(n);
+    }
+    show(0);
+    window.addEventListener("resize", function(){ sizeTo(i); }, {passive:true});
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function(){ sizeTo(i); }); }
+    if(reduced) return;                       // leave it on the first line
+    function start(){
+      if(timer) return;
+      timer = setInterval(function(){
+        i = (i + 1) % items.length;
+        if(i === 0){                          // wrap: drop the parked lines below
+          items.forEach(function(el){ el.classList.remove("past"); });
+        }
+        show(i);
+      }, 2200);
+    }
+    function stop(){ clearInterval(timer); timer = null; }
+    if("IntersectionObserver" in window){
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){ e.isIntersecting ? start() : stop(); });
+      }, {threshold:.3}).observe(box);
+    } else { start(); }
+  })();
+
+  /* ---------- the app, frozen on one note ----------
+     The frame runs the real ui-react build against its design-preview mock, so
+     the note is invented. It boots to Home; open the note once and leave it. */
+  (function(){
+    var frame = document.getElementById("appFrame"), box = document.getElementById("appBox");
+    if(!frame || !box) return;
+    var CROP_H = 660, NATIVE_H = 640, SIDEBAR = 250, NOTE_W = 450;
+    function fit(){
+      if(box.clientWidth >= 900){
+        box.classList.remove("scaled"); frame.style.transform = ""; box.style.height = NATIVE_H + "px"; return;
+      }
+      box.classList.add("scaled");
+      var s = Math.min(1, box.clientWidth / NOTE_W);
+      frame.style.transform = "scale(" + s + ") translateX(-" + SIDEBAR + "px)";
+      box.style.height = Math.round(CROP_H * s) + "px";
+    }
+    fit();
+    window.addEventListener("resize", fit, {passive:true});
+
+    function open(tries){
+      var d; try { d = frame.contentDocument; } catch(e){ return; }
+      if(!d) return;
+      var rows = d.querySelectorAll('[role="option"]'), row = null;
+      for(var i = 0; i < rows.length; i++){ if(/Tony pricing/i.test(rows[i].innerText || "")){ row = rows[i]; break; } }
+      if(!row){ if(tries < 25) setTimeout(function(){ open(tries + 1); }, 300); return; }
+      var b = row.getBoundingClientRect();
+      var o = {bubbles:true, cancelable:true, clientX:b.left + b.width/2, clientY:b.top + b.height/2, pointerId:1, isPrimary:true, button:0};
+      ["pointerdown","mousedown","pointerup","mouseup","click"].forEach(function(t){
+        try { row.dispatchEvent(new (t.indexOf("pointer") === 0 ? PointerEvent : MouseEvent)(t, o)); } catch(e){}
+      });
+      try { d.querySelectorAll("[tabindex]").forEach(function(el){ el.setAttribute("tabindex","-1"); }); } catch(e){}
+      /* the app sits under a title bar in the real product; a bare frame has none,
+         so give the wordmark that space back */
+      try {
+        if(!d.getElementById("__fit")){
+          var st = d.createElement("style"); st.id = "__fit";
+          st.textContent = "aside{padding-top:14px}";
+          d.head.appendChild(st);
+        }
+      } catch(e){}
+    }
+    frame.addEventListener("load", function(){ fit(); setTimeout(function(){ open(0); }, 700); });
+    if(frame.contentDocument && frame.contentDocument.readyState === "complete"){ setTimeout(function(){ open(0); }, 700); }
+  })();
+
+  /* ---------- the call-detection card ----------
+     Interactive, the way the artifact drives it: press Start and the card
+     springs through confirm into the recording pill; press stop and it returns.
+     The stage also carries a perspective tilt that follows the pointer, and the
+     content sits 26px above the card face so it parallaxes against it. */
+  (function(){
+    var pop = document.getElementById("pop");
+    if(!pop) return;
+    var persp = document.getElementById("popPersp"),
+        bars = document.getElementById("bars"), tm = document.getElementById("tm"),
+        go = document.getElementById("popGo"), stop = document.getElementById("popStop"),
+        x = document.getElementById("popX"), hint = document.getElementById("popHint");
+
+    var N = 11, els = [];
+    for(var i = 0; i < N; i++){ var b = document.createElement("i"); bars.appendChild(b); els.push(b); }
+
+    /* ---- state ---- */
+    var confirmT = null, timerT = null, autoT = null, touched = false, waving = false;
+    function set(s){
+      pop.setAttribute("data-s", s);
+      if(s === "idle"){ pop.classList.remove("run"); void pop.offsetWidth; pop.classList.add("run"); }
+    }
+    function toRecording(){
+      clearTimeout(confirmT);
+      set("confirm");
+      confirmT = setTimeout(function(){
+        set("rec");
+        var t0 = Date.now();
+        tm.textContent = "0:00";
+        clearInterval(timerT);
+        timerT = setInterval(function(){
+          var sec = Math.round((Date.now() - t0)/1000);
+          tm.textContent = Math.floor(sec/60) + ":" + String(sec % 60).padStart(2,"0");
+        }, 500);
+        wave();
+      }, 850);                       // the app waits out its own confirm beat
+    }
+    function toIdle(){
+      clearTimeout(confirmT); clearInterval(timerT); timerT = null;
+      tm.textContent = "0:00";
+      set("idle");
+    }
+    function mark(){                 // a real press cancels the demo run
+      touched = true; clearTimeout(autoT);
+      if(hint) hint.style.opacity = "0";
+    }
+    go.addEventListener("click", function(){ mark(); toRecording(); });
+    stop.addEventListener("click", function(){ mark(); toIdle(); });
+    x.addEventListener("click", function(){ mark(); toIdle(); });
+
+    /* ---- pointer tilt (the artifact's perspective card) ----
+       The easing is a CSS transition on transform rather than a rAF lerp: same
+       feel, but it survives a throttled frame loop and needs no loop at all. */
+    if(!reduced){
+      var MAX = 9;
+      persp.addEventListener("pointermove", function(e){
+        var r = pop.getBoundingClientRect();
+        var ry = ((e.clientX - r.left)/r.width - .5) * 2 * MAX;
+        var rx = -((e.clientY - r.top)/r.height - .5) * 2 * MAX;
+        pop.style.transform = "rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg)";
+      });
+      persp.addEventListener("pointerleave", function(){
+        pop.style.transform = "rotateX(0deg) rotateY(0deg)";
+      });
+    }
+
+    /* ---- waveform: the app's own expander ---- */
+    function wave(){
+      if(waving) return; waving = true;
+      var val = [], tgt = [], next = [], t0 = performance.now();
+      for(var i = 0; i < N; i++){ val.push(.5); tgt.push(.5); next.push(t0 + i*37); }
+      var env = 0, ph = 0, mid = (N-1)/2;
+      (function loop(){
+        if(pop.getAttribute("data-s") !== "rec"){ waving = false; return; }
+        var now = performance.now();
+        var raw = Math.max(0, .5 + .42*Math.sin(now/900)*Math.sin(now/310));
+        var t = Math.max(0, Math.min(1, (raw - .13)/.42));
+        var target = t < .02 ? 0 : .25 + .75*Math.pow(t, .8);
+        env += (target - env) * (target > env ? .6 : .15);
+        ph += .045;
+        for(var i = 0; i < N; i++){
+          if(now >= next[i]){ tgt[i] = Math.random(); next[i] = now + 110 + Math.random()*160; }
+          val[i] += (tgt[i] - val[i]) * .14;
+          var off = Math.abs(i - mid)/mid, taper = 1 - .55*Math.pow(off, 1.5);
+          var lv = env * taper * (.30 + .70*val[i]);
+          if(env < .04) lv = .02 + .015*Math.sin(ph + i*.55);
+          lv = Math.max(0, Math.min(1, lv));
+          els[i].style.height = (3 + lv*15).toFixed(1) + "px";
+          els[i].style.opacity = (.18 + lv*.82).toFixed(2);
+        }
+        requestAnimationFrame(loop);
+      })();
+    }
+
+    /* ---- one unattended run so the motion is visible, then it waits ---- */
+    set("idle");
+    if(!reduced && "IntersectionObserver" in window){
+      var seen = false;
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(!e.isIntersecting || seen || touched) return;
+          seen = true;
+          autoT = setTimeout(function(){
+            if(touched) return;
+            toRecording();
+            autoT = setTimeout(function(){ if(!touched) toIdle(); }, 5200);
+          }, 1600);
+        });
+      }, {threshold:.4}).observe(pop);
+    }
+  })();
+
+
+
+  /* ---------- FAQ accordion ----------
+     HeroUI's Accordion animates the panel's height, which React Aria feeds it
+     as --disclosure-panel-height. Here that measurement is done directly: open
+     to the measured height, then release to auto so reflow can't clip it. */
+  (function(){
+    var acc = document.getElementById("faq-acc");
+    if(!acc) return;
+    var items = [].slice.call(acc.querySelectorAll(".accordion__item")).map(function(it){
+      return { trigger: it.querySelector(".accordion__trigger"),
+               panel: it.querySelector(".accordion__panel"),
+               ind: it.querySelector(".accordion__indicator") };
+    });
+
+    function setOpen(n, open, animate){
+      var it = items[n], p = it.panel;
+      it.trigger.setAttribute("aria-expanded", open ? "true" : "false");
+      it.ind.setAttribute("data-expanded", open ? "true" : "false");
+      p.setAttribute("data-expanded", open ? "true" : "false");
+      var target = p.firstElementChild ? p.firstElementChild.offsetHeight : 0;
+      if(!animate){ p.style.height = open ? "auto" : "0px"; return; }
+      if(open){
+        p.style.height = "0px"; void p.offsetHeight;
+        p.style.height = target + "px";
+        clearTimeout(p._t);
+        p._t = setTimeout(function(){ if(p.getAttribute("data-expanded") === "true") p.style.height = "auto"; }, 220);
+      } else {
+        p.style.height = p.scrollHeight + "px"; void p.offsetHeight;
+        p.style.height = "0px";
+      }
+    }
+
+    items.forEach(function(it, n){
+      setOpen(n, it.trigger.getAttribute("aria-expanded") === "true", false);
+      it.trigger.addEventListener("click", function(){
+        var isOpen = it.trigger.getAttribute("aria-expanded") === "true";
+        // single-expand, the Accordion default
+        items.forEach(function(o, k){
+          if(k !== n && o.trigger.getAttribute("aria-expanded") === "true") setOpen(k, false, true);
+        });
+        setOpen(n, !isOpen, true);
+      });
+    });
+
+    // an open panel left at auto stays correct when the text reflows
+    window.addEventListener("resize", function(){
+      items.forEach(function(it){
+        if(it.panel.getAttribute("data-expanded") === "true") it.panel.style.height = "auto";
+      });
+    }, {passive:true});
+  })();
+
+})();
+</script>
 </body>
 </html>
