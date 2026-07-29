@@ -1,6 +1,7 @@
 {
-  "version": "2.3.0",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/latest/download/Prism-Setup.exe",
-  "notes": "Prism 2.3.0: speaker labels that survive AirPods and audio-device switches \u2014 Prism follows Windows device changes mid-call, judges each side by its own voice level, catches speaker echo even through room reverb, and says so honestly if a device drops. Your audio is never stored. Free.",
+  "version": "2.3.1",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.3.1/Prism-Setup.exe",
+  "sha256": "4c68b9b0d394daa68a5546bae75b8aa8215bb5f236885c8210392ce2ab931e7a",
+  "notes": "Prism 2.3.1: Prism now updates itself \u2014 silently, in the background, never during a call. Plus 2.3.0's fix: speaker labels that survive AirPods and audio-device switches. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
