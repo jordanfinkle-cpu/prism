@@ -1,7 +1,7 @@
 {
-  "version": "2.3.2",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.3.2/Prism-Setup.exe",
-  "sha256": "83594bb3a957f78714954f2ce2ff7c18f78ec3b2737e3785ca080a9ff13fbe89",
-  "notes": "Prism 2.3.2: speakerphone and out-loud calls labeled right \u2014 verified by physical testing \u2014 plus silent self-updates and speaker labels that survive AirPods and device switches. Your audio is never stored. Free.",
+  "version": "2.4.0",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.4.0/Prism-Setup.exe",
+  "sha256": "edb525780a986c5272dc95102f27f54b7a777ba151776550f9830f423c24115b",
+  "notes": "Prism 2.4.0: each side of the call transcribed from its own recording \u2014 speaker labels are ground truth, people talking over each other are both captured, and speakerphone bleed is filtered before upload. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
