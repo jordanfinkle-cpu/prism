@@ -1,7 +1,7 @@
 {
-  "version": "2.4.2",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.4.2/Prism-Setup.exe",
-  "sha256": "7a871e42857bbd2225af690a8fc4e1592812fea2e2a933ee113bca14adbab0e8",
-  "notes": "Prism 2.4.2: notes know your name from day one \u2014 set it in Settings, or Prism reads it from your sign-in email when it's clearly there \u2014 plus dual-channel transcription: ground-truth speaker labels and both sides captured even when people talk over each other. Your audio is never stored. Free.",
+  "version": "2.4.3",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.4.3/Prism-Setup.exe",
+  "sha256": "347763126db6d8ee960ffc1bb3415e0f096518e753431ee10410a7e2f4b5f496",
+  "notes": "Prism 2.4.3: action items always get their interactive section \u2014 tick to complete, send to Tasks \u2014 no matter how your notes style formats them. Plus name-aware notes and dual-channel transcription with ground-truth speaker labels. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
