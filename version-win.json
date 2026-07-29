@@ -1,7 +1,7 @@
 {
-  "version": "2.4.0",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.4.0/Prism-Setup.exe",
-  "sha256": "edb525780a986c5272dc95102f27f54b7a777ba151776550f9830f423c24115b",
-  "notes": "Prism 2.4.0: each side of the call transcribed from its own recording \u2014 speaker labels are ground truth, people talking over each other are both captured, and speakerphone bleed is filtered before upload. Your audio is never stored. Free.",
+  "version": "2.4.1",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.4.1/Prism-Setup.exe",
+  "sha256": "2176aa776ecc8ca6cadaafea54a8a2069f4ddf3c81c806de32da456d44981079",
+  "notes": "Prism 2.4.1: your notes know your name \u2014 new Your-name setting used across notes and greetings \u2014 plus 2.4.0's dual-channel transcription: ground-truth speaker labels and both sides captured even when people talk over each other. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
