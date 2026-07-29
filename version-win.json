@@ -1,7 +1,7 @@
 {
-  "version": "2.5.5",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.5/Prism-Setup.exe",
-  "sha256": "0b799aa2639ba7b3090f3ded4f9abae390e652bceafef9cd3728f623586e904b",
-  "notes": "Prism 2.5.5: cleaner turn changes \u2014 a new speaker no longer starts with the last word of the previous one \u2014 plus your own avatar on your bubbles, initial avatars for everyone else, named speakers, and dual-channel ground-truth transcription. Your audio is never stored. Free.",
+  "version": "2.5.6",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.6/Prism-Setup.exe",
+  "sha256": "913b239ca461901c0150ee773c82bba0bdd3fd10bb025dc2337fa2bbb6bbfd57",
+  "notes": "Prism 2.5.6: a Check for updates button in Settings \u2192 Account, so you never have to wait for a background update \u2014 plus cleaner turn changes, your own avatar on your bubbles, initial avatars for everyone else, and named speakers. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
