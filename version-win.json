@@ -1,7 +1,7 @@
 {
-  "version": "2.5.0",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.0/Prism-Setup.exe",
-  "sha256": "566d7af59a5d539a2d2d98bfdc73262c7cf13bd1f5f11e36f96700de44011f41",
-  "notes": "Prism 2.5.0: tells the people on the other end apart \u2014 Caller 1, Caller 2 \u2014 with their own commitments in your notes, on a leaner far-end transcription model. Plus interactive action items everywhere, name-aware notes, and dual-channel ground-truth speaker labels. Your audio is never stored. Free.",
+  "version": "2.5.1",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.1/Prism-Setup.exe",
+  "sha256": "69e59eca9a8006a5ddac1e2d1f9e91e3bb5573b4fce5132443b0ac5d79d37a25",
+  "notes": "Prism 2.5.1: callers are called by their names \u2014 introduce yourself on a call and the transcript says who said what, no guessing \u2014 plus multi-speaker far-end labels, interactive action items everywhere, and dual-channel ground-truth transcription. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
