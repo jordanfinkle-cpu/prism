@@ -1,7 +1,7 @@
 {
-  "version": "2.4.1",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.4.1/Prism-Setup.exe",
-  "sha256": "2176aa776ecc8ca6cadaafea54a8a2069f4ddf3c81c806de32da456d44981079",
-  "notes": "Prism 2.4.1: your notes know your name \u2014 new Your-name setting used across notes and greetings \u2014 plus 2.4.0's dual-channel transcription: ground-truth speaker labels and both sides captured even when people talk over each other. Your audio is never stored. Free.",
+  "version": "2.4.2",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.4.2/Prism-Setup.exe",
+  "sha256": "7a871e42857bbd2225af690a8fc4e1592812fea2e2a933ee113bca14adbab0e8",
+  "notes": "Prism 2.4.2: notes know your name from day one \u2014 set it in Settings, or Prism reads it from your sign-in email when it's clearly there \u2014 plus dual-channel transcription: ground-truth speaker labels and both sides captured even when people talk over each other. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
