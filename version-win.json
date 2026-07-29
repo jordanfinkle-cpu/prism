@@ -1,7 +1,7 @@
 {
-  "version": "2.5.2",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.2/Prism-Setup.exe",
-  "sha256": "649ce295a051164b2b20fb83c0b359fbcf2938b951d6b9b134e818bcf97701b3",
-  "notes": "Prism 2.5.2: speaker labels stop stealing each other's words at turn changes, and callers are called by their names \u2014 plus multi-speaker far-end labels, interactive action items, and dual-channel ground-truth transcription. Your audio is never stored. Free.",
+  "version": "2.5.3",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.3/Prism-Setup.exe",
+  "sha256": "12c80c97fc8a0ce7727139ac521f0bba46880e0f13933e5d2bbc83b6257ab06a",
+  "notes": "Prism 2.5.3: initial avatars for the people you talk to \u2014 B for Bryant, P for Priya \u2014 plus named speakers, turn-change label repair, and dual-channel ground-truth transcription. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
