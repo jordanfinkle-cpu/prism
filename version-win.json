@@ -1,7 +1,7 @@
 {
-  "version": "2.5.3",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.3/Prism-Setup.exe",
-  "sha256": "12c80c97fc8a0ce7727139ac521f0bba46880e0f13933e5d2bbc83b6257ab06a",
-  "notes": "Prism 2.5.3: initial avatars for the people you talk to \u2014 B for Bryant, P for Priya \u2014 plus named speakers, turn-change label repair, and dual-channel ground-truth transcription. Your audio is never stored. Free.",
+  "version": "2.5.4",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.4/Prism-Setup.exe",
+  "sha256": "81a7e158caae05fb0371d6f2611c4ead69694bfe0eec3a0b29b5ed5a2b02344b",
+  "notes": "Prism 2.5.4: your transcript bubbles wear the avatar you picked, and everyone else gets clean initial avatars \u2014 plus named speakers, turn-change label repair, and dual-channel ground-truth transcription. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
