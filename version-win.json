@@ -1,7 +1,7 @@
 {
-  "version": "2.5.7",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.5.7/Prism-Setup.exe",
-  "sha256": "ba8aad251af5231a70201d729f64fd74d31d072f09e512ed0bc6b76aeda33b21",
-  "notes": "Prism 2.5.7: updates land even if you only open Prism for a minute \u2014 pending updates install when you close the app \u2014 plus a Check for updates button in Settings \u2192 Account, cleaner turn changes, and named speakers. Your audio is never stored. Free.",
+  "version": "2.6.0",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.6.0/Prism-Setup.exe",
+  "sha256": "fd29a90ae13cbc5fd5e7672db34e5c7a4c50b7719541bd390d63dff17c8cda48",
+  "notes": "Prism 2.6.0: the redesigned app — a new Home with your calendar and folders, a cleaner note view, and Tasks — plus call-capture fixes: both sides of the call are heard even on native phone apps, and long or music-heavy calls no longer lose words. The meeting card is faster and smoother. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
