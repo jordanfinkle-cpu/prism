@@ -1,7 +1,7 @@
 {
-  "version": "2.6.1",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.6.1/Prism-Setup.exe",
-  "sha256": "c8b155ea239457a5218e9a1e580f7c5553a6e13898dfa66330d2effb74f83ed0",
-  "notes": "Prism 2.6.1: a call that recorded but came back as an empty note now writes a real note instead of silently ending up blank. The meeting card shows up for the second of two back-to-back meetings, and two calls inside one calendar block no longer overwrite each other. A note you rename keeps the name you gave it. The app no longer freezes for a moment when a call ends. Your audio is never stored. Free.",
+  "version": "2.6.2",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.6.2/Prism-Setup.exe",
+  "sha256": "775386a5dfa1eab16a47ceb09558e8a055d0877bcd79e782b3a9e747b213c540",
+  "notes": "Prism 2.6.2: a note you renamed keeps its name — including notes you renamed before the last update, which were still being overwritten when their notes were regenerated. Once Prism names a note, you can change it to whatever you like and it stays that way. Also in this update: calls that recorded but came back empty now write a real note, the meeting card shows up for the second of two back-to-back meetings, two calls inside one calendar block no longer overwrite each other, and the app no longer freezes when a call ends. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
