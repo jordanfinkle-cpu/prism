@@ -1,7 +1,7 @@
 {
-  "version": "2.6.3",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.6.3/Prism-Setup.exe",
-  "sha256": "049c6c92836336c0febb9c9c18adbd96d33f65ca91634c5989fab136f52acb6c",
-  "notes": "Prism 2.6.3: labels like the note count no longer act like editable text — clicking one used to leave a text cursor in it. Your notes, transcripts and titles still select and copy exactly as before. Also in this update: calls that recorded but came back empty now write a real note, the meeting card shows up for the second of two back-to-back meetings, two calls in one calendar block no longer overwrite each other, notes you renamed keep their names, and the app no longer freezes when a call ends. Your audio is never stored. Free.",
+  "version": "2.6.4",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.6.4/Prism-Setup.exe",
+  "sha256": "4373ed252dfa76dc37ffb3205836b4509b9045f04c87a93e4f0ec92e8a782b9f",
+  "notes": "Prism 2.6.4: if you started a new call before Prism finished writing up the last one, the app could drop out of recording mode while it was still recording — and then refuse to stop. That's fixed; no recording or audio was ever lost. Prism also now records how it tells two back-to-back meetings apart, so a merged pair can be diagnosed. Also recent: calls that recorded but came back empty now write a real note, notes you renamed keep their names, labels are no longer clickable like text, and the app no longer freezes when a call ends. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
