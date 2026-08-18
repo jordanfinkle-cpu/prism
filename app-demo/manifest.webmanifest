@@ -1,0 +1,15 @@
+{
+  "name": "Prism",
+  "short_name": "Prism",
+  "description": "Your calls, written up — notes, action items and tasks.",
+  "start_url": "./mobile.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#141413",
+  "theme_color": "#f4f4f5",
+  "icons": [
+    { "src": "prism-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "prism-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
