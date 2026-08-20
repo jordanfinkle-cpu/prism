@@ -1,7 +1,7 @@
 {
-  "version": "2.6.4",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.6.4/Prism-Setup.exe",
-  "sha256": "4373ed252dfa76dc37ffb3205836b4509b9045f04c87a93e4f0ec92e8a782b9f",
-  "notes": "Prism 2.6.4: if you started a new call before Prism finished writing up the last one, the app could drop out of recording mode while it was still recording — and then refuse to stop. That's fixed; no recording or audio was ever lost. Prism also now records how it tells two back-to-back meetings apart, so a merged pair can be diagnosed. Also recent: calls that recorded but came back empty now write a real note, notes you renamed keep their names, labels are no longer clickable like text, and the app no longer freezes when a call ends. Your audio is never stored. Free.",
+  "version": "2.7.0",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.7.0/Prism-Setup.exe",
+  "sha256": "33cc039d6eb21e473caefd2abe2e1890d4024efd08283af777c88eb21e938c1c",
+  "notes": "Prism 2.7.0: the new look. One design across Mac and Windows — a cleaner, calmer layout, Prism's new mark, and folders you can create, rename, recolour and nest right from the sidebar. Pick your own avatar in Settings. Tasks gained a full composer: priority, description and a linked note now save on Windows too. The meeting card's wave shows the audio it is actually hearing, and the far end of a call gets the flagship model with speaker labels, so several people on the other end stop being one \"Caller\". Also fixed: speakerphone calls where everything was labelled Me. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
