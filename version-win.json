@@ -1,7 +1,7 @@
 {
-  "version": "2.8.0",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.8.0/Prism-Setup.exe",
-  "sha256": "a899a75496fa40fe16cc8a1bc3315ac94d8f6d12d465a3c8963e45b54da614a5",
-  "notes": "Prism 2.8.0: one look on every desk. Windows matches the Mac again — the notes shell sits in one rounded frame instead of three, type is rebuilt on a cleaner stack, and the icons got a refresh. Long recordings are safer too: a \"still there?\" check-in every 3 hours replaces the old hard cap, so a marathon session keeps recording while you're in it, and a free account's hour now ends the recording cleanly with your notes saved instead of losing them. One transcription pass per call keeps speaker labels consistent from start to finish. Your audio is never stored. Free.",
+  "version": "2.8.1",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.8.1/Prism-Setup.exe",
+  "sha256": "6228ccf458f11c936c0a452174f83e930e9a0bc96b3404ce100784176dcf8a1d",
+  "notes": "Prism 2.8.1: one look on every desk. Windows matches the Mac — the notes shell sits in one rounded frame instead of three, type is rebuilt on a cleaner stack, and the icons got a refresh. Notes read like a PDF: highlight and copy any text, with no blinking cursor pretending you can type there. Long recordings are safer too: a \"still there?\" check-in every 3 hours replaces the old hard cap, so a marathon session keeps recording while you're in it, and a free account's hour now ends the recording cleanly with your notes saved instead of losing them. One transcription pass per call keeps speaker labels consistent from start to finish. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
