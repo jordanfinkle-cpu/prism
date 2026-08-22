@@ -1,7 +1,7 @@
 {
-  "version": "2.7.0",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.7.0/Prism-Setup.exe",
-  "sha256": "33cc039d6eb21e473caefd2abe2e1890d4024efd08283af777c88eb21e938c1c",
-  "notes": "Prism 2.7.0: the new look. One design across Mac and Windows — a cleaner, calmer layout, Prism's new mark, and folders you can create, rename, recolour and nest right from the sidebar. Pick your own avatar in Settings. Tasks gained a full composer: priority, description and a linked note now save on Windows too. The meeting card's wave shows the audio it is actually hearing, and the far end of a call gets the flagship model with speaker labels, so several people on the other end stop being one \"Caller\". Also fixed: speakerphone calls where everything was labelled Me. Your audio is never stored. Free.",
+  "version": "2.7.1",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.7.1/Prism-Setup.exe",
+  "sha256": "201380e4b764d64c9037cc3e400b94ec4d87f50f31bef352c8603b8e5fc75d95",
+  "notes": "Prism 2.7.1: your settings follow your account. Your name, personal info, custom instructions and note preferences now sync across your devices — sign in on another machine and Prism already knows you. Device-specific settings like calendar feeds and audio tuning stay on each machine, and a fresh install can never overwrite the settings your account already has. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
