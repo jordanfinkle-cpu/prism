@@ -1,7 +1,7 @@
 {
-  "version": "2.9.0",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.9.0/Prism-Setup.exe",
-  "sha256": "60b54a9a213d7f2c786badac8ca890049d3cfbec09f0aecb21b90ee4da849085",
-  "notes": "Prism 2.9.0: dictation comes to Windows. Hold a key, speak, and the words land where you were already typing — no window to switch to, nothing to copy across. It is off until you want it: turn it on in Settings and pick the key you hold. Dictation reads the room, too — a code editor gets your identifiers, paths and commands left exactly as spoken, while a quick message does not get a full stop it never needed. Your dictation dictionary follows your account properly now: a name you add on one machine turns up on the other instead of quietly replacing what was already there, and the \"sounds like\" corrections you type finally reach the model that tidies the text, so a name Prism keeps mishearing can be taught once. Your audio is never stored. Free.",
+  "version": "2.9.1",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.9.1/Prism-Setup.exe",
+  "sha256": "3e7867ff6bf0ff3bb47bcfc6d1907050d1fe062315663f08e9509b63ea519445",
+  "notes": "Prism 2.9.1: your notes stop going missing. A single note that was blank, or busy being written, could quietly stop every note body from reaching a computer — titles and folders kept arriving, the writing itself never did, and nothing said so. That is fixed. Signing in on a second machine no longer blanks your name, your about-me and your instructions. \"Clean up transcripts\" was switching itself off behind your back; it stays on now and actually runs, so transcripts get the correction pass and names from your calendar are spelled the way you spell them. Tasks: editing a task's words saves instead of erroring and snapping back, a task lifted from a note shows which note it came from and when, and deleting a note no longer takes a task you typed yourself with it. Long stretches of one person talking arrive as one paragraph instead of a dozen fragments. Dictation now transcribes while you hold the key, so your words land about as fast as you can let go — it stays off until you turn it on in Settings. Your audio is never stored. Free.",
   "min_windows": "10.0"
 }
