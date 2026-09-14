@@ -145,29 +145,75 @@ const links = [
 
 <script>
   const nav = document.getElementById('nav')!
+  const chapters = [...document.querySelectorAll<HTMLElement>('[data-tone]')]
 
-  // Tone follows whatever chapter the nav is currently sitting on top of. The
-  // -100% bottom margin shrinks the observer's viewport to a line at the very
-  // top of the page, so exactly one chapter is ever intersecting it.
-  const chapters = document.querySelectorAll<HTMLElement>('[data-tone]')
-  if (chapters.length) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            const tone = (e.target as HTMLElement).dataset.tone
-            nav.dataset.navTone = tone === 'dark' ? 'dark' : 'light'
-          }
-        }
-      },
-      { rootMargin: `-${nav.offsetHeight}px 0px -100% 0px`, threshold: 0 }
-    )
-    chapters.forEach((c) => io.observe(c))
+  /* The nav is whatever colour the chapter beneath it is.
+
+     Worked out by asking which chapter contains the line just under the nav,
+     rather than by listening for crossings: an intersection callback can
+     deliver several chapters at once during a fast flick or a jump to an
+     anchor, and then the answer depends on the order they happen to arrive in.
+     This cannot land on the wrong one.
+
+     Offsets are cached because they only move when the page reflows, which
+     keeps the scroll handler free of layout reads. */
+  let marks: { top: number; bottom: number; dark: boolean }[] = []
+
+  function measure() {
+    marks = chapters.map((el) => {
+      let top = 0
+      for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) top += n.offsetTop
+      return { top, bottom: top + el.offsetHeight, dark: el.dataset.tone === 'dark' }
+    })
   }
 
-  const onScroll = () => {
+  function paint() {
+    const line = window.scrollY + nav.offsetHeight
+    let dark = false
+    for (const m of marks) {
+      if (line >= m.top && line < m.bottom) dark = m.dark
+    }
+    nav.dataset.navTone = dark ? 'dark' : 'light'
     nav.dataset.scrolled = String(window.scrollY > 8)
   }
-  onScroll()
+
+  let queued = false
+  function onScroll() {
+    if (queued) return
+    queued = true
+    requestAnimationFrame(() => {
+      queued = false
+      paint()
+    })
+  }
+
+  measure()
+  paint()
   addEventListener('scroll', onScroll, { passive: true })
+
+  /* A second source of wake-ups. The observer decides nothing — it just asks
+     for a repaint when a chapter edge crosses the nav — so the answer still
+     comes from the position maths above and cannot depend on callback order.
+     It covers the cases a scroll listener misses, such as a jump to an anchor
+     or a layout shift under a stationary page. */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(onScroll, {
+      rootMargin: `-${nav.offsetHeight}px 0px -100% 0px`,
+      threshold: 0,
+    })
+    chapters.forEach((c) => io.observe(c))
+  }
+  addEventListener('resize', () => {
+    measure()
+    paint()
+  })
+  // Mockups settle into their scaled height a frame or two after hydration.
+  addEventListener('load', () => {
+    measure()
+    paint()
+  })
+  setTimeout(() => {
+    measure()
+    paint()
+  }, 1200)
 </script>
