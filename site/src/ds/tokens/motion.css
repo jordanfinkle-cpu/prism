@@ -1,0 +1,19 @@
+/* Native-app motion: short, flat, no bounce. Most state changes are a colour swap. */
+:root{
+  --dur-instant:80ms;  /* @kind other */
+  --dur-fast:120ms;    /* @kind other */
+  --dur-base:180ms;    /* @kind other */
+  --dur-slow:260ms;    /* @kind other */
+  --dur-sheet:320ms;   /* @kind other */
+  --dur-rail:250ms;    /* @kind other */ /* the sidebar rail widening */
+
+  --ease-standard:cubic-bezier(.2,.7,.3,1);   /* @kind other */
+  --ease-out:cubic-bezier(.16,1,.3,1);        /* @kind other */
+  --ease-in-out:cubic-bezier(.4,0,.2,1);      /* @kind other */
+  --ease-glide:cubic-bezier(.32,.72,0,1);     /* @kind other */ /* panels, flyouts, swipe release */
+  --ease-spring:cubic-bezier(.32,1.15,.45,1); /* @kind other */ /* the note deck, collapsing cards */
+
+  --press-scale:.98;   /* @kind other */
+
+  --transition-control:background-color var(--dur-fast) var(--ease-standard),color var(--dur-fast) var(--ease-standard),box-shadow var(--dur-fast) var(--ease-standard),opacity var(--dur-fast) var(--ease-standard); /* @kind other */
+}

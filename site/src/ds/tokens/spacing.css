@@ -1,0 +1,43 @@
+:root{
+  --space-0:0px;
+  --space-05:2px;
+  --space-1:4px;
+  --space-15:6px;
+  --space-2:8px;
+  --space-25:10px;
+  --space-3:12px;
+  --space-35:14px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:28px;
+  --space-8:32px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-16:64px;
+
+  /* Measured from the shipping builds */
+  --sidebar-width:212px;        /* the rail, expanded */
+  --rail-width:60px;            /* the rail at rest — icons only */
+  --rail-icon-col:38px;         /* fixed icon column, so glyphs never shift as labels fade */
+  --rail-flyout-width:186px;    /* subfolder panel */
+  --sidebar-pad:12px;          /* sidebar side padding */
+  --gutter-desktop:28px;       /* main-pane side padding */
+  --gutter-mobile:16px;        /* phone side padding */
+  --content-max:680px;         /* centred content column on desktop */
+  --row-height:36px;           /* sidebar nav row */
+  --row-height-note:44px;      /* note row in a list card */
+  --card-pad:14px;
+  --card-pad-lg:16px;
+  --stack-gap:10px;            /* between grouped cards */
+  --control-height:32px;       /* desktop control */
+  --control-height-touch:44px; /* iOS minimum tap target */
+  --tabbar-height:56px;        /* docked fallback */
+  --tabbar-height-float:62px;  /* the floating glass pill */
+  --titlebar-height:52px;
+  --indent-folder:22px;        /* only for legacy indented lists — the rail uses flyouts */
+  --blur-zone-top:84px;        /* progressive blur band under the status bar */
+  --blur-zone-bottom:96px;     /* and above the floating tab bar */
+  --swipe-action:84px;         /* revealed delete strip on a phone note row */
+  --chat-max:680px;            /* chat column */
+}

@@ -1,0 +1,24 @@
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--surface-canvas);color:var(--text-primary);font:var(--type-body);letter-spacing:var(--tracking-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p{margin:0}
+h1{font:var(--type-display);letter-spacing:var(--tracking-display)}
+h2{font:var(--type-title-l);letter-spacing:var(--tracking-title)}
+h3{font:var(--type-title);letter-spacing:var(--tracking-title)}
+h4{font:var(--type-title-s);letter-spacing:var(--tracking-title)}
+a{color:var(--text-link);text-decoration:none;transition:color var(--dur-fast) var(--ease-standard)}
+a:hover{color:var(--text-link-hover);text-decoration:underline;text-underline-offset:2px}
+button,input,select,textarea{font:inherit;letter-spacing:inherit;color:inherit}
+button{cursor:pointer}
+[data-tabular]{font-variant-numeric:tabular-nums}
+::selection{background:rgba(10,132,255,.18)}
+:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+/* Overlay scrollbars — a floating pill thumb inset from the edge, never touching a rounded
+   corner, never reserving gutter space. Phone surfaces hide them: data-scrollbar="none". */
+*{scrollbar-width:thin;scrollbar-color:rgba(24,24,25,.16) transparent}
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-corner{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(24,24,25,.16);border-radius:999px;border:4px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:rgba(24,24,25,.28);border:4px solid transparent;background-clip:content-box}
+[data-scrollbar="none"]{scrollbar-width:none}
+[data-scrollbar="none"]::-webkit-scrollbar{display:none}

@@ -1,0 +1,79 @@
+/* Aliases components consume. Never reference a raw palette value in a component. */
+:root{
+  /* Surfaces */
+  --surface-canvas:var(--grey-100);      /* window chrome + sidebar + phone canvas */
+  --surface-sidebar:var(--grey-100);     /* the sidebar is ALWAYS darker than the content beside it */
+  --surface-content:var(--white);        /* the rounded main pane; note screens are white edge-to-edge */
+  --surface-card:var(--white);
+  --surface-chrome:var(--grey-25);       /* tab bar, toolbar */
+  --surface-field:var(--grey-150);
+  --surface-raised:var(--white);
+  --surface-hover:rgba(24,24,25,.045);
+  --surface-selected:var(--grey-200);
+  --surface-inverse:var(--ink);
+  --surface-scrim:rgba(24,24,25,.28);
+
+  /* Text */
+  --text-primary:var(--ink);
+  --text-secondary:var(--grey-700);
+  --text-tertiary:var(--grey-600);
+  --text-placeholder:var(--grey-500);
+  --text-disabled:var(--grey-400);
+  --text-inverse:var(--white);
+  --text-link:var(--ink);
+  --text-link-hover:var(--grey-700);
+
+  /* Lines */
+  --border-hairline:rgba(24,24,25,.07);  /* divider inside a white card */
+  --border-card:rgba(24,24,25,.055);     /* card outline */
+  --border-field:transparent;
+  --border-strong:var(--grey-300);
+  --focus-ring:0 0 0 3px rgba(10,132,255,.30);
+
+  /* Interactive */
+  --action-primary:var(--ink);
+  --action-primary-press:#000000;
+  --action-primary-text:var(--white);
+  --action-secondary:var(--grey-150);
+  --action-secondary-press:var(--grey-200);
+  --action-secondary-text:var(--ink);
+  --action-ghost-hover:var(--surface-hover);
+  --action-disabled:var(--grey-150);
+  --action-disabled-text:var(--text-disabled);
+  --action-danger:var(--danger);
+
+  /* Navigation */
+  --nav-item-text:var(--text-primary);
+  --nav-item-icon:var(--grey-700);
+  --nav-item-selected-bg:var(--grey-200);
+  --nav-item-hover-bg:var(--surface-hover);
+  --nav-indicator:rgba(24,24,25,.07);    /* sliding pill in the floating tab bar */
+  --tab-active:var(--ink);
+  --tab-idle:var(--grey-700);
+
+  /* Content */
+  --note-title:var(--text-primary);
+  --note-snippet:var(--text-tertiary);
+  --note-time:var(--text-tertiary);
+  --saved-idle:var(--grey-600);          /* bookmark, not saved — outline */
+  --saved-active:var(--grey-600);        /* saved — same grey, filled. never ink, never accent */
+  --star-idle:var(--saved-idle);         /* legacy aliases */
+  --star-active:var(--saved-active);
+  --today-disc:var(--ink);
+  --event-dot:var(--grey-600);
+
+  /* Chat */
+  --chat-user-bg:var(--grey-150);         /* the only bubble in chat */
+  --chat-user-text:var(--text-primary);
+  --chat-answer-text:var(--text-primary); /* answers sit on the canvas, no bubble */
+  --chat-trace-line:var(--border-hairline);
+
+  /* Graph */
+  --graph-grid-dot:var(--grey-600);
+  --graph-edge:var(--border-hairline);
+  --graph-edge-lit:var(--grey-600);
+  --graph-person:var(--grey-150);          /* HeroUI avatar "letter" — spoke with */
+  --graph-person-text:var(--ink);
+  --graph-mentioned:rgba(235,235,236,.5);  /* "letter soft" — only named */
+  --graph-mentioned-text:var(--grey-350);
+}

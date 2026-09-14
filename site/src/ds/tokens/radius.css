@@ -1,0 +1,19 @@
+/* Mosaic corners: soft and cushioned. Fields 16, every card 22, the hero / content pane / sheet 26. */
+:root{
+  --radius-xs:6px;
+  --radius-sm:10px;    /* menus, kbd, tooltips */
+  --radius-nav:12px;   /* sidebar rows */
+  --radius-md:16px;    /* search field, inputs, small tiles */
+  --radius-lg:22px;    /* cards — desktop and phone alike */
+  --radius-xl:26px;    /* hero card, sheet top */
+  --radius-2xl:30px;
+  --radius-sheet:26px;
+  --radius-full:999px; /* buttons, chips, tags, avatars, the selected-day disc, the tab-bar pill */
+
+  --radius-field:var(--radius-md);
+  --radius-card:var(--radius-lg);
+  --radius-card-mobile:var(--radius-lg);
+  --radius-content:14px; /* the white desktop content pane set into the grey chrome */
+  --radius-chip:var(--radius-full);
+  --radius-button:var(--radius-full);
+}

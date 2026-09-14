@@ -1,0 +1,10 @@
+/* Prism ships as a native Mac app and an iOS app, so it uses the platform UI face.
+   These stacks resolve to SF Pro on Apple platforms, Segoe UI on Windows and Roboto on Android
+   through the -apple-system / system-ui aliases — there is deliberately no @font-face and no
+   webfont download, which is why text paints on the first frame and matches the OS chrome.
+   If Prism ever ships a custom typeface, add its @font-face here and prepend it to both stacks. */
+:root{
+  --font-core:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --font-display:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}

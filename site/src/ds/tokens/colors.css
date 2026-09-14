@@ -1,0 +1,44 @@
+/* Palette sampled pixel-for-pixel from the Prism Mac and iOS builds, tuned in the Mosaic direction.
+   The interface is achromatic; colour appears only as folder dots and folder tags. */
+:root{
+  /* Neutrals — the entire interface */
+  --white:#FFFFFF;
+  --grey-25:#FDFDFD;   /* tab bar, toolbars */
+  --grey-50:#F7F7F8;
+  --grey-100:#F4F4F5;  /* window chrome + sidebar — always darker than the content pane */
+  --grey-150:#EBEBEC;  /* search field, idle chip */
+  --grey-200:#E4E4E6;  /* selected sidebar pill, pressed chip */
+  --grey-250:#DCDCDE;
+  --grey-300:#D4D4D6;  /* hairline on grey */
+  --grey-350:#C7C7C9;
+  --grey-400:#A9A9AC;  /* disabled glyph */
+  --grey-500:#939395;  /* placeholder */
+  --grey-600:#7E7E80;  /* timestamps, snippets */
+  --grey-700:#717273;  /* secondary label, idle tab */
+  --grey-800:#4A4A4C;
+  --grey-900:#2A2A2C;
+  --ink:#181819;       /* every piece of primary text, and the selected-day disc */
+
+  /* Folder & tag accents — the only saturated colour in the product.
+     App mapping: Retail Leadership = blue, ISA Leadership = red, Deal Notes = green, Personal = violet. */
+  --accent-blue:#0A84FF;
+  --accent-red:#FF3B30;
+  --accent-green:#30D158;
+  --accent-violet:#8A2BFF;
+  --accent-orange:#FF9500;
+  --accent-yellow:#FFD60A;
+  --accent-pink:#FF2DA6;
+  --accent-grey:#A9A9AC;
+
+  /* Tints — hover wash for a coloured folder row */
+  --accent-blue-tint:#EBF3FF;
+  --accent-red-tint:#FFEEED;
+  --accent-green-tint:#EAFAEF;
+  --accent-violet-tint:#F4EDFF;
+
+  /* Status */
+  --danger:#FF3B30;
+  --danger-press:#E5342A;
+  --success:#30D158;
+  --warning:#FF9500;
+}
