@@ -118,8 +118,36 @@ export function ChannelsShot() {
   )
 }
 
+/* A desktop for the card to sit on.
+
+   The card is glass on macOS 26: it tints and refracts whatever is behind it,
+   which means showing it on a flat ground shows half the thing. So it gets a
+   wallpaper, the way it would have on anyone's actual screen. The deep teal
+   underneath is the photograph's own water, so nothing flashes white while the
+   image loads. */
+export function Screen({ children, max = 560 }) {
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: max,
+        aspectRatio: '1011 / 711',
+        borderRadius: 18,
+        overflow: 'hidden',
+        background: "#0E3A42 url('/media/desktop.jpg') center / cover no-repeat",
+        boxShadow: 'inset 0 0 0 1px rgba(255,255,255,.14), 0 40px 90px -34px rgba(0,0,0,.8)',
+        display: 'grid',
+        placeItems: 'center',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
 /* The stacked telling of the detection sequence, used on phones and whenever
-   motion is turned down. */
+   motion is turned down. Same screen, three moments. */
 export function CallStrip() {
   const frames = [
     { stage: 0, cap: 'Zoom picks up your mic. Prism asks, once.' },
@@ -127,11 +155,13 @@ export function CallStrip() {
     { stage: 2, cap: 'A pill in the corner, until you hang up.' },
   ]
   return (
-    <div style={{ display: 'grid', gap: 28, justifyItems: 'center' }}>
+    <div style={{ display: 'grid', gap: 30, justifyItems: 'center' }}>
       {frames.map((f) => (
-        <div key={f.stage} style={{ display: 'grid', gap: 12, justifyItems: 'center' }}>
-          <CallFrame stage={f.stage} drain={f.stage === 0 ? 0.62 : 1} />
-          <p style={{ margin: 0, fontSize: 13.5, fontWeight: 500, color: 'var(--tone-ink3)', textAlign: 'center', maxWidth: 260 }}>
+        <div key={f.stage} style={{ display: 'grid', gap: 13, justifyItems: 'center', width: '100%' }}>
+          <Screen max={420}>
+            <CallFrame stage={f.stage} drain={0.38} glass />
+          </Screen>
+          <p style={{ margin: 0, fontSize: 13.5, fontWeight: 500, color: 'var(--tone-ink3)', textAlign: 'center', maxWidth: 280 }}>
             {f.cap}
           </p>
         </div>
@@ -144,14 +174,16 @@ export function DictationShot() {
   return (
     <div
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 10,
-        height: 40, paddingInline: 13, borderRadius: 12, background: '#fff',
-        boxShadow: '0 1px 2px rgba(24,24,25,.035), 0 10px 30px rgba(24,24,25,.10)',
+        display: 'inline-flex', alignItems: 'center', gap: 9,
+        height: 40, padding: '0 13px', borderRadius: 12,
+        background: '#181819', color: '#fff',
+        boxShadow:
+          'inset 0 0 0 .5px rgba(255,255,255,.20), inset 0 1.5px 0 rgba(255,255,255,.14), 0 14px 38px rgba(0,0,0,.22)',
       }}
     >
-      <Mark size={11} color="#181819" />
-      <Wave height={14} />
-      <span style={{ fontSize: 12, fontWeight: 500, color: '#6A6A6C' }}>Hold to speak</span>
+      <Mark size={11} color="#fff" />
+      <Wave height={14} color="#fff" />
+      <span style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,.58)' }}>Hold to speak</span>
     </div>
   )
 }

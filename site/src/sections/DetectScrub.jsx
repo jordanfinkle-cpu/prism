@@ -1,7 +1,7 @@
 import { motion, useTransform } from 'motion/react'
 import Pinned from '../components/Pinned.jsx'
 import CallIsland from '../mockups/CallIsland.jsx'
-import { CallStrip } from '../mockups/shots.jsx'
+import { CallStrip, Screen } from '../mockups/shots.jsx'
 import { EASE_OUT_EXPO } from '../lib/motion.js'
 
 /* Chapter 7: the card notices, you decide.
@@ -58,9 +58,11 @@ function Stage({ progress }) {
       </div>
 
       <div className="ds-shot">
-        <div className="ds-island">
-          <CallIsland progress={progress} />
-        </div>
+        <Screen>
+          <div className="ds-island">
+            <CallIsland progress={progress} glass />
+          </div>
+        </Screen>
         <div className="ds-caps">
           {CAPS.map((c) => (
             <Cap key={c.text} progress={progress} {...c} />
@@ -112,7 +114,7 @@ export default function DetectScrub() {
           justify-items: center;
           gap: 34px;
         }
-        .ds-island { display: grid; place-items: center; min-height: 170px; }
+        .ds-island { display: grid; place-items: center; }
         .ds-caps { position: relative; width: 100%; min-height: 48px; }
         .ds-cap {
           position: absolute;

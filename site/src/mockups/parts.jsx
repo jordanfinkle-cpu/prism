@@ -13,9 +13,13 @@ export function Mark({ size = 15, color = 'currentColor' }) {
   )
 }
 
-/* The app draws nine 3px bars with 3px gaps. Heights are a fixed pattern, not
-   random, so two renders of the same pill look the same. */
-const BARS = [0.34, 0.62, 0.95, 0.5, 0.78, 1, 0.44, 0.7, 0.36]
+/* Nine bars, 3px wide and 3px apart, running 3px to 14px.
+
+   Each one is a slice of the spectrum rather than a slice of the loudness, and
+   the app puts bass in the middle, so the shape tapers out to the ends. At rest
+   every bar is exactly 3px — a row of perfect circles, which reads as listening
+   rather than as broken. The pattern is fixed so two renders match. */
+const BARS = [0.3, 0.55, 0.78, 0.95, 0.86, 1, 0.72, 0.48, 0.28]
 
 export function Wave({ height = 16, color = '#181819', level = 1, bars = BARS }) {
   return (
@@ -25,7 +29,7 @@ export function Wave({ height = 16, color = '#181819', level = 1, bars = BARS })
           key={i}
           style={{
             width: 3,
-            borderRadius: 2,
+            borderRadius: 999,
             background: color,
             height: Math.max(3, Math.round(height * h * level)),
             transition: 'height .18s linear',

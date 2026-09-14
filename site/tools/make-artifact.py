@@ -52,6 +52,12 @@ def main(out_path: str) -> None:
 
     css = "".join(p.read_text() for p in sorted(DIST.glob("_astro/*.css")))
 
+    # The wallpaper behind the meeting card. Inlined for the same reason the
+    # font is: one file has to carry everything, and a path to /media would
+    # resolve to nothing once this is served from somewhere else.
+    wall = (ROOT / "public/media/desktop.jpg").read_bytes()
+    wall_uri = "data:image/jpeg;base64," + base64.b64encode(wall).decode()
+
     # Strip the island machinery, keeping everything it wrapped.
     body = re.sub(r"</?astro-island[^>]*>", "", body)
     body = body.replace("<!--astro:end-->", "")
@@ -78,6 +84,8 @@ def main(out_path: str) -> None:
         'style="display:flex;align-items:center;padding-block:clamp(72px,9vw,120px)"',
         1,
     )
+
+    body = body.replace("/media/desktop.jpg", wall_uri)
 
     # Escape every non-ASCII character in the markup. The page is UTF-8, but it
     # is about to be served by something whose charset declaration is not ours
@@ -181,6 +189,8 @@ RUNTIME = r"""
   const dsWrap = document.querySelector('.ds')
   const dsBox = document.querySelector('.ds-island > div > div')
   const dsBodies = dsBox ? [...dsBox.children] : []
+  const dsRing = document.querySelector('.ds-island svg circle[stroke-dasharray]')
+  const RING_LEN = 58.12
   const dsCaps = [...document.querySelectorAll('.ds-cap')]
   const CAPS = [[0, 0.28], [0.42, 0.6], [0.78, 1]]
 
@@ -202,9 +212,12 @@ RUNTIME = r"""
     const p = travel > 0 ? clamp01(-top / travel) : 0
     const S = [0, 0.32, 0.46, 0.62, 0.76]
 
-    dsBox.style.width = track(p, S, [236, 236, 238, 238, 177]) + 'px'
-    dsBox.style.height = track(p, S, [150, 150, 58, 58, 40]) + 'px'
+    dsBox.style.width = track(p, S, [236, 236, 238, 238, 161]) + 'px'
+    dsBox.style.height = track(p, S, [136, 136, 58, 58, 40]) + 'px'
     dsBox.style.borderRadius = track(p, S, [16, 16, 14, 14, 12]) + 'px'
+    // The countdown lives on the dismiss control: the ring empties as the
+    // card's own patience does.
+    if (dsRing) dsRing.style.strokeDashoffset = clamp01((p - 0.04) / 0.26) * RING_LEN
 
     if (dsBodies[0]) dsBodies[0].style.opacity = String(1 - clamp01((p - 0.3) / 0.12))
     if (dsBodies[1]) dsBodies[1].style.opacity = String(fade(p, 0.36, 0.46, 0.6, 0.7))

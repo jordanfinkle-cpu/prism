@@ -39,10 +39,12 @@ function timerAt(t) {
   return `${m}:${s}`
 }
 
+/* The recording pill: the live state of the meeting card, at the size and in
+   the colours the app draws it — ink with white text, whatever is behind it. */
 function Pill({ t }) {
   const pressed = t >= T.press && t < T.press + 0.18
   const collapse = ease((t - T.press) / 0.58)
-  const w = t < T.press ? 177 : 177 - (177 - 40) * collapse
+  const w = t < T.press ? 161 : 161 - (161 - 40) * collapse
   const out = t >= T.pillOut ? clamp01((t - T.pillOut) / 0.26) : 0
   const level = 0.55 + 0.45 * Math.abs(Math.sin(t * 3.1))
 
@@ -52,31 +54,34 @@ function Pill({ t }) {
         width: w,
         height: 40,
         borderRadius: 12,
-        background: '#fff',
-        boxShadow: '0 1px 2px rgba(24,24,25,.035), 0 10px 30px rgba(24,24,25,.14)',
+        background: '#181819',
+        color: '#fff',
+        boxShadow:
+          'inset 0 0 0 .5px rgba(255,255,255,.20), inset 0 1.5px 0 rgba(255,255,255,.14), 0 14px 38px rgba(0,0,0,.28)',
         display: 'flex',
         alignItems: 'center',
-        gap: 9,
-        paddingInline: 11,
+        gap: 8,
+        padding: '0 9px 0 12px',
         boxSizing: 'border-box',
         overflow: 'hidden',
         opacity: 1 - out,
-        transform: `translateY(${-12 * out}px) scale(${pressed ? 0.975 : 1})`,
+        transform: `translateY(${-12 * out}px) scale(${pressed ? 0.985 : 1})`,
       }}
     >
-      <Mark size={11} color="#181819" />
-      <div style={{ opacity: clamp01(1 - collapse * 2.2), display: 'flex', alignItems: 'center', gap: 9, flex: 1, minWidth: 0 }}>
-        <Wave height={14} level={t < T.press ? level : 0.2} />
-        <span className="tabular" style={{ fontSize: 12, fontWeight: 500, letterSpacing: '0.05em', color: '#181819', marginLeft: 'auto' }}>
+      <Mark size={11} color="#fff" />
+      <div style={{ opacity: clamp01(1 - collapse * 2.2), display: 'flex', alignItems: 'center', gap: 8, flex: 1, minWidth: 0 }}>
+        <Wave height={14} level={t < T.press ? level : 0.2} color="#fff" />
+        <span className="tabular" style={{ fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,.58)' }}>
           {timerAt(t)}
         </span>
         <span
           style={{
-            width: 24, height: 24, borderRadius: 999, flex: 'none',
-            boxShadow: 'inset 0 0 0 1.5px #FF3B30', display: 'grid', placeItems: 'center',
+            width: 24, height: 24, borderRadius: 999, flex: 'none', marginLeft: 'auto',
+            border: '1.5px solid #FF453A', background: '#181819',
+            display: 'grid', placeItems: 'center', boxSizing: 'border-box',
           }}
         >
-          <span style={{ width: 9, height: 9, borderRadius: 2.5, background: '#FF3B30' }} />
+          <span style={{ width: 9, height: 9, borderRadius: 2.5, background: '#FF453A' }} />
         </span>
       </div>
     </div>
