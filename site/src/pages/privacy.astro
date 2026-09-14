@@ -1,0 +1,118 @@
+---
+import Legal from '../layouts/Legal.astro'
+import { ENTITY, CONTACT } from '../lib/legal.js'
+
+/* Everything on this page is checked against the shipping code, not against
+   the old site. The claims that are NOT here are as deliberate as the ones
+   that are: no "never leaves the machine" (that described v1 — see
+   MAC_HANDOFF.md), no promise about how long the speech-to-text provider
+   keeps uploaded audio, and no statement about international transfer
+   mechanisms. Those belong in the longer policy in prism-aai/docs/legal once
+   a lawyer and a legal entity exist. */
+---
+
+<Legal
+  title="Privacy — Prism"
+  description="What Prism does with your recordings, your transcripts and your email address. Plain answers, checked against the shipping app."
+  heading="Privacy"
+>
+  <p>
+    Prism listens to your calls. That earns you straight answers about where
+    everything goes. This page covers what {ENTITY} collects, what we do with it,
+    and how to get rid of it.
+  </p>
+
+  <h2>If all you did was ask for access</h2>
+  <p>
+    The form on this site sends one thing: the email address you typed, plus a
+    note of which form it came from. We use it to send you an invite when one is
+    available. We do not sell it, rent it, or add you to a marketing list.
+  </p>
+  <p>
+    There is no analytics on this website. No Google Analytics, no pixel, no
+    advertising tracker, no session recorder. Our host records ordinary web
+    server logs, which include IP addresses, and we do not read them for
+    anything but keeping the site up.
+  </p>
+  <p>
+    To be taken off the list, email <a href={`mailto:${CONTACT}`}>{CONTACT}</a> from
+    the address you signed up with and we will delete the row.
+  </p>
+
+  <h2>If you use the app</h2>
+
+  <h3>Audio</h3>
+  <p>
+    Recording starts when you start it. Prism captures your microphone and what
+    your computer is playing, as two separate tracks, into files on your own
+    machine.
+  </p>
+  <p>
+    When the recording ends, that audio is sent through our relay to a
+    speech-to-text provider. <strong>The relay stores no audio.</strong> It passes the
+    bytes straight through: nothing is written to disk, nothing is written to
+    storage, and nothing about the audio outlives the request. We ask the
+    provider to delete the transcript as soon as we have retrieved it.
+  </p>
+  <p>
+    The original recording stays on your computer, inside the note, until you
+    delete it.
+  </p>
+
+  <h3>Transcripts and notes</h3>
+  <p>
+    Your transcripts, notes, tasks and folders are stored in your account so
+    that your devices stay in step. That is the only reason the account exists.
+    Delete a note and it is removed from your account and stops syncing.
+  </p>
+
+  <h3>Your account</h3>
+  <p>
+    You sign in with a code we email you. There is no password to lose. Prism is
+    free while it is invite only, so there is no payment information at all.
+  </p>
+
+  <h3>The AI providers</h3>
+  <p>
+    Transcription is done by a speech-to-text provider, and notes are written by
+    a large language model provider. They receive the audio or the transcript
+    for as long as it takes to do the work. We use paid API tiers, whose terms
+    exclude using your content to train models.
+  </p>
+  <p>
+    <strong>We never train on your content, and we never sell it.</strong>
+  </p>
+
+  <h2>Other people on the call</h2>
+  <p>
+    Prism does not announce itself to anyone else on the call, because nothing
+    of ours is in the call. Telling the other people that you are recording is
+    your responsibility, and the law on that differs by where you and they are.
+    Some places require everyone to agree. Check before you press record.
+  </p>
+  <p>
+    If you were recorded by someone using Prism and want to know what is held
+    about you, the person who made the recording controls it, not us. Write to
+    them. If you cannot, write to
+    <a href={`mailto:${CONTACT}`}>{CONTACT}</a> and we will help you reach them.
+  </p>
+
+  <h2>Deleting things</h2>
+  <ul>
+    <li>A note: delete it in the app. It stops syncing to your other devices.</li>
+    <li>The local recording: it sits with the note on your computer and goes when the note does.</li>
+    <li>Your account, or your waitlist row: email <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.</li>
+  </ul>
+
+  <h2>Changes</h2>
+  <p>
+    Prism is early and this page will get longer as the product does. If
+    something material changes about where your recordings go, we will say so
+    here and date it, not quietly edit it.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    <a href={`mailto:${CONTACT}`}>{CONTACT}</a>
+  </p>
+</Legal>

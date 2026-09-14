@@ -1,0 +1,36 @@
+---
+import Chapter from '../components/Chapter.astro'
+import Reveal from '../components/Reveal.jsx'
+import { NotesShot } from '../mockups/shots.jsx'
+---
+
+<Chapter id="folders" tone="canvas">
+  <div class="fd-head">
+    <Reveal client:visible>
+      <p class="t-eyebrow">Folders</p>
+      <h2 class="t-h2 fd-h2">Your folders. Prism just puts things in them.</h2>
+    </Reveal>
+    <Reveal client:visible delay={0.08}>
+      <p class="t-lede fd-lede">
+        Drag a note into a folder or let Prism file it. Tinted tags, one level of
+        subfolders, nothing to set up.
+      </p>
+    </Reveal>
+  </div>
+
+  <p class="sr-only">
+    The Prism window: a folder list down the left, and every note as a card in two
+    columns, each tagged with the folder it belongs to.
+  </p>
+
+  <div class="fd-shot">
+    <NotesShot client:visible dragging />
+  </div>
+</Chapter>
+
+<style>
+  .fd-head { max-width: 1040px; }
+  .fd-h2 { margin-top: 18px; }
+  .fd-lede { margin-top: 22px; }
+  .fd-shot { margin-top: clamp(48px, 6vw, 80px); max-width: 1280px; margin-inline: auto; }
+</style>

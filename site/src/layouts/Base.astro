@@ -1,0 +1,115 @@
+---
+import GlassNav from '../components/GlassNav.astro'
+import Footer from '../components/Footer.astro'
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  description: string
+  jsonLd?: unknown[]
+  ogImage?: string
+}
+const {
+  title,
+  description,
+  jsonLd = [],
+  ogImage = '/og.png',
+} = Astro.props
+
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href
+const ogUrl = new URL(ogImage, Astro.site).href
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e0e0f" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Prism" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    {/* Inlined so the face is discovered at parse time. Deliberately NOT
+        preloaded: Apple devices render SF Pro and must never pay for Inter. */}
+    <style is:inline>
+      @font-face {
+        font-family: 'Inter Variable';
+        font-style: normal;
+        font-display: swap;
+        font-weight: 100 900;
+        src: url('/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+          U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+    </style>
+
+    {/* Reveal animations start at opacity 0. If scripts never run — a crawler
+        without JS, a blocked bundle — nothing should stay invisible. */}
+    <noscript>
+      <style>
+        [style*='opacity:0'], [style*='opacity: 0'] {
+          opacity: 1 !important;
+          filter: none !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+
+    {
+      jsonLd.map((block) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(block)}
+        />
+      ))
+    }
+  </head>
+
+  <body>
+    <a href="#main" class="skip">Skip to content</a>
+    <GlassNav />
+    <main id="main"><slot /></main>
+    <Footer />
+
+    <style>
+      .skip {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -120%);
+        z-index: 100;
+        background: var(--color-ink);
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: transform 0.18s var(--ease-press);
+      }
+      .skip:focus {
+        transform: translate(-50%, 12px);
+      }
+    </style>
+  </body>
+</html>

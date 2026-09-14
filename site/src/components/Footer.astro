@@ -1,0 +1,79 @@
+---
+import Wordmark from './Wordmark.astro'
+const year = new Date().getFullYear()
+---
+
+<footer data-tone="canvas" class="ft">
+  <div class="wrap ft-inner">
+    <a href="/" class="ft-brand" aria-label="Prism, home">
+      <Wordmark size={16} wordSize={16} />
+    </a>
+    <nav class="ft-links" aria-label="Footer">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="mailto:privacy@downloadprism.com">privacy@downloadprism.com</a>
+    </nav>
+    <p class="ft-note">
+      Check your local law before recording a call.
+    </p>
+    <p class="ft-copy">© {year} Prism</p>
+  </div>
+</footer>
+
+<style>
+  .ft {
+    padding-block: 56px 48px;
+    padding-inline: var(--gutter);
+    border-top: 1px solid var(--hairline);
+  }
+  .ft-inner {
+    display: grid;
+    gap: 18px;
+  }
+  .ft-brand {
+    color: var(--color-ink);
+    text-decoration: none;
+    width: max-content;
+  }
+  .ft-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+  }
+  .ft-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink2);
+    text-decoration: none;
+    line-height: 28px;
+  }
+  .ft-links a:hover {
+    color: var(--color-ink);
+  }
+  .ft-note,
+  .ft-copy {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink3);
+    margin: 0;
+  }
+  @media (min-width: 900px) {
+    .ft-inner {
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px 32px;
+    }
+    .ft-note {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .ft-copy {
+      grid-column: 3;
+      grid-row: 2;
+      text-align: right;
+    }
+    .ft-links {
+      justify-content: flex-end;
+    }
+  }
+</style>
