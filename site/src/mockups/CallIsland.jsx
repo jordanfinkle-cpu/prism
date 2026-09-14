@@ -126,19 +126,22 @@ export function CallFrame({ stage = 0, drain = 1, timer = '00:04' }) {
 
 /* Scrubbed version: one box whose size is driven by a 0…1 progress value. */
 export default function CallIsland({ progress }) {
-  /* The box only ever changes size while whichever body it is holding has
-     already faded out, so the reader never sees two states at once. */
-  const width = useTransform(progress, [0, 0.33, 0.45, 0.66, 0.78], [236, 236, 238, 238, 177])
-  const height = useTransform(progress, [0, 0.33, 0.45, 0.66, 0.78], [150, 150, 58, 58, 40])
-  const radius = useTransform(progress, [0, 0.33, 0.45, 0.66, 0.78], [16, 16, 14, 14, 12])
+  /* The states cross-fade while the box resizes, overlapping just enough that
+     there is always ink in it. Separating them completely, which is what this
+     did first, left a beat where a near-full-size card was simply empty —
+     which reads as a rendering fault, not a transition. */
+  const SIZE = [0, 0.32, 0.46, 0.62, 0.76]
+  const width = useTransform(progress, SIZE, [236, 236, 238, 238, 177])
+  const height = useTransform(progress, SIZE, [150, 150, 58, 58, 40])
+  const radius = useTransform(progress, SIZE, [16, 16, 14, 14, 12])
   const x = useTransform(progress, [0.86, 1], [0, 96])
   const y = useTransform(progress, [0.86, 1], [0, -64])
 
-  const detectOpacity = useTransform(progress, [0.28, 0.33], [1, 0])
-  const confirmOpacity = useTransform(progress, [0.45, 0.5, 0.62, 0.66], [0, 1, 1, 0])
-  const liveOpacity = useTransform(progress, [0.78, 0.84], [0, 1])
-  const drain = useTransform(progress, [0.04, 0.24], [1, 0.42])
-  const pressScale = useTransform(progress, [0.23, 0.26, 0.3], [1, 0.975, 1])
+  const detectOpacity = useTransform(progress, [0.3, 0.42], [1, 0])
+  const confirmOpacity = useTransform(progress, [0.36, 0.46, 0.6, 0.7], [0, 1, 1, 0])
+  const liveOpacity = useTransform(progress, [0.66, 0.78], [0, 1])
+  const drain = useTransform(progress, [0.04, 0.22], [1, 0.42])
+  const pressScale = useTransform(progress, [0.22, 0.25, 0.29], [1, 0.975, 1])
 
   return (
     <motion.div style={{ x, y, scale: pressScale }}>

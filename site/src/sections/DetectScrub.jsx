@@ -12,9 +12,9 @@ import { EASE_OUT_EXPO } from '../lib/motion.js'
    it without you. */
 
 const CAPS = [
-  { at: [0, 0.3], text: 'Zoom picks up your mic. Prism asks, once.' },
-  { at: [0.44, 0.64], text: 'You press it. Both sides start recording.' },
-  { at: [0.8, 1], text: 'A pill in the corner, until you hang up.' },
+  { at: [0, 0.28], text: 'Zoom picks up your mic. Prism asks, once.' },
+  { at: [0.42, 0.6], text: 'You press it. Both sides start recording.' },
+  { at: [0.78, 1], text: 'A pill in the corner, until you hang up.' },
 ]
 
 /* Scroll progress only ever runs 0…1, and a keyframe list that steps outside
