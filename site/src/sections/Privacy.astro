@@ -1,0 +1,107 @@
+---
+import Chapter from '../components/Chapter.astro'
+import Reveal from '../components/Reveal.jsx'
+
+/* Every line here is checked against the code, not against the old site.
+   "Never leaves the machine" described v1 and is not true of the relay; see
+   prism-aai/MAC_HANDOFF.md and supabase/functions/ai/index.ts. */
+
+const statements = [
+  {
+    head: 'Prism keeps no audio.',
+    body: 'Your recording streams through to be transcribed and is gone when the transcript comes back. The original stays on your computer.',
+  },
+  {
+    head: 'Your notes live in your account.',
+    body: 'Transcripts and notes are stored so your devices stay in step. Delete a note and it goes.',
+  },
+  {
+    head: 'Nothing records until you press record.',
+    body: 'Nothing joins the call and nobody is notified. Telling people is on you, and the law on that varies by where you and they are.',
+  },
+  {
+    head: 'Nothing you record trains a model.',
+    body: 'Your calls are not used to improve anything, and none of it is ever sold. There are no ads and no advertising trackers in the apps.',
+  },
+]
+---
+
+<Chapter id="privacy" tone="dark" sameTone>
+  <div class="pv-head">
+    <Reveal client:visible>
+      <p class="t-eyebrow">Privacy</p>
+      <h2 class="t-h2 pv-h2">Your meetings are nobody's business.</h2>
+    </Reveal>
+    <Reveal client:visible delay={0.08}>
+      <p class="t-lede pv-lede">
+        A notetaker that hears your calls owes you straight answers.
+      </p>
+    </Reveal>
+  </div>
+
+  <dl class="pv-list">
+    {
+      statements.map((s, i) => (
+        <Reveal client:visible delay={0.06 * i}>
+          <div class="pv-row">
+            <dt class="t-h3 pv-dt">{s.head}</dt>
+            <dd class="t-body pv-dd">{s.body}</dd>
+          </div>
+        </Reveal>
+      ))
+    }
+  </dl>
+
+  <Reveal client:visible>
+    <p class="t-caption pv-foot">
+      The full policy is in <a href="/privacy">Privacy</a>.
+    </p>
+  </Reveal>
+</Chapter>
+
+<style>
+  .pv-head {
+    max-width: 1040px;
+  }
+  .pv-h2 {
+    margin-top: 18px;
+  }
+  .pv-lede {
+    margin-top: 22px;
+  }
+  .pv-list {
+    margin: clamp(48px, 6vw, 84px) 0 0;
+    max-width: 1100px;
+  }
+  .pv-row {
+    display: grid;
+    gap: 12px;
+    padding-block: clamp(26px, 3vw, 36px);
+    border-top: 1px solid var(--tone-hairline);
+  }
+  .pv-dt {
+    margin: 0;
+    max-width: 20ch;
+  }
+  .pv-dd {
+    margin: 0;
+    max-width: 58ch;
+  }
+  @media (min-width: 900px) {
+    .pv-row {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 40px;
+      align-items: start;
+    }
+  }
+  .pv-foot {
+    margin-top: 40px;
+  }
+  .pv-foot a {
+    color: var(--tone-ink2);
+    text-underline-offset: 3px;
+  }
+  .pv-foot a:hover {
+    color: var(--tone-ink);
+  }
+</style>

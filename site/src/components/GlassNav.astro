@@ -1,0 +1,219 @@
+---
+import Wordmark from './Wordmark.astro'
+
+const links = [
+  { href: '/#note', label: 'Notes' },
+  { href: '/#ask', label: 'Ask' },
+  { href: '/#privacy', label: 'Privacy' },
+  { href: '/#faq', label: 'FAQ' },
+]
+---
+
+<header id="nav" class="nav" data-nav-tone="light">
+  <div class="nav-wash" aria-hidden="true"></div>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand" aria-label="Prism, home">
+      <Wordmark size={17} wordSize={17} />
+    </a>
+
+    <nav class="nav-links" aria-label="Sections">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <a href="/#access" class="nav-cta-hit">
+      <span class="nav-cta">Request access</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: var(--nav-h);
+    color: var(--color-ink);
+    transition: color 0.28s ease;
+  }
+  .nav[data-nav-tone='dark'] {
+    color: var(--color-night-ink);
+  }
+
+  /* The wash and its hairline only appear once the page has moved; at the top
+     the nav floats on the hero with nothing behind it. */
+  .nav-wash {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition:
+      opacity 0.28s ease,
+      background-color 0.28s ease;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav[data-scrolled='true'] .nav-wash {
+    opacity: 1;
+  }
+  .nav[data-nav-tone='dark'] .nav-wash {
+    background: rgba(14, 14, 15, 0.72);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-brand {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+  }
+
+  .nav-links {
+    margin-inline: auto;
+    display: flex;
+    gap: 26px;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.008em;
+    color: var(--color-ink2);
+    text-decoration: none;
+    line-height: 44px;
+    transition: color 0.18s ease;
+  }
+  .nav[data-nav-tone='dark'] .nav-links a {
+    color: var(--color-night-ink2);
+  }
+  .nav-links a:hover {
+    color: inherit;
+  }
+  @media (max-width: 899px) {
+    .nav-links {
+      display: none;
+    }
+    .nav-inner {
+      justify-content: space-between;
+    }
+  }
+
+  .nav-cta-hit {
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+    text-decoration: none;
+  }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    padding-inline: 15px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: -0.008em;
+    background: var(--color-ink);
+    color: #fff;
+    transition:
+      transform 0.18s var(--ease-press),
+      background-color 0.28s ease,
+      color 0.28s ease;
+  }
+  .nav[data-nav-tone='dark'] .nav-cta {
+    background: var(--color-night-ink);
+    color: var(--color-ink);
+  }
+  .nav-cta-hit:active .nav-cta {
+    transform: scale(0.975);
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav')!
+  const chapters = [...document.querySelectorAll<HTMLElement>('[data-tone]')]
+
+  /* The nav is whatever colour the chapter beneath it is.
+
+     Worked out by asking which chapter contains the line just under the nav,
+     rather than by listening for crossings: an intersection callback can
+     deliver several chapters at once during a fast flick or a jump to an
+     anchor, and then the answer depends on the order they happen to arrive in.
+     This cannot land on the wrong one.
+
+     Offsets are cached because they only move when the page reflows, which
+     keeps the scroll handler free of layout reads. */
+  let marks: { top: number; bottom: number; dark: boolean }[] = []
+
+  function measure() {
+    marks = chapters.map((el) => {
+      let top = 0
+      for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) top += n.offsetTop
+      return { top, bottom: top + el.offsetHeight, dark: el.dataset.tone === 'dark' }
+    })
+  }
+
+  function paint() {
+    const line = window.scrollY + nav.offsetHeight
+    let dark = false
+    for (const m of marks) {
+      if (line >= m.top && line < m.bottom) dark = m.dark
+    }
+    nav.dataset.navTone = dark ? 'dark' : 'light'
+    nav.dataset.scrolled = String(window.scrollY > 8)
+  }
+
+  let queued = false
+  function onScroll() {
+    if (queued) return
+    queued = true
+    requestAnimationFrame(() => {
+      queued = false
+      paint()
+    })
+  }
+
+  measure()
+  paint()
+  addEventListener('scroll', onScroll, { passive: true })
+
+  /* A second source of wake-ups. The observer decides nothing — it just asks
+     for a repaint when a chapter edge crosses the nav — so the answer still
+     comes from the position maths above and cannot depend on callback order.
+     It covers the cases a scroll listener misses, such as a jump to an anchor
+     or a layout shift under a stationary page. */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(onScroll, {
+      rootMargin: `-${nav.offsetHeight}px 0px -100% 0px`,
+      threshold: 0,
+    })
+    chapters.forEach((c) => io.observe(c))
+  }
+  addEventListener('resize', () => {
+    measure()
+    paint()
+  })
+  // Mockups settle into their scaled height a frame or two after hydration.
+  addEventListener('load', () => {
+    measure()
+    paint()
+  })
+  setTimeout(() => {
+    measure()
+    paint()
+  }, 1200)
+</script>

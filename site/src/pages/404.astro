@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro'
+---
+
+<Base
+  title="Not found — Prism"
+  description="That page does not exist."
+>
+  <section data-tone="light" class="nf">
+    <div class="nf-inner">
+      <h1 class="t-h2">That page does not exist.</h1>
+      <p class="t-lede nf-lede">
+        It may have moved, or it may never have been here. The home page is a
+        good place to start.
+      </p>
+      <a class="nf-btn" href="/">Back to Prism</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    min-height: 70svh;
+    display: grid;
+    place-items: center;
+    padding-top: calc(var(--nav-h) + 64px);
+    padding-bottom: 96px;
+    padding-inline: var(--gutter);
+  }
+  .nf-inner { max-width: 620px; }
+  .nf-lede { margin-top: 20px; }
+  .nf-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    margin-top: 30px;
+    padding-inline: 22px;
+    border-radius: var(--radius-field);
+    background: var(--color-ink);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    text-decoration: none;
+    transition: transform 0.18s var(--ease-press);
+  }
+  .nf-btn:active { transform: scale(0.975); }
+</style>

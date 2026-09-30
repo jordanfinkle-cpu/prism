@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro'
+import { EFFECTIVE } from '../lib/legal.js'
+
+interface Props {
+  title: string
+  description: string
+  heading: string
+}
+const { title, description, heading } = Astro.props
+---
+
+<Base title={title} description={description}>
+  <article data-tone="light" class="legal">
+    <div class="legal-inner">
+      <h1 class="legal-h1">{heading}</h1>
+      <p class="legal-date">Last updated {EFFECTIVE}</p>
+      <div class="prose"><slot /></div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .legal {
+    padding-top: calc(var(--nav-h) + clamp(48px, 7vw, 92px));
+    padding-bottom: clamp(72px, 9vw, 120px);
+    padding-inline: var(--gutter);
+  }
+  .legal-inner {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+  .legal-h1 {
+    margin: 0;
+    font-size: clamp(38px, 5vw, 56px);
+    font-weight: 600;
+    letter-spacing: -0.032em;
+    line-height: 1.06;
+  }
+  .legal-date {
+    margin: 14px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink3);
+  }
+
+  .prose {
+    margin-top: clamp(36px, 4vw, 52px);
+  }
+  .prose :global(h2) {
+    margin: 46px 0 0;
+    font-size: clamp(22px, 2.2vw, 27px);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    line-height: 1.2;
+  }
+  .prose :global(h3) {
+    margin: 30px 0 0;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.014em;
+  }
+  .prose :global(p) {
+    margin: 14px 0 0;
+    font-size: 16.5px;
+    line-height: 1.62;
+    color: var(--color-ink2);
+    text-wrap: pretty;
+  }
+  .prose :global(ul) {
+    margin: 14px 0 0;
+    padding-left: 20px;
+  }
+  .prose :global(li) {
+    margin-top: 9px;
+    font-size: 16.5px;
+    line-height: 1.62;
+    color: var(--color-ink2);
+  }
+  .prose :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .prose :global(a) {
+    color: var(--color-ink);
+    text-underline-offset: 3px;
+  }
+  .prose :global(hr) {
+    margin: 46px 0 0;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+  }
+</style>
