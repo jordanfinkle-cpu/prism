@@ -1,7 +1,7 @@
 {
-  "version": "2.9.2",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.9.2/Prism-Setup.exe",
-  "sha256": "acb3df0d47dc8a3a6a3d4d1568a8dd3fee7d52ff03e7806d02644af6951fe9d1",
-  "notes": "Prism 2.9.2: a dropped connection no longer takes your dictation with it. If your network faltered part-way through a long dictation, Prism pasted only the words it had heard before the drop and quietly discarded the rest — no warning, and nothing left on the clipboard to recover. It had the whole recording in hand the entire time and was not using it. Now it notices when it has missed anything and falls back to the complete recording, so you get everything you said. Short bursts on a good connection are unchanged: the fast path still handles those. Your audio is never stored. Free.",
+  "version": "2.9.4",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.9.4/Prism-Setup.exe",
+  "sha256": "d3a0ede38ca3ce8dc887ea8ea162a2aa26e96cf5471c8bf3acce834cd7158138",
+  "notes": "Prism 2.9.4: Windows, level with the Mac. A new look and a new mark. The meeting card and the dictation pill are now islands, as on the Mac: one solid shape that grows, shrinks and moves between states in a single smooth motion, with clicks passing through the space around it. Deleted notes wait in Settings > Notes > Recently deleted for 30 days, with their transcript, recording and tasks, so you can bring them back. Choose your own dictation key: hold the key you want for three seconds. Notes open at once, on Prism notes. And Prism never deletes a note outright: if a file in it is in use, it waits and tries again. Free.",
   "min_windows": "10.0"
 }
