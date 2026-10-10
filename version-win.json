@@ -1,7 +1,7 @@
 {
-  "version": "2.9.5",
-  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.9.5/Prism-Setup.exe",
-  "sha256": "a32684932fa3774c1901b1cff365136f2f7309656deefdc941b9043111ce09e5",
-  "notes": "Prism 2.9.5: the new mark everywhere. If your taskbar button or desktop shortcut still showed Prism's old icon after 2.9.4, this update clears Windows' icon cache so they show the six-legged asterisk, the same mark as the app and the Mac. Also in this version, from 2.9.4: a new look, the meeting card and dictation pill as smooth islands, Recently deleted, your own dictation key, and notes that open at once. Free.",
+  "version": "2.9.6",
+  "url": "https://github.com/jordanfinkle-cpu/prism/releases/download/v2.9.6/Prism-Setup.exe",
+  "sha256": "ac87f27e546efcf01e91063feb6d011f14e68081d5117ee96a3b91869f5246ec",
+  "notes": "Prism 2.9.6: the left nav starts at the top. Windows has no traffic lights in the corner, so search, folders and notes now start at the top of the window instead of below an empty strip. The title bar keeps its minimize, maximize and close buttons where they were. Also in recent versions: the new mark on taskbars and desktops (2.9.5); a new look, the meeting card and dictation pill as smooth islands, Recently deleted, your own dictation key, and notes that open at once (2.9.4). Free.",
   "min_windows": "10.0"
 }
