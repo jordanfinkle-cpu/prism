@@ -296,16 +296,18 @@ h2 .dim{color:inherit}
 .dl{margin:44px 0 0;max-width:470px;scroll-margin-top:96px}
 .dl-h{margin:0 0 12px;color:rgba(255,255,255,.4)}
 .dl-row{display:flex;gap:10px;flex-wrap:wrap}
-.dl-btn{flex:1 1 210px;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;
-  background:rgba(255,255,255,.1);color:#fff;text-decoration:none;
-  transition:background .2s,transform .2s}
-.dl-btn:hover{background:rgba(255,255,255,.16)}
-.dl-btn:active{transform:scale(.98)}
-.dl-btn.mine{background:#fff;color:var(--ink)}
+/* A very faint tile, not a button: the logo, the label, the version under it.
+   The label underlines on hover and the tile lifts a shade; nothing moves. */
+.dl-btn{display:flex;align-items:center;gap:10px;padding:11px 16px 11px 14px;border-radius:12px;
+  background:rgba(255,255,255,.045);color:#fff;text-decoration:none;transition:background .2s}
+.dl-btn:hover{background:rgba(255,255,255,.07)}
 .dl-btn svg{width:20px;height:20px;flex:none}
-.dl-btn b{display:block;font-size:14.5px;font-weight:600}
-.dl-btn small{display:block;font-size:12px;opacity:.6;margin-top:1px}
-.dl-btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+.dl-btn b{display:block;font-size:15px;font-weight:600;text-decoration:underline;text-decoration-color:transparent;
+  text-decoration-thickness:1.5px;text-underline-offset:4px;transition:text-decoration-color .2s}
+.dl-btn:hover b,.dl-btn:focus-visible b{text-decoration-color:currentColor}
+.dl-btn:focus-visible{outline:none}
+.dl-btn small{display:block;font-size:12px;opacity:.55;margin-top:2px}
+.dl-btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .dl-note{margin:12px 0 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.55)}
 .lanyard{position:relative;height:820px}
 @media (max-width:900px){.lanyard{height:720px;margin:0 -16px}}
@@ -1561,12 +1563,9 @@ if (!form.dataset.done) setDone(false);
      version-win.json   already written by every Windows release
      download-mac.json  {"version","url"}; url null until a Mac build is public,
                         and until then the Mac button says so instead of 404ing
-   The button for the visitor's own OS is the bright one. */
+   */
 (() => {
   const mac = document.getElementById('dlMac'), win = document.getElementById('dlWin');
-  const ua = navigator.userAgent, touch = navigator.maxTouchPoints > 1;
-  const onMac = /Macintosh/i.test(ua) && !touch;
-  if (/Windows/i.test(ua)) win.classList.add('mine');
   const get = f => fetch(f, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null);
   const ok = u => typeof u === 'string' && /^https:\/\/github\.com\/jordanfinkle-cpu\/prism\/releases\//.test(u);
   get('/version-win.json').then(v => {
@@ -1578,7 +1577,6 @@ if (!form.dataset.done) setDone(false);
     const label = document.getElementById('dlMacV');
     if (!v || !ok(v.url)) { label.textContent = 'Coming soon'; return; }
     mac.href = v.url; mac.removeAttribute('aria-disabled'); mac.removeAttribute('tabindex');
-    if (onMac) mac.classList.add('mine');
     label.textContent = 'Version ' + v.version + ' · macOS ' + (v.min_macos || '13') + ' or later';
   });
 })();
