@@ -1,0 +1,106 @@
+---
+import Chapter from '../components/Chapter.astro'
+import Reveal from '../components/Reveal.jsx'
+import { FAQ } from '../lib/faq.js'
+---
+
+<Chapter id="faq" tone="light">
+  <div class="fq">
+    <Reveal client:visible>
+      <h2 class="t-h2">Questions, answered.</h2>
+    </Reveal>
+
+    <div class="fq-list">
+      {
+        FAQ.map((item) => (
+          <details class="fq-item" name="faq">
+            <summary class="fq-q">
+              <span>{item.q}</span>
+              <span class="fq-mark" aria-hidden="true" />
+            </summary>
+            <div class="fq-a-wrap">
+              <p class="fq-a">{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</Chapter>
+
+<style>
+  .fq {
+    max-width: 880px;
+  }
+  .fq-list {
+    margin-top: clamp(36px, 4vw, 56px);
+    border-top: 1px solid var(--hairline);
+  }
+  .fq-item {
+    border-bottom: 1px solid var(--hairline);
+  }
+  .fq-q {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 56px;
+    padding-block: 16px;
+    cursor: pointer;
+    font-size: clamp(17px, 1.5vw, 20px);
+    font-weight: 500;
+    letter-spacing: -0.016em;
+    color: var(--color-ink);
+  }
+  .fq-q::-webkit-details-marker {
+    display: none;
+  }
+  .fq-mark {
+    flex: none;
+    position: relative;
+    width: 14px;
+    height: 14px;
+  }
+  .fq-mark::before,
+  .fq-mark::after {
+    content: '';
+    position: absolute;
+    background: var(--color-ink2);
+    border-radius: 1px;
+    transition: transform 0.32s var(--ease-expand);
+  }
+  .fq-mark::before {
+    inset: 6px 0;
+    height: 2px;
+  }
+  .fq-mark::after {
+    inset: 0 6px;
+    width: 2px;
+  }
+  .fq-item[open] .fq-mark::after {
+    transform: scaleY(0);
+  }
+
+  /* 0fr → 1fr animates a height the browser knows without measuring it. */
+  .fq-a-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.32s var(--ease-expand);
+  }
+  .fq-item[open] .fq-a-wrap {
+    grid-template-rows: 1fr;
+  }
+  .fq-a {
+    overflow: hidden;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-ink2);
+    max-width: 66ch;
+    padding-bottom: 0;
+  }
+  .fq-item[open] .fq-a {
+    padding-bottom: 22px;
+  }
+</style>

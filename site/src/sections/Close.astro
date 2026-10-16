@@ -1,0 +1,31 @@
+---
+import Chapter from '../components/Chapter.astro'
+import Reveal from '../components/Reveal.jsx'
+import RequestAccess from '../components/RequestAccess.jsx'
+---
+
+<Chapter id="access" tone="dark">
+  <div class="cl">
+    <Reveal client:visible>
+      <h2 class="t-h2 cl-h2">Free, invite only, opening up as we go.</h2>
+    </Reveal>
+    <Reveal client:visible delay={0.08}>
+      <p class="t-lede cl-lede">
+        Prism is free while it is invite only. We let people in as we scale, in the
+        order they asked.
+      </p>
+    </Reveal>
+    <Reveal client:visible delay={0.14}>
+      <div class="cl-form">
+        <RequestAccess client:visible variant="close" source="site-close" />
+      </div>
+    </Reveal>
+  </div>
+</Chapter>
+
+<style>
+  .cl { max-width: 900px; }
+  .cl-h2 { max-width: 17ch; }
+  .cl-lede { margin-top: 22px; }
+  .cl-form { margin-top: 34px; }
+</style>

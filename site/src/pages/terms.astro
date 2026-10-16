@@ -1,0 +1,88 @@
+---
+import Legal from '../layouts/Legal.astro'
+import { ENTITY, CONTACT } from '../lib/legal.js'
+
+/* Scoped to what Prism is today: free, invite only, no payment, no company
+   formed. Deliberately no arbitration clause, no venue and no choice of law —
+   those need a lawyer and a legal entity, and a clause with a blank in it is
+   worse than no clause. The longer draft lives in prism-aai/docs/legal. */
+---
+
+<Legal
+  title="Terms — Prism"
+  description="The terms for using Prism while it is free and invite only."
+  heading="Terms"
+>
+  <p>
+    Prism is free and invite only. These terms are short because the product is
+    early and there is not much to argue about yet. They will get longer when
+    there is.
+  </p>
+
+  <h2>What you get</h2>
+  <p>
+    An invite to use the Prism apps, at no charge, for as long as we keep the
+    invite open. We can change what the product does, and we can stop offering
+    it. If we are going to stop, we will give you notice and a way to get your
+    notes out.
+  </p>
+
+  <h2>Your account</h2>
+  <p>
+    One account, for you. Do not share your invite or your sign-in code. Tell us
+    at <a href={`mailto:${CONTACT}`}>{CONTACT}</a> if you think someone else is in
+    your account.
+  </p>
+
+  <h2>Recording is on you</h2>
+  <p>
+    <strong>You are responsible for the legality of every recording you make.</strong>
+    Prism records from your computer and does not announce itself to anyone
+    else on the call. Recording law varies: some places need only your consent,
+    some need everyone's. Knowing which one applies, and getting consent where
+    it is needed, is your job and not ours.
+  </p>
+  <p>
+    Do not use Prism to record people you are not allowed to record, to harass
+    anyone, or to break the law where you are.
+  </p>
+
+  <h2>Your content is yours</h2>
+  <p>
+    Your recordings, transcripts and notes belong to you. We process them to
+    provide the product, as described in <a href="/privacy">Privacy</a>, and for
+    nothing else. We do not train models on them and we do not sell them.
+  </p>
+
+  <h2>What we do not promise</h2>
+  <p>
+    Transcription and note-writing are automated and imperfect. Accuracy drops
+    with crosstalk, bad audio, and unfamiliar names. <strong>Do not rely on a Prism
+    note as a record of a legally significant conversation without checking the
+    transcript.</strong>
+  </p>
+  <p>
+    The product is provided as it is, without warranties. It may be unavailable,
+    it may lose a write-up, and it depends on third-party services we do not
+    control. Keep your own copy of anything that matters.
+  </p>
+
+  <h2>Ending it</h2>
+  <p>
+    You can stop using Prism whenever you like; email
+    <a href={`mailto:${CONTACT}`}>{CONTACT}</a> to delete your account. We can end
+    your access if you break these terms, and we will tell you why.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    If these terms change materially we will date the change here and email
+    account holders. {ENTITY} is early-stage and not yet incorporated; when that
+    changes, the company behind the product will be named on this page.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    <a href={`mailto:${CONTACT}`}>{CONTACT}</a>
+  </p>
+</Legal>

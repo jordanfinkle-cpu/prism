@@ -1,26 +1,25 @@
 {
   "name": "prism-site",
   "private": true,
-  "version": "1.0.0",
   "type": "module",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "deploy": "vite build && node deploy.mjs"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "^5.3.0",
-    "@gravity-ui/icons": "^2.20.0",
-    "@heroui/react": "^3.2.2",
-    "@heroui/styles": "^3.2.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@astrojs/react": "6.0.5",
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource-variable/inter": "5.3.0",
+    "astro": "7.3.2",
+    "motion": "12.43.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "tailwindcss": "^4.1.0",
-    "vite": "^7.1.0"
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
   }
 }

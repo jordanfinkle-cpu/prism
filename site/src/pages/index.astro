@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro'
+import Hero from '../sections/Hero.astro'
+import Channels from '../sections/Channels.astro'
+import NoteScrub from '../sections/NoteScrub.jsx'
+import Ask from '../sections/Ask.astro'
+import Tasks from '../sections/Tasks.astro'
+import Folders from '../sections/Folders.astro'
+import DetectScrub from '../sections/DetectScrub.jsx'
+import Privacy from '../sections/Privacy.astro'
+import Devices from '../sections/Devices.astro'
+import Close from '../sections/Close.astro'
+import Faq from '../sections/Faq.astro'
+import { TITLE, DESCRIPTION, softwareJsonLd, faqJsonLd } from '../lib/seo.js'
+---
+
+<Base title={TITLE} description={DESCRIPTION} jsonLd={[softwareJsonLd, faqJsonLd]}>
+  <Hero />
+  <Channels />
+
+  {/* The pinned chapters carry their own tone wrapper so the nav can read it. */}
+  <section id="note" data-tone="light" class="pin-chapter">
+    <NoteScrub client:visible />
+  </section>
+
+  <Ask />
+  <Tasks />
+  <Folders />
+
+  <section id="detect" data-tone="dark" class="pin-chapter">
+    <DetectScrub client:visible />
+  </section>
+
+  <Privacy />
+  <Devices />
+  <Close />
+  <Faq />
+</Base>
+
+<style>
+  .pin-chapter {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+/* The chevron-asterisk, inlined so it inherits currentColor and costs no
+   request. Monochrome by rule: never in a badge, never in an accent.
+   Source of truth: prism-aai/ui-react/public/asterisk-mark.svg */
+interface Props {
+  size?: number
+  word?: boolean
+  wordSize?: number
+  class?: string
+}
+const { size = 17, word = true, wordSize = 17, class: cls = '' } = Astro.props
+---
+
+<span class={`wordmark ${cls}`}>
+  <svg
+    viewBox="0 0 1000 1000"
+    width={size}
+    height={size}
+    fill="currentColor"
+    aria-hidden="true"
+    style="display:block;flex:none"
+  >
+    <path d="M194.176 98.717L98.717 194.176L337.041 432.5L0 432.5L0 567.5L337.041 567.5L98.717 805.824L194.176 901.283L565.195 530.264A42.8 42.8 0 0 0 565.195 469.736Z"></path>
+    <path d="M432.5 0L567.5 0L567.5 337.041L805.824 98.717L901.283 194.176L662.959 432.5L1000 432.5L1000 567.5L662.959 567.5L901.283 805.824L805.824 901.283L567.5 662.959L567.5 1000L432.5 1000L432.5 783.592L625.511 590.58A128.1 128.1 0 0 0 625.511 409.42L432.5 216.408Z"></path>
+  </svg>
+  {
+    word && (
+      <span
+        style={`font-size:${wordSize}px;font-weight:500;letter-spacing:-.015em;line-height:1`}
+      >
+        Prism
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+</style>
