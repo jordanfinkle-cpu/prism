@@ -315,21 +315,38 @@ h2 .dim{color:inherit}
 /* over the card, the whole section takes the card's cursor; while dragging, nothing selects */
 .invite.on-card,.invite.on-card *{cursor:var(--card-cursor)!important}
 .invite.dragging,.invite.dragging *{user-select:none;-webkit-user-select:none}
-/* The real form sits under the 3D card: it takes the typing (and the phone
-   keyboard, autofill, paste, screen readers) while the card draws it. */
-.badge-form{position:absolute;left:50%;top:46%;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.badge-form input{font-size:16px}
+/* The invite request: a plain form beside the badge. The badge hangs back
+   side out until the request goes through, then turns round with the name
+   and email on it, and the form gives way to the confirmation. */
+.rq{margin:36px 0 0;max-width:470px;display:grid;gap:16px}
+.rq-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:600px){.rq-fields{grid-template-columns:1fr}}
+.rq label{display:grid;gap:8px;min-width:0}
+.rq label .mono{font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.45)}
+.rq input{width:100%;min-width:0;height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--night-line);
+  background:rgba(255,255,255,.045);color:#fff;font-size:16px;outline:none;transition:border-color .2s,background-color .2s}
+.rq input::placeholder{color:rgba(255,255,255,.3)}
+.rq input:hover{background:rgba(255,255,255,.06)}
+.rq input:focus{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.07)}
+.rq input[aria-invalid="true"]{border-color:rgba(255,107,97,.85)}
+.rq-row{display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap}
+.rq-btn{height:46px;padding:0 22px;background:#fff;color:var(--ink);font-size:15px;font-weight:600}
+.rq-btn:hover{background:#ECECED}
+.rq-btn:disabled{opacity:.6;cursor:default}
+.rq-btn:focus-visible{outline-color:#fff}
+.rq-msg{font-size:13.5px;color:rgba(255,255,255,.55)}
+.rq-msg.err{color:#FF6B61}
+.rq-done{margin:36px 0 0;max-width:470px;display:grid;justify-items:start;gap:8px}
+.rq-ok{display:flex;align-items:center;gap:10px;margin:0;font-size:22px;font-weight:650;letter-spacing:-.025em}
+.rq-ok svg{width:22px;height:22px;color:var(--green)}
+.rq-note{margin:0;font-size:15px;line-height:1.5;color:rgba(255,255,255,.7)}
+.rq-note b{color:#fff;font-weight:600;overflow-wrap:anywhere}
+.rq-edit{margin-top:6px;padding:4px 0;background:none;border:0;color:rgba(255,255,255,.75);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.rq-edit:hover{color:#fff}
+.rq[hidden],.rq-done[hidden]{display:none}
 .lan-foot{position:absolute;left:0;right:0;bottom:28px;display:flex;justify-content:center;align-items:center;gap:14px;color:rgba(255,255,255,.4);pointer-events:none}
-.lan-foot .hint.err{color:#FF6B61}
-.lan-foot button{pointer-events:auto;background:none;border:0;color:rgba(255,255,255,.75);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:var(--mono);font-size:12px;letter-spacing:.02em;text-transform:uppercase;padding:4px}
-.lan-foot button:hover{color:#fff}
-/* No WebGL: the same form, shown as a plain white card. */
-.lanyard.fallback .badge-form{left:50%;top:50%;width:min(320px,calc(100% - 32px));height:auto;overflow:visible;clip-path:none;white-space:normal;transform:translate(-50%,-50%);
-  display:grid;gap:14px;padding:28px 24px;border-radius:20px;background:#fff;color:var(--ink)}
-.lanyard.fallback .badge-form label{display:grid;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
-.lanyard.fallback .badge-form input:not([type=radio]){border:0;border-bottom:1.5px solid var(--line-2);padding:6px 0;font-family:var(--ui);font-size:17px;outline:none;background:none}
-.lanyard.fallback .badge-form button{height:44px;border-radius:999px;border:0;background:var(--ink);color:#fff;font-weight:600;cursor:pointer}
-.lanyard.fallback .lan-foot .hint{display:none}
+/* No WebGL: no badge, and the form beside it is all there is. */
+.lanyard.fallback{display:none}
 
 /* ---------- footer ---------- */
 footer{padding:36px 0 44px;font-size:13px;color:var(--ink-3)}
@@ -520,7 +537,22 @@ footer a:hover{color:var(--ink)}
       <div class="copy">
         <span class="kicker mono rv">03 — Early access</span>
         <h2 class="rv d1">Prism is invite only. <span class="dim">Fill out your badge.</span></h2>
-        <p class="sub rv d2">We let new people in every week. Click the badge, put your name on it, and we’ll email you when it’s your turn.</p>
+        <p class="sub rv d2">We let new people in every week. Put your name down and we’ll email you when it’s your turn.</p>
+        <form class="rq rv d2" id="badgeForm" novalidate aria-label="Request an invite">
+          <div class="rq-fields">
+            <label for="fName"><span class="mono">Name</span><input id="fName" name="name" autocomplete="name" placeholder="Your name" maxlength="40" required></label>
+            <label for="fEmail"><span class="mono">Work email</span><input id="fEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" required></label>
+          </div>
+          <div class="rq-row">
+            <button class="pill rq-btn" type="submit" id="fSend">Request invite <svg width="15" height="15" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <span class="rq-msg" id="rqMsg" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+        <div class="rq-done" id="rqDone" hidden>
+          <p class="rq-ok"><svg aria-hidden="true"><use href="#i-check"/></svg>Access requested</p>
+          <p class="rq-note">We’ll email <b id="rqEmail"></b> when your invite is ready.</p>
+          <button type="button" class="rq-edit mono" id="again">Edit details</button>
+        </div>
         <ul class="perks rv d3">
           <li><svg><use href="#i-gift"/></svg>Free for all of early access. No card, no trial clock.</li>
           <li><svg><use href="#i-laptop"/></svg>Mac and Windows.</li>
@@ -537,12 +569,7 @@ footer a:hover{color:var(--ink)}
       </div>
 
       <div class="lanyard" id="lanyard">
-        <form class="badge-form" id="badgeForm" novalidate aria-label="Invite request">
-          <label for="fName">Name <input id="fName" name="name" autocomplete="name" placeholder="Your name" maxlength="40" required></label>
-          <label for="fEmail">Work email <input id="fEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" required></label>
-          <button type="submit" id="fSend">Request invite</button>
-        </form>
-        <div class="lan-foot mono"><span class="hint" id="lanHint">Click the badge to fill it out</span><button type="button" id="again" hidden>Edit badge</button></div>
+        <div class="lan-foot mono"><span class="hint" id="lanHint">Fill out the form to put your name on it</span></div>
       </div>
     </div>
   </section>
@@ -1535,19 +1562,26 @@ async function typeTerm(){
 for (const el of [term, $('#termGhost')]) script.forEach(([cls, txt]) => { const s = document.createElement('span'); if (cls) s.className = cls; s.textContent = txt; el.appendChild(s); });
 if (!reduce) { const mio = new IntersectionObserver(es => { if (es[0].isIntersecting){ mio.disconnect(); typeTerm(); } }, {threshold:.4}); mio.observe(term); }
 
-/* ---------- invite badge: the form logic (the 3D card below draws it) ---------- */
+/* ---------- invite request: the form beside the badge ----------
+   The 3D badge (below) shows its back until the request goes through, then
+   turns round with the name and email from this form on it. */
 const form = $('#badgeForm'), fName = $('#fName'), fEmail = $('#fEmail'), fSend = $('#fSend');
-const hint = $('#lanHint'), again = $('#again'), lan = $('#lanyard');
+const msg = $('#rqMsg'), doneBox = $('#rqDone'), again = $('#again'), lan = $('#lanyard');
 const KEY = 'prism-invite';
 form.dataset.no = String(Math.floor(400 + Math.random() * 600)).padStart(4, '0');
 const emit = (type = 'badge:change') => form.dispatchEvent(new CustomEvent(type));
 const touch = matchMedia('(hover: none)').matches;
 function setDone(on){
   form.dataset.done = on ? '1' : '';
-  again.hidden = !on;
-  hint.textContent = on ? (touch ? 'Drag it, or tap to spin it' : 'Drag it, or click to spin it') : (touch ? 'Tap a line to fill it out · tap the badge to spin it' : 'Click a line to fill it out · click the badge to spin it');
-  fSend.textContent = on ? 'Requested ✓' : 'Request invite';
+  $('#lanHint').textContent = on ? (touch ? 'Drag it, or tap to spin it' : 'Drag it, or click to spin it') : 'Fill out the form to put your name on it';
+  form.hidden = on; doneBox.hidden = !on;
+  if (on) $('#rqEmail').textContent = fEmail.value.trim();
   emit();
+}
+function markErr(which){
+  form.dataset.err = which || '';
+  fName.setAttribute('aria-invalid', which === 'name');
+  fEmail.setAttribute('aria-invalid', which === 'email');
 }
 try {
   const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
@@ -1605,32 +1639,28 @@ async function submitInvite(data){
   } finally { clearTimeout(t); }
 }
 let sending = false;
-function flash(text, isErr){ hint.textContent = text; hint.classList.toggle('err', !!isErr); }
+function flash(text, isErr){ msg.textContent = text; msg.classList.toggle('err', !!isErr); }
 form.addEventListener('submit', async ev => {
   ev.preventDefault();
-  if (form.dataset.done === '1') return;
+  if (form.dataset.done === '1' || sending) return;
   const name = fName.value.trim(), email = fEmail.value.trim();
-  if (!name) { form.dataset.err = 'name'; fName.focus({preventScroll:true}); emit(); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { form.dataset.err = 'email'; fEmail.focus({preventScroll:true}); emit(); return; }
-  form.dataset.err = '';
-  if (sending) return;
+  if (!name) { markErr('name'); flash('Add your name.', true); fName.focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markErr('email'); flash('Add a work email we can reach you at.', true); fEmail.focus(); return; }
+  markErr('');
   const data = { name, email };
-  sending = true; flash('Sending…');
+  sending = true; fSend.disabled = true; flash('Sending…');
   const r = await submitInvite(data);
-  sending = false;
-  if (!r.ok) {
-    if (r.field) form.dataset.err = r.field;
-    flash(r.error, true); emit();
-    return;
-  }
-  hint.classList.remove('err');
+  sending = false; fSend.disabled = false;
+  if (!r.ok) { if (r.field) markErr(r.field); flash(r.error, true); return; }
+  flash('');
   try { localStorage.setItem(KEY, JSON.stringify({ ...data, sent: true })); } catch (_) {}
   document.activeElement?.blur?.();
+  // one column: the badge sits under the form, so bring it into view before it turns
+  if (innerWidth <= 900 && window.__lanyard) { lan.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); await sleep(reduce ? 0 : 550); }
   setDone(true);
   emit('badge:submitted');
 });
-form.addEventListener('input', () => { form.dataset.err = ''; if (hint.classList.contains('err')) { hint.classList.remove('err'); setDone(false); } else emit(); });
-['change', 'focusin', 'focusout'].forEach(t => form.addEventListener(t, () => emit()));
+form.addEventListener('input', () => { if (form.dataset.err) { markErr(''); flash(''); } emit(); });
 again.addEventListener('click', () => {
   try { const v = JSON.parse(localStorage.getItem(KEY) || '{}'); v.sent = false; localStorage.setItem(KEY, JSON.stringify(v)); } catch (_) {}
   setDone(false);
@@ -1653,9 +1683,9 @@ setTimeout(() => { if (!window.__lanyard) lan.classList.add('fallback'); }, 4000
    strap, the physical card material and the four-Lightformer environment.
    Changed for Prism: Rapier is replaced by a small position-based solver (no
    WASM to load), the strap and both faces of the card are Prism's, the front
-   face is a live drawing of the invite form, and the card stays still until
-   the badge is filled out — one small sway the first time you touch it,
-   then free to drag once the invite is requested.
+   face is a live drawing of the invite form beside it, and the card hangs
+   back side out until the invite is requested, then turns round to show the
+   name on it. Drag it, or click to spin it.
    ===================================================================== */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js';
 
@@ -1766,8 +1796,7 @@ function field(r, label, value, prompt, font, size, active, bad, editable) {
 }
 
 function draw() {
-  const done = form.dataset.done === '1', err = form.dataset.err || '', no = form.dataset.no || '0000';
-  const act = document.activeElement;
+  const done = form.dataset.done === '1', no = form.dataset.no || '0000';
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, A, A);
 
@@ -1780,14 +1809,11 @@ function draw() {
   text('Prism', 108, 127, `650 40px ${UI}`, INK, 'left', -0.6);
   mono('EARLY ACCESS', 660, 124, 23, MUTE, 'right');
   mono(`BADGE #${no} · ${done ? 'ON THE LIST' : 'INVITE ONLY'}`, 56, 202, 23, MUTE);
-  field(R.name, 'NAME', fName.value.trim() ? fName.value : '', '+ Add your name', `700 54px ${UI}`, 54, !done && act === fName, err === 'name', !done);
-  field(R.email, 'WORK EMAIL', fEmail.value.trim() ? fEmail.value : '', '+ Add your work email', `600 32px ${UI}`, 32, !done && act === fEmail, err === 'email', !done);
-  if (!done) {
-    pill(R.send, 41); ctx.fillStyle = INK; ctx.fill();
-    text('Request invite  →', 358, 651, `600 28px ${UI}`, '#FFFFFF', 'center');
-    if (act === fSend) ring(R.send, 41);
-  } else {
-    // where the button was: a quiet pill with the app's confirm-green check
+  // the front mirrors the form beside it; it only faces you once the request is in
+  field(R.name, 'NAME', fName.value.trim() ? fName.value : '', '', `700 54px ${UI}`, 54, false, false, !done);
+  field(R.email, 'WORK EMAIL', fEmail.value.trim() ? fEmail.value : '', '', `600 32px ${UI}`, 32, false, false, !done);
+  if (done) {
+    // a quiet pill with the app's confirm-green check
     pill(R.send, 41); ctx.fillStyle = '#F2F2F3'; ctx.fill();
     ctx.font = `600 28px ${UI}`;
     const label = 'You’re on the list', lw = ctx.measureText(label).width, x0 = 358 - (lw + 46) / 2;
@@ -1874,6 +1900,9 @@ const GRAV = -40, DAMP = 4, SUB = 8, MAX_SPEED = 50;
 let calmUntil = 0;   // after a drag, heavy damping for a moment so the badge eases home instead of swinging
 let SEG = 1, fixedY = 4, restY = 0, W = 1, H = 1;
 let drag = null, nudged = false;
+// which face hangs toward you: the back until the invite is requested, then the front
+let faceYaw = form.dataset.done === '1' ? 0 : Math.PI;
+const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
 const t1 = V(), t2 = V(), mid = V(), xA = V(), yA = V(), zA = V(), m4 = new THREE.Matrix4();
 
 let cx = 0;   // where the card hangs, in world x (the lanyard column's centre)
@@ -1897,7 +1926,8 @@ function layout() {
   SEG = (fixedY - (restY + 1.5)) / 3;
 }
 function rest() {
-  const pts = [[cx, fixedY], [cx, fixedY - SEG], [cx, fixedY - 2 * SEG], [cx, restY + 1.5], [cx - 0.806, restY - 1.148], [cx + 0.806, restY - 1.148]];
+  const s = faceYaw ? -0.806 : 0.806;   // back side out, the bottom corners swap sides
+  const pts = [[cx, fixedY], [cx, fixedY - SEG], [cx, fixedY - 2 * SEG], [cx, restY + 1.5], [cx - s, restY - 1.148], [cx + s, restY - 1.148]];
   P.forEach((q, i) => { q.x.set(pts[i][0], pts[i][1], 0); q.p.copy(q.x); q.v.set(0, 0, 0); q.lerp.copy(q.x); });
 }
 function solve(i, j, L, rope) {
@@ -1926,9 +1956,9 @@ function simulate(dt) {
     }
     for (let i = 1; i < 6; i++) P[i].v.subVectors(P[i].x, P[i].p).multiplyScalar(1 / h);
   }
-  if (!drag) { // the original's angvel.y -= rot.y * 0.25, once per 60 Hz frame
+  if (!drag) { // the original's angvel.y -= rot.y * 0.25, once per 60 Hz frame, toward whichever face should hang out
     t1.subVectors(P[5].x, P[4].x);
-    const dw = -Math.atan2(-t1.z, t1.x) * 0.25 * dt * 60;
+    const dw = -wrapA(Math.atan2(-t1.z, t1.x) - faceYaw) * 0.25 * dt * 60;
     // a turn about the vertical through the card's centre: v = ω × r, with each
     // corner's real offset (past 90° the corners have swapped sides)
     mid.addVectors(P[4].x, P[5].x).multiplyScalar(0.5);
@@ -1970,12 +2000,16 @@ function strap(dt) {
 /* ---------- loop: runs while something moves, sleeps at rest ---------- */
 let running = false, last = 0, quiet = 0, onScreen = true;
 function frame(t) {
-  const dt = Math.min(1 / 30, (t - last) / 1000 || 1 / 60); last = t;
+  // the frame's timestamp can be a hair EARLIER than the performance.now() wake()
+  // started from, and a negative step runs the solver backwards and throws the
+  // badge to wherever its pull points: the twirl just snapped round in one frame
+  let dt = (t - last) / 1000; if (!(dt > 0)) dt = 1 / 60;
+  dt = Math.min(1 / 30, dt); last = t;
   simulate(dt); strap(dt); renderer.render(scene, camera);
   let e = 0; for (let i = 1; i < 6; i++) e += P[i].v.lengthSq();
   for (const q of [P[1], P[2]]) e += q.lerp.distanceToSquared(q.x);
   t1.subVectors(P[5].x, P[4].x);
-  const facing = Math.abs(Math.atan2(-t1.z, t1.x)) < 0.02;   // don't sleep until the front faces the camera again
+  const facing = Math.abs(wrapA(Math.atan2(-t1.z, t1.x) - faceYaw)) < 0.02;   // don't sleep until the right face is toward the camera again
   quiet = e < 1e-4 && facing && !drag ? quiet + 1 : 0;
   if (quiet > 30 || !onScreen) { running = false; return; }
   requestAnimationFrame(frame);
@@ -1987,15 +2021,6 @@ function show() { if (!running) { pose(); strap(1); renderer.render(scene, camer
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
 function toNdc(e) { const r = canvas.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1); }
 function pick(e) { toNdc(e); ray.setFromCamera(ndc, camera); return ray.intersectObjects([cardMesh, clip, clamp], false)[0] || null; }
-function region(h) {
-  if (!h || h.object !== cardMesh || !h.uv || h.uv.x > FRONT.w || h.uv.y > FRONT.h) return h ? 'card' : null;
-  const x = h.uv.x / FRONT.w * CW, y = h.uv.y / FRONT.h * CH;
-  const inside = r => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
-  if (inside(R.name)) return 'name';
-  if (inside(R.email)) return 'email';
-  if (inside(R.send)) return 'send';
-  return 'card';
-}
 const done = () => form.dataset.done === '1';
 function nudge(dir) {
   if (nudged) return;
@@ -2016,29 +2041,24 @@ function cursor(c) { sec.classList.toggle('on-card', !!c); if (c) sec.style.setP
 sec.addEventListener('pointermove', e => {
   if (drag) { dragTo(e); return; }
   const h = pick(e);
-  if (h && !done() && e.pointerType === 'mouse') nudge(Math.sign(e.clientX - (lastX ?? e.clientX)) || 1);
+  if (h && e.pointerType === 'mouse') nudge(Math.sign(e.clientX - (lastX ?? e.clientX)) || 1);
   lastX = e.clientX;
-  const r = region(h);
-  cursor(!h ? '' : done() ? 'grab' : r === 'name' || r === 'email' ? 'text' : r === 'card' ? 'default' : 'pointer');
+  cursor(h ? 'grab' : '');
 });
 sec.addEventListener('pointerleave', () => { if (!drag) cursor(''); });
 sec.addEventListener('pointerdown', e => {
   const h = pick(e);
-  if (!h) return;                                   // not the card: the text underneath behaves as usual
-  if (done()) {
-    drag = { offset: h.point.clone().sub(body.position), target: body.position.clone(), sx: e.clientX, sy: e.clientY };
-    try { sec.setPointerCapture(e.pointerId); } catch (_) {}
-    sec.classList.add('dragging'); getSelection()?.removeAllRanges();
-    cursor('grabbing');
-    wake(); e.preventDefault(); return;
-  }
-  nudge(1);
-  if (e.pointerType === 'mouse') e.preventDefault();   // keep the field that has focus, and select no text
+  if (!h) return;                                   // not the card: the text and the form underneath behave as usual
+  drag = { offset: h.point.clone().sub(body.position), target: body.position.clone(), sx: e.clientX, sy: e.clientY };
+  try { sec.setPointerCapture(e.pointerId); } catch (_) {}
+  sec.classList.add('dragging'); getSelection()?.removeAllRanges();
+  cursor('grabbing');
+  wake(); e.preventDefault();
 });
 // a full turn about the badge's own vertical axis: the back comes round, then the front settles home
 let spinDir = 1;
 function spin() {
-  if (reduce) return;
+  if (reduce || !done()) return;   // the badge stays back side out until it's filled out and requested
   P[4].v.z += 20 * spinDir; P[5].v.z -= 20 * spinDir; spinDir = -spinDir;
   wake();
 }
@@ -2054,28 +2074,42 @@ const release = e => {
 };
 sec.addEventListener('pointerup', release);
 sec.addEventListener('pointercancel', release);
-sec.addEventListener('touchstart', e => { if (done() && pick(e.touches[0])) e.preventDefault(); }, { passive: false });
-sec.addEventListener('click', e => {
-  if (done()) return;
-  const r = region(pick(e));
-  if (!r) return;
-  e.preventDefault();
-  if (r === 'card') spin();                     // anywhere that isn't a line to fill in
-  else if (r === 'name') fName.focus({ preventScroll: true });
-  else if (r === 'email') fEmail.focus({ preventScroll: true });
-  else if (r === 'send') form.requestSubmit();
-});
+sec.addEventListener('touchstart', e => { if (pick(e.touches[0])) e.preventDefault(); }, { passive: false });
 
 /* ---------- form events (the form logic itself lives in the page script) ---------- */
-form.addEventListener('badge:change', draw);
+// the request went through (or was taken back to edit): turn the badge to the face that goes with it
+function face() {
+  const want = done() ? 0 : Math.PI;
+  if (want === faceYaw) return;
+  faceYaw = want;
+  if (reduce) { if (!drag) rest(); show(); return; }
+  // the whole twirl: hard enough to carry it past the face it's heading for, round
+  // the back once more, and onto that face (about 490°, settling in ~2.2 s; a
+  // weaker kick loses to the pull and only makes the half turn)
+  P[4].v.z -= 45; P[5].v.z += 45;
+  wake();
+}
+form.addEventListener('badge:change', () => { draw(); face(); });
 form.addEventListener('badge:submitted', () => {
-  draw();
   if (reduce) return;
-  for (const i of [3, 4, 5]) P[i].v.x += 2.5;   // a toss and a twirl, showing the back
-  spin();
+  for (const i of [3, 4, 5]) P[i].v.x += 2.5;   // a little toss as it turns round
+  wake();
 });
 
-const ro = new ResizeObserver(() => { layout(); if (!drag) rest(); show(); }); ro.observe(sec); ro.observe(lan);
+// A resize re-anchors the badge rather than snapping it to rest: the form giving
+// way to "Access requested" changes the section's height at the very moment the
+// request's twirl starts, and a snap to rest there ended the twirl in one frame.
+let laidOut = false;
+const ro = new ResizeObserver(() => {
+  const ox = cx, oy = fixedY;
+  layout();
+  if (!laidOut || reduce) { laidOut = true; if (!drag) rest(); show(); return; }
+  const dx = cx - ox, dy = fixedY - oy;
+  for (const q of P) { q.x.x += dx; q.x.y += dy; q.p.x += dx; q.p.y += dy; q.lerp.x += dx; q.lerp.y += dy; }
+  P[0].x.set(cx, fixedY, 0);
+  wake(); show();
+});
+ro.observe(sec); ro.observe(lan);
 new IntersectionObserver(es => { onScreen = es[0].isIntersecting; if (onScreen) show(); }).observe(sec);
 // show the trick off once: the first time the badge is in view, it spins
 const sio2 = new IntersectionObserver(es => { if (es[0].isIntersecting) { sio2.disconnect(); setTimeout(spin, 700); } }, { threshold: 0.55 });
@@ -2207,9 +2241,6 @@ function NoteShuffle(stage, notes, opts) {
     x.setTransform(k, 0, 0, k, 0, 0); x.clearRect(0, 0, W, H);
     x.save(); box(x, 0, 0, W, H, 22); x.clip();
     x.fillStyle = "#fff"; x.fillRect(0, 0, W, H);
-    const g = x.createRadialGradient(W, 0, 0, W, 0, W * 1.1);
-    g.addColorStop(0, tp.c + "24"); g.addColorStop(.7, tp.c + "00");
-    x.fillStyle = g; x.fillRect(0, 0, W, H);
     x.restore();
     const pad = 22, inner = W - pad * 2;
     x.font = `500 12.5px ${FONT}`;
