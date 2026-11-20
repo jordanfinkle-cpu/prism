@@ -1,0 +1,116 @@
+---
+import Chapter from '../components/Chapter.astro'
+import Reveal from '../components/Reveal.jsx'
+import { GraphShot, DictationShot } from '../mockups/shots.jsx'
+
+const also = [
+  {
+    head: 'Dictation',
+    body: 'Hold a key, say it, let go. The words land in whatever you were typing.',
+  },
+  {
+    head: 'Graph',
+    body: 'Notes joined by the people, companies and topics they share. Mac today.',
+  },
+  {
+    head: 'Calendar and To Do',
+    body: 'Outlook, calendar links, Microsoft To Do.',
+  },
+]
+---
+
+<Chapter id="devices" tone="light">
+  <div class="dv-head">
+    <Reveal client:visible>
+      <p class="t-eyebrow">Devices</p>
+      <h2 class="t-h2 dv-h2">Every call, wherever you took it.</h2>
+    </Reveal>
+    <Reveal client:visible delay={0.08}>
+      <p class="t-lede dv-lede">
+        Notes, folders and tasks stay in step across your devices through your account.
+        Sign in once.
+      </p>
+    </Reveal>
+  </div>
+
+  <Reveal client:visible delay={0.06}>
+    <div class="dv-cards">
+      <div class="dv-card">
+        <h3 class="dv-card-h">Mac</h3>
+        <p class="dv-card-b">macOS 13 and later. Apple silicon and Intel.</p>
+      </div>
+      <div class="dv-card">
+        <h3 class="dv-card-h">Windows</h3>
+        <p class="dv-card-b">Windows 10 and 11.</p>
+      </div>
+      <div class="dv-card dv-card-quiet">
+        <h3 class="dv-card-h">iPhone</h3>
+        <p class="dv-card-b">A companion app is in early access.</p>
+      </div>
+    </div>
+  </Reveal>
+
+  <p class="sr-only">
+    The graph view: one dot per recording, joined where two calls share a person, a
+    company or a topic.
+  </p>
+
+  <div class="dv-shot">
+    <GraphShot client:visible />
+  </div>
+
+  <div class="dv-also">
+    {
+      also.map((a, i) => (
+        <Reveal client:visible delay={0.05 * i}>
+          <div class="dv-also-item">
+            <h3 class="dv-also-h">{a.head}</h3>
+            <p class="dv-also-b">{a.body}</p>
+            {a.head === 'Dictation' && (
+              <div class="dv-also-shot">
+                <DictationShot client:visible />
+              </div>
+            )}
+          </div>
+        </Reveal>
+      ))
+    }
+  </div>
+</Chapter>
+
+<style>
+  .dv-head { max-width: 1040px; }
+  .dv-h2 { margin-top: 18px; }
+  .dv-lede { margin-top: 22px; }
+
+  .dv-cards {
+    margin-top: clamp(40px, 5vw, 64px);
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-width: 900px;
+  }
+  .dv-card {
+    padding: 20px 22px;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+    box-shadow: var(--ring-card);
+  }
+  .dv-card-quiet { background: var(--color-canvas); box-shadow: 0 0 0 1px var(--hairline); }
+  .dv-card-h { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.016em; }
+  .dv-card-b { margin: 7px 0 0; font-size: 14px; line-height: 1.5; color: var(--color-ink2); }
+
+  .dv-shot { margin-top: clamp(48px, 6vw, 80px); max-width: 1280px; margin-inline: auto; }
+
+  .dv-also {
+    margin-top: clamp(48px, 6vw, 80px);
+    display: grid;
+    gap: 28px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    border-top: 1px solid var(--hairline);
+    padding-top: clamp(32px, 4vw, 48px);
+  }
+  .dv-also-h { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.016em; }
+  .dv-also-b { margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: var(--color-ink2); max-width: 34ch; }
+  .dv-also-shot { margin-top: 16px; }
+</style>

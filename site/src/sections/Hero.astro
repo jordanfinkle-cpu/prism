@@ -1,0 +1,62 @@
+---
+import RequestAccess from '../components/RequestAccess.jsx'
+import Recording from '../components/Recording.astro'
+import HeroShot from '../mockups/HeroShot.jsx'
+---
+
+<section data-tone="light" class="hero">
+  <div class="wrap hero-inner">
+    <p class="t-eyebrow hero-eyebrow">Invite only · Free · Mac and Windows</p>
+
+    <h1 class="t-display">You take the call.<br />Prism takes the notes.</h1>
+
+    <p class="t-lede hero-lede">
+      Prism records from your own computer and writes the note seconds after you
+      hang up. Nothing joins the meeting.
+    </p>
+
+    <div class="hero-form">
+      <RequestAccess client:load variant="hero" />
+    </div>
+
+    <p class="sr-only">
+      A Mac window showing Prism: a call is recording, then the recording stops
+      and the note writes itself — a title, a summary, and the action items
+      agreed on the call.
+    </p>
+
+    <div class="hero-shot">
+      <Recording name="hangup-to-note" label="A call ends and Prism writes the note">
+        <HeroShot client:load />
+      </Recording>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: calc(var(--nav-h) + clamp(56px, 9vw, 124px));
+    padding-bottom: clamp(72px, 9vw, 130px);
+    padding-inline: var(--gutter);
+    background: var(--color-surface);
+  }
+  .hero-inner {
+    display: grid;
+    justify-items: start;
+  }
+  .hero-eyebrow {
+    margin-bottom: 20px;
+  }
+  .hero-lede {
+    margin-top: 24px;
+  }
+  .hero-form {
+    margin-top: 32px;
+    width: 100%;
+  }
+  .hero-shot {
+    margin-top: clamp(56px, 7vw, 96px);
+    width: 100%;
+    max-width: 1280px;
+  }
+</style>

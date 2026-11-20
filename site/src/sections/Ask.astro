@@ -1,0 +1,40 @@
+---
+import Chapter from '../components/Chapter.astro'
+import Reveal from '../components/Reveal.jsx'
+import Recording from '../components/Recording.astro'
+import { ChatShot } from '../mockups/shots.jsx'
+---
+
+<Chapter id="ask" tone="canvas">
+  <div class="ask-head">
+    <Reveal client:visible>
+      <p class="t-eyebrow">Ask your notes</p>
+      <h2 class="t-h2 ask-h2">Ask your notes. Read the receipt.</h2>
+    </Reveal>
+    <Reveal client:visible delay={0.08}>
+      <p class="t-lede ask-lede">
+        Prism answers only from your notes and cites the ones it read. If they do not
+        cover it, it tells you instead of guessing.
+      </p>
+    </Reveal>
+  </div>
+
+  <p class="sr-only">
+    A question about what was promised to a client, answered in a few sentences with
+    two note titles cited underneath, and a second question the notes cannot answer,
+    declined.
+  </p>
+
+  <div class="ask-shot">
+    <Recording name="ask-your-notes" label="Asking Prism what was promised on a call">
+      <ChatShot client:visible />
+    </Recording>
+  </div>
+</Chapter>
+
+<style>
+  .ask-head { max-width: 1040px; }
+  .ask-h2 { margin-top: 18px; }
+  .ask-lede { margin-top: 22px; }
+  .ask-shot { margin-top: clamp(48px, 6vw, 80px); max-width: 1280px; margin-inline: auto; }
+</style>

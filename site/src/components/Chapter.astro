@@ -1,0 +1,20 @@
+---
+interface Props {
+  id?: string
+  tone?: 'light' | 'canvas' | 'dark'
+  sameTone?: boolean
+  class?: string
+  flush?: boolean
+}
+const { id, tone = 'light', sameTone = false, class: cls = '', flush = false } = Astro.props
+---
+
+<section
+  id={id}
+  data-tone={tone}
+  data-same-tone={sameTone ? 'true' : undefined}
+  class={`chapter ${cls}`}
+  style={flush ? 'padding-block:0' : undefined}
+>
+  <div class="wrap"><slot /></div>
+</section>

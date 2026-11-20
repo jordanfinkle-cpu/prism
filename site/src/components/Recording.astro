@@ -1,0 +1,81 @@
+---
+import fs from 'node:fs'
+import path from 'node:path'
+
+/* A slot for one of the real screen recordings.
+
+   Until the file exists in public/media, this renders whatever mockup was
+   passed as children — so the page is complete today and gets truer later
+   without a code change. No <video> markup is emitted for a file that is not
+   there, which is why nothing 404s in the meantime. */
+
+interface Props {
+  name: string
+  label: string
+  width?: number
+  height?: number
+}
+const { name, label, width = 1920, height = 1200 } = Astro.props
+
+const root = path.resolve('public/media')
+const mp4 = fs.existsSync(path.join(root, `${name}.mp4`))
+const poster = fs.existsSync(path.join(root, `${name}.jpg`)) ? `/media/${name}.jpg` : undefined
+---
+
+{
+  mp4 ? (
+    <div class="rec" style={`aspect-ratio:${width}/${height}`}>
+      <video
+        class="rec-v"
+        muted
+        playsinline
+        loop
+        preload="none"
+        poster={poster}
+        width={width}
+        height={height}
+        aria-label={label}
+        data-src={`/media/${name}.mp4`}
+      />
+    </div>
+    <script>
+      // Attach the source one viewport early, and never let an off-screen
+      // video hold the decoder.
+      for (const v of document.querySelectorAll<HTMLVideoElement>('video[data-src]')) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              const el = e.target as HTMLVideoElement
+              if (e.isIntersecting) {
+                if (!el.src) el.src = el.dataset.src!
+                if (!matchMedia('(prefers-reduced-motion: reduce)').matches) el.play().catch(() => {})
+              } else {
+                el.pause()
+              }
+            }
+          },
+          { rootMargin: '100% 0px', threshold: 0.5 }
+        )
+        io.observe(v)
+      }
+    </script>
+  ) : (
+    <slot />
+  )
+}
+
+<style>
+  .rec {
+    width: 100%;
+    border-radius: var(--radius-pane);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(24, 24, 25, 0.055),
+      0 40px 100px -24px rgba(24, 24, 25, 0.28);
+  }
+  .rec-v {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>
